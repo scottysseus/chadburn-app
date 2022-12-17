@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "[javascript][typescript][typescriptreact][html][css][json]": {
+  "[javascript][javascriptreact][typescript][typescriptreact][html][css][json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
