@@ -2,12 +2,12 @@ import { Spectrum, startTurn as turnStateStartTurn, TurnState } from "./turn";
 
 export interface GameState {
   // mapping between teams and points
-  score: Map<string, number>;
+  readonly score: Map<string, number>;
 
   // the team whose turn it is
-  teamInTurn: string;
+  readonly teamInTurn: string;
 
-  turnState: TurnState;
+  readonly turn: TurnState;
 }
 
 export function startGame(spectrum: Spectrum, target: number): GameState {
@@ -17,7 +17,7 @@ export function startGame(spectrum: Spectrum, target: number): GameState {
       ["red", 0],
     ]),
     teamInTurn: "blue",
-    turnState: turnStateStartTurn(spectrum, target),
+    turn: turnStateStartTurn(spectrum, target),
   };
 }
 
@@ -38,7 +38,7 @@ export function startTurn(
   return {
     ...state,
     teamInTurn,
-    turnState: turnStateStartTurn(spectrum, target),
+    turn: turnStateStartTurn(spectrum, target),
   };
 }
 
