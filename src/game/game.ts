@@ -58,9 +58,9 @@ export function finishTurn(state: GameState): GameState {
 /**
  * updateTurn performs all other turn state updates on the given game state.
  * @param state GameState to update
- * @param turnState the new TurnState for this game
+ * @param turn the new TurnState for this game
  * @returns the update state
  */
-export function updateTurn(state: GameState, turnState: TurnState) {
-  return { ...state, turnState };
+export function updateTurn(state: GameState, turn: TurnState): GameState {
+  return { ...state, turn };
 }
