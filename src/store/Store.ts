@@ -53,14 +53,16 @@ export interface Store {
 export class YStore implements Store {
   listeners: Listener[];
   ymap: Y.Map<any>;
+  ydoc: Y.Doc;
   cachedSnapshot?: SharedState;
 
-  constructor(ymap: Y.Map<any>) {
+  constructor(ydoc: Y.Doc) {
     this.listeners = [];
 
-    this.ymap = ymap;
-    this.shareState(getInitialSharedState());
-    this.ymap.observeDeep((events, transaction) => {
+    this.ydoc = ydoc;
+    this.ymap = this.ydoc.getMap<any>("sharedState");
+    this.transactShareState(getInitialSharedState());
+    this.ymap.observeDeep(() => {
       this.updateCachedSnapshot();
       this.emitChange();
     });
@@ -122,7 +124,7 @@ export class YStore implements Store {
         break;
     }
 
-    this.shareState(toShare);
+    this.transactShareState(toShare);
   }
 
   /**
@@ -181,6 +183,12 @@ export class YStore implements Store {
     return sharedState;
   }
 
+  private transactShareState(toShare: SharedState) {
+    this.ydoc.transact(() => {
+      this.shareState(toShare);
+    });
+  }
+
   private shareState(toShare: SharedState) {
     if (this.ymap.size < 1) {
       this.initializeYMap();
@@ -231,7 +239,6 @@ export class YStore implements Store {
 export class YStoreFactory {
   private ydoc: Y.Doc;
   private provider?: WebrtcProvider;
-  private ymap: Y.Map<any>;
 
   constructor({ ydoc, id }: { ydoc?: Y.Doc; id?: string }) {
     if (!ydoc) {
@@ -250,10 +257,9 @@ export class YStoreFactory {
     }
 
     this.ydoc = ydoc;
-    this.ymap = this.ydoc.getMap<any>("sharedState");
   }
 
   getStore() {
-    return new YStore(this.ymap);
+    return new YStore(this.ydoc);
   }
 }
