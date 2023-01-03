@@ -3,6 +3,18 @@
 
 log_prefix="[PRE-COMMIT]"
 
+echo "${log_prefix} running formatter"
+
+set +e
+bash -e <<TRY
+  ./node_modules/.bin/prettier --check .
+TRY
+
+if [ $? -ne 0 ]; then
+  printf "\n${log_prefix} \033[41mCOMMIT FAILED:\033[0m Fix formatter errors and try again\n"
+  exit 1
+fi
+
 echo "${log_prefix} running linter"
 
 set +e
