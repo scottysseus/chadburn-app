@@ -7,11 +7,13 @@ echo "${log_prefix} running formatter"
 
 set +e
 bash -e <<TRY
-  ./node_modules/.bin/prettier --check .
+  pnpm run fmt
 TRY
 
 if [ $? -ne 0 ]; then
   printf "\n${log_prefix} \033[41mCOMMIT FAILED:\033[0m Fix formatter errors and try again\n"
+  printf "${log_prefix} to fix formatting errors, run the command below:\n"
+  printf "${log_prefix}\tpnpm run fmt:fix\n"
   exit 1
 fi
 
@@ -23,7 +25,9 @@ bash -e <<TRY
 TRY
 
 if [ $? -ne 0 ]; then
-  printf "\n${log_prefix} \033[41mCOMMIT FAILED:\033[0m Fix eslint errors and try again\n"
+  printf "\n${log_prefix} \033[41mCOMMIT FAILED:\033[0m Fix linter errors and try again\n"
+  printf "${log_prefix} to fix formatting errors, run the command below:\n"
+  printf "${log_prefix}\tpnpm run lint:fix\n"
   exit 1
 fi
 
