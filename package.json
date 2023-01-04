@@ -11,6 +11,7 @@
     "lint:fix": "eslint --fix \"src/**/*.{ts,tsx}\"",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
+    "tsc": "tsc --noEmit",
     "prepare": "husky install"
   },
   "keywords": [],

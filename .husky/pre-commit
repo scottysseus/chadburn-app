@@ -35,7 +35,7 @@ echo "${log_prefix} running TypeScript compiler"
 
 set +e
 bash -e <<TRY
-  ./node_modules/.bin/tsc --noEmit
+  pnpm run tsc
 TRY
 
 if [ $? -ne 0 ]; then
