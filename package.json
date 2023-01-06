@@ -8,6 +8,10 @@
     "build:dev": "NODE_ENV=dev ./build.js",
     "start": "concurrently \"pnpm run build:dev\" \"firebase emulators:start\"",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,tsx}\"",
+    "fmt": "prettier --check .",
+    "fmt:fix": "prettier --write .",
+    "tsc": "tsc --noEmit",
     "prepare": "husky install"
   },
   "keywords": [],

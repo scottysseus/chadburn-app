@@ -35,7 +35,7 @@ if (["development", "dev"].includes(process.env.NODE_ENV)) {
       // after the JS build succeeds, run the TypeScript compiler.
       // use --noEmit so we don't emit any JS artifacts - we only want
       // to see error messages.
-      exec("./node_modules/.bin/tsc --noEmit", (error, stdout, stderr) => {
+      exec("pnpm run tsc", (error, stdout, stderr) => {
         if (stdout) {
           console.error(
             `${tscPrefix} found TypeScript errors:\n${tscPrefix} `,

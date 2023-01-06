@@ -1,9 +1,15 @@
-import { finishTurn, getTeamInTurn, startGame, startTurn, updateTurn } from "src/game/game";
+import {
+  finishTurn,
+  getTeamInTurn,
+  startGame,
+  startTurn,
+  updateTurn,
+} from "src/game/game";
 import {
   getRandomSpectrum,
   getRandomTarget,
   submitGuess,
-  submitHint
+  submitHint,
 } from "src/game/turn";
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs";
@@ -11,7 +17,7 @@ import {
   Action,
   ActionTypes,
   SubmitHintAction,
-  UpdateGuessAction
+  UpdateGuessAction,
 } from "./actions";
 import { SharedState } from "./SharedState";
 
@@ -116,10 +122,12 @@ export class YStore implements Store {
       case ActionTypes.SUBMIT_GUESS:
         toShare = {
           ...toShare,
-          game: finishTurn(updateTurn(
-            toShare.game,
-            submitGuess(toShare.game.turn, toShare.guess)
-          )),
+          game: finishTurn(
+            updateTurn(
+              toShare.game,
+              submitGuess(toShare.game.turn, toShare.guess)
+            )
+          ),
         };
         break;
     }
