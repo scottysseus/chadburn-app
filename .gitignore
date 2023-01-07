@@ -6,3 +6,5 @@ www/*.css
 www/*.css.*
 
 **/*.log
+
+cypress/videos

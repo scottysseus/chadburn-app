@@ -57,3 +57,17 @@ pnpm run start
 ```bash
 pnpm run prepare
 ```
+
+## Testing
+
+Run all Cypress tests:
+
+```bash
+pnpm exec cypress run
+```
+
+Open the interactive Cypress UI:
+
+```bash
+pnpm exec cypress open
+```
