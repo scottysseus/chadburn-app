@@ -10,7 +10,7 @@ describe("guess dial", () => {
 
     PlayerView.get_guess_angle().should("equal", 0);
 
-    PlayerView.get_guess().then(($guessDial) => {
+    PlayerView.get_guess_dial().then(($guessDial) => {
       const offset = $guessDial.offset();
 
       const downX = $guessDial.width() / 2 + offset.left;

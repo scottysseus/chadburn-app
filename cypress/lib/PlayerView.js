@@ -32,11 +32,11 @@ function getRotationDegreesFromCssMatrix(cssMatrix) {
 }
 
 export const PlayerView = {
-  get_guess() {
+  get_guess_dial() {
     return cy.get('img[src="assets/guess.svg"]');
   },
   get_guess_angle() {
-    return PlayerView.get_guess().then(($guessDial) => {
+    return PlayerView.get_guess_dial().then(($guessDial) => {
       const transform = $guessDial.css("transform");
       let angle = NaN;
 
