@@ -38,20 +38,16 @@ export const PlayerView = {
   get_guess_angle() {
     return PlayerView.get_guess().then(($guessDial) => {
       const transform = $guessDial.css("transform");
-      console.log(transform);
       let angle = NaN;
 
       if (rotateDegreeRegex.test(transform)) {
-        console.log("transform is rotate");
         const match = rotateDegreeRegex.exec(transform);
         angle = match[1];
       } else if (matrixRegx.test(transform)) {
-        console.log("transform is matrix");
         const match = matrixRegx.exec(transform);
         angle = getRotationDegreesFromCssMatrix(match[0]);
       }
 
-      console.log(`wrapping angle ${angle}`);
       return cy.wrap(angle);
     });
   },
