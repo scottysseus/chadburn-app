@@ -17,7 +17,11 @@ export const PlayerView = ({
 }: PlayerViewProps) => {
   return (
     <>
-      <GuessDial onUpdated={onGuessUpdated} guess={guess} />
+      <GuessDial
+        data-cy="player_view_guess_dial"
+        onUpdated={onGuessUpdated}
+        guess={guess}
+      />
 
       <img
         src="assets/border.svg"

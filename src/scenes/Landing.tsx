@@ -11,7 +11,9 @@ export const Landing = () => {
 
   return (
     <>
-      <button onClick={onClick}>New Game</button>
+      <button data-cy="landing_btn_new_game" onClick={onClick}>
+        New Game
+      </button>
     </>
   );
 };
