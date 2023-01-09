@@ -1,6 +1,6 @@
 import {
   finishTurn,
-  getTeamInTurn,
+  getTeamOutOfTurn,
   startGame,
   startTurn,
   updateTurn,
@@ -10,6 +10,7 @@ import {
   getRandomTarget,
   submitGuess,
   submitHint,
+  submitRebuttal,
 } from "src/game/turn";
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs";
@@ -17,6 +18,7 @@ import {
   Action,
   ActionTypes,
   SubmitHintAction,
+  SubmitRebuttalAction,
   UpdateGuessAction,
 } from "./actions";
 import { SharedState } from "./SharedState";
@@ -36,6 +38,7 @@ const YMapKeys = {
   ACTOR: "actor",
   LEFT: "left",
   RIGHT: "right",
+  REBUTTAL: "rebuttal",
 };
 
 const START_GUESS = 0;
@@ -101,7 +104,7 @@ export class YStore implements Store {
           ...toShare,
           game: startTurn(
             toShare.game,
-            getTeamInTurn(toShare.game),
+            getTeamOutOfTurn(toShare.game),
             getRandomSpectrum(),
             getRandomTarget()
           ),
@@ -122,11 +125,22 @@ export class YStore implements Store {
       case ActionTypes.SUBMIT_GUESS:
         toShare = {
           ...toShare,
-          game: finishTurn(
+          game:
             updateTurn(
               toShare.game,
               submitGuess(toShare.game.turn, toShare.guess)
-            )
+            ),
+        };
+        break;
+
+      case ActionTypes.SUBMIT_REBUTTAL:
+        const submitRebuttalAction =
+          action as unknown as SubmitRebuttalAction;
+        toShare = {
+          ...toShare,
+          game: finishTurn(updateTurn(
+            toShare.game,
+            submitRebuttal(toShare.game.turn, submitRebuttalAction.rebuttal)
           ),
         };
         break;
@@ -184,6 +198,7 @@ export class YStore implements Store {
           target: turnState.get(YMapKeys.TARGET),
           hint: turnState.get(YMapKeys.HINT),
           guess: turnState.get(YMapKeys.GUESS),
+          rebuttal: turnState.get(YMapKeys.REBUTTAL),
         },
       },
     };
@@ -221,6 +236,7 @@ export class YStore implements Store {
 
     turn.set(YMapKeys.LEFT, toShare.game.turn.spectrum.left);
     turn.set(YMapKeys.RIGHT, toShare.game.turn.spectrum.right);
+    turn.set(YMapKeys.REBUTTAL, toShare.game.turn.rebuttal);
   }
 
   private initializeYMap() {
