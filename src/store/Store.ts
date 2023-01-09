@@ -125,22 +125,22 @@ export class YStore implements Store {
       case ActionTypes.SUBMIT_GUESS:
         toShare = {
           ...toShare,
-          game:
-            updateTurn(
-              toShare.game,
-              submitGuess(toShare.game.turn, toShare.guess)
-            ),
+          game: updateTurn(
+            toShare.game,
+            submitGuess(toShare.game.turn, toShare.guess)
+          ),
         };
         break;
 
       case ActionTypes.SUBMIT_REBUTTAL:
-        const submitRebuttalAction =
-          action as unknown as SubmitRebuttalAction;
+        const submitRebuttalAction = action as unknown as SubmitRebuttalAction;
         toShare = {
           ...toShare,
-          game: finishTurn(updateTurn(
-            toShare.game,
-            submitRebuttal(toShare.game.turn, submitRebuttalAction.rebuttal)
+          game: finishTurn(
+            updateTurn(
+              toShare.game,
+              submitRebuttal(toShare.game.turn, submitRebuttalAction.rebuttal)
+            )
           ),
         };
         break;
