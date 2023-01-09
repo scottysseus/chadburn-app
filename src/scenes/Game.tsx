@@ -95,6 +95,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       rebuttal: rebuttal,
     };
     publish(action);
+
     finishTurn();
   };
 
@@ -116,7 +117,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         <h3>
           Blue: {sharedState.game.score.get("blue")} Red:{" "}
           {sharedState.game.score.get("red")}
-        </h3>
+         </h3>
+
         <h3>{sharedState.game.teamInTurn} team&apos;s turn!</h3>
       </div>
 
@@ -161,7 +163,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
             SUBMIT
           </button>
         </div>
-      </div>
+
 
       <div className={styles.hintContainer}>
         {player ? (

@@ -141,7 +141,6 @@ export class YStore implements Store {
           game: finishTurn(updateTurn(
             toShare.game,
             submitRebuttal(toShare.game.turn, submitRebuttalAction.rebuttal)
-          )
           ),
         };
         break;
