@@ -77,7 +77,6 @@ export function finishTurn(state: GameState): GameState {
     );
   }
 
-
   return newState;
 }
 
@@ -100,7 +99,6 @@ export function getGuessScore(state: GameState): number {
   } else if (absDifference < 13) {
     return 3;
   } else if (absDifference <= 25) {
-
     return 2;
   } else {
     return 0;
@@ -129,7 +127,6 @@ export function getRebuttalScore(state: GameState): number {
 }
 
 export function getTeamOutOfTurn(state: GameState): string {
-
   return state.teamInTurn === "blue" ? "red" : "blue";
 }
 
