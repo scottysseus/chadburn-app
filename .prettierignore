@@ -1,5 +1,5 @@
 node_modules
-pnpm_lock.yaml
+pnpm-lock.yaml
 
 www/*.js
 www/*.js.*
