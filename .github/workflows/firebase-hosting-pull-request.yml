@@ -33,5 +33,5 @@ jobs:
     needs: build_and_preview
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{needs.build_and_preview.outputs.urls}}
+      # - run: echo ${{needs.build_and_preview.outputs.urls}}
       - run: echo "hello world"
