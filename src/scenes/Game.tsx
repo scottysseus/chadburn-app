@@ -9,19 +9,19 @@ import {
   UpdateGuessAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
-import {
-  leftRebuttalBtn,
-  playerBtn,
-  psychicBtn,
-  rightRebuttalBtn,
-  setLeftRebuttalBtn,
-  setPlayerBtn,
-  setPsychicBtn,
-  setRightRebuttalBtn,
-} from "../components/Toggles";
 import styles from "./Game.module.css";
 import { PlayerView } from "./PlayerView";
 import { PsychicView } from "./PsychicView";
+import {
+  leftRebuttalBtn,
+  setLeftRebuttalBtn,
+  rightRebuttalBtn,
+  setRightRebuttalBtn,
+  setPlayerBtn,
+  setPsychicBtn,
+  playerBtn,
+  psychicBtn,
+} from "../components/Toggles";
 
 interface GameProps {
   sharedState: SharedState;
