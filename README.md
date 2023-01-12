@@ -19,7 +19,7 @@ pnpm install -g firebase-tools
 3. Start the dev server in watch mode:
 
 ```bash
-pnpm run start
+pnpm start
 ```
 
 4. In another terminal, clone `chadburn-signaling` to get the WebRTC signaling server:
@@ -41,7 +41,7 @@ pnpm install
 6. Start the signaling server:
 
 ```bash
-pnpm run start
+pnpm start
 ```
 
 5. View the app in your browser at http://localhost:8000
@@ -60,7 +60,19 @@ pnpm run prepare
 
 ## Testing
 
-Run all Cypress tests:
+Run all tests with the following command:
+
+```bash
+pnpm test
+```
+
+To run just the Jest tests:
+
+```bash
+pnpm exec jest
+```
+
+To run just the Cypress tests:
 
 ```bash
 pnpm exec cypress run
