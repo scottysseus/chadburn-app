@@ -1,3 +1,4 @@
+import { SharedState } from "src/store/SharedState";
 import { Spectrum, startTurn as turnStateStartTurn, TurnState } from "./turn";
 
 export interface GameState {
@@ -138,4 +139,25 @@ export function getTeamOutOfTurn(state: GameState): string {
  */
 export function updateTurn(state: GameState, turn: TurnState): GameState {
   return { ...state, turn };
+}
+
+export function checkForEndOfGame(state: SharedState): boolean {
+  if (
+    (state.game.score.get(state.game.teamInTurn) || 0) >= 10 ||
+    (state.game.score.get(getTeamOutOfTurn(state.game)) || 0) >= 10
+  ) {
+    console.log("teaminturn", state?.game.score.get(state.game.teamInTurn));
+    console.log(
+      "teamoutturn",
+      state?.game.score.get(getTeamOutOfTurn(state.game))
+    );
+    return true;
+  } else {
+  }
+
+  return false;
+}
+
+export function finishGame(state: GameState): GameState {
+  return { ...state };
 }
