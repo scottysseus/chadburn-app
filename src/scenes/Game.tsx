@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsArrowLeftSquare, BsArrowRightSquare } from "react-icons/bs";
+
 import { finishGame, getTeamOutOfTurn } from "src/game/game";
 import {
   Action,
@@ -16,6 +16,7 @@ import { PsychicView } from "./PsychicView";
 import { RebuttalView } from "./RebuttalView";
 import { Header } from "../components/Header";
 import { Hint } from "src/components/Hint";
+import { Cards } from "src/components/Cards";
 
 interface GameProps {
   sharedState: SharedState;
@@ -129,23 +130,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         <PsychicView target={sharedState.game.turn.target} />
       )}
 
-      <div className={styles.cardContainer}>
-        <p style={{ fontSize: "20px" }}>
-          <span>
-            <BsArrowLeftSquare
-              style={{ marginBottom: "-3px", marginRight: "4px" }}
-            />
-          </span>
-          {sharedState.game.turn.spectrum.left}
-        </p>
-        <p style={{ fontSize: "20px" }}>
-          {sharedState.game.turn.spectrum.right}
-          <BsArrowRightSquare
-            style={{ marginBottom: "-3px", marginLeft: "4px" }}
-          />
-        </p>
-      </div>
-
+      <Cards sharedState={sharedState} />
       <div className={styles.buttomContainer}>
         <button
           style={{
