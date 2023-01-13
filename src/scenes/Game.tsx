@@ -12,16 +12,6 @@ import { SharedState } from "src/store/SharedState";
 import styles from "./Game.module.css";
 import { PlayerView } from "./PlayerView";
 import { PsychicView } from "./PsychicView";
-import {
-  leftRebuttalBtn,
-  setLeftRebuttalBtn,
-  rightRebuttalBtn,
-  setRightRebuttalBtn,
-  setPlayerBtn,
-  setPsychicBtn,
-  playerBtn,
-  psychicBtn,
-} from "../components/Toggles";
 
 interface GameProps {
   sharedState: SharedState;
@@ -31,6 +21,10 @@ interface GameProps {
 export const Game = ({ sharedState, publish }: GameProps) => {
   const [hint, setHint] = useState<string>("");
   const [rebuttal, setRebuttal] = useState<string>("");
+  const [leftRebuttalBtn, setLeftRebuttalBtn] = useState<boolean>(false);
+  const [rightRebuttalBtn, setRightRebuttalBtn] = useState<boolean>(false);
+  const [playerBtn, setPlayerBtn] = useState<boolean>(false);
+  const [psychicBtn, setPsychicBtn] = useState<boolean>(false);
 
   const [guessSubmitted, setGuessSubmitted] = useState<boolean>(false);
   const [player, setPlayer] = useState<boolean>(true);
@@ -163,99 +157,99 @@ export const Game = ({ sharedState, publish }: GameProps) => {
             SUBMIT
           </button>
         </div>
+      </div>
 
-        <div className={styles.hintContainer}>
-          {player ? (
-            sharedState.game.turn.hint ? (
-              <h2>{sharedState.game.turn.hint}</h2>
-            ) : (
-              <h2>The Psychic has not chosen a hint yet!</h2>
-            )
-          ) : sharedState.game.turn.hint ? (
-            <h2>The submitted hint is : {sharedState.game.turn.hint} !</h2>
-          ) : (
-            <>
-              <input
-                type="text"
-                onChange={onUpdateHint}
-                style={{
-                  width: "400px",
-                  height: "34px",
-                  zIndex: "4",
-                }}
-                placeholder="Provide hint"
-                id="hint"
-              />
-              <button className={styles.hintBtn} onClick={() => onSubmitHint()}>
-                SUBMIT
-              </button>
-            </>
-          )}
-        </div>
+      <div className={styles.hintContainer}>
         {player ? (
-          <PlayerView
-            guess={sharedState.guess}
-            onUpdated={onUpdateGuess}
-            onGuessSubmit={onGuessSubmit}
-            disableSubmit={disableSubmit}
-            // target={sharedState.game.turn.target}
-          />
+          sharedState.game.turn.hint ? (
+            <h2>{sharedState.game.turn.hint}</h2>
+          ) : (
+            <h2>The Psychic has not chosen a hint yet!</h2>
+          )
+        ) : sharedState.game.turn.hint ? (
+          <h2>The submitted hint is : {sharedState.game.turn.hint} !</h2>
         ) : (
-          <PsychicView target={sharedState.game.turn.target} />
-        )}
-
-        <div className={styles.cardContainer}>
-          <p style={{ fontSize: "20px" }}>
-            <span>
-              <BsArrowLeftSquare
-                style={{ marginBottom: "-3px", marginRight: "4px" }}
-              />
-            </span>
-            {sharedState.game.turn.spectrum.left}
-          </p>
-          <p style={{ fontSize: "20px" }}>
-            {sharedState.game.turn.spectrum.right}
-            <BsArrowRightSquare
-              style={{ marginBottom: "-3px", marginLeft: "4px" }}
+          <>
+            <input
+              type="text"
+              onChange={onUpdateHint}
+              style={{
+                width: "400px",
+                height: "34px",
+                zIndex: "4",
+              }}
+              placeholder="Provide hint"
+              id="hint"
             />
-          </p>
-        </div>
+            <button className={styles.hintBtn} onClick={() => onSubmitHint()}>
+              SUBMIT
+            </button>
+          </>
+        )}
+      </div>
+      {player ? (
+        <PlayerView
+          guess={sharedState.guess}
+          onUpdated={onUpdateGuess}
+          onGuessSubmit={onGuessSubmit}
+          disableSubmit={disableSubmit}
+          // target={sharedState.game.turn.target}
+        />
+      ) : (
+        <PsychicView target={sharedState.game.turn.target} />
+      )}
 
-        <div className={styles.buttomContainer}>
-          <button
-            style={{
-              width: "100px",
-              height: "50px",
-              fontSize: "15px",
-            }}
-            onClick={() => onToggleActorView()}
-            disabled={playerBtn}
-          >
-            Player
-          </button>
-          <button
-            style={{
-              width: "100px",
-              height: "50px",
-              fontSize: "15px",
-            }}
-            onClick={() => onToggleActorView()}
-            disabled={psychicBtn}
-          >
-            Psychic
-          </button>
-        </div>
-        <div>
-          <button
-            style={{
-              position: "absolute",
-              bottom: "40px",
-            }}
-            onClick={() => onNewGameClick()}
-          >
-            New Game
-          </button>
-        </div>
+      <div className={styles.cardContainer}>
+        <p style={{ fontSize: "20px" }}>
+          <span>
+            <BsArrowLeftSquare
+              style={{ marginBottom: "-3px", marginRight: "4px" }}
+            />
+          </span>
+          {sharedState.game.turn.spectrum.left}
+        </p>
+        <p style={{ fontSize: "20px" }}>
+          {sharedState.game.turn.spectrum.right}
+          <BsArrowRightSquare
+            style={{ marginBottom: "-3px", marginLeft: "4px" }}
+          />
+        </p>
+      </div>
+
+      <div className={styles.buttomContainer}>
+        <button
+          style={{
+            width: "100px",
+            height: "50px",
+            fontSize: "15px",
+          }}
+          onClick={() => onToggleActorView()}
+          disabled={playerBtn}
+        >
+          Player
+        </button>
+        <button
+          style={{
+            width: "100px",
+            height: "50px",
+            fontSize: "15px",
+          }}
+          onClick={() => onToggleActorView()}
+          disabled={psychicBtn}
+        >
+          Psychic
+        </button>
+      </div>
+      <div>
+        <button
+          style={{
+            position: "absolute",
+            bottom: "40px",
+          }}
+          onClick={() => onNewGameClick()}
+        >
+          New Game
+        </button>
       </div>
     </div>
   );
