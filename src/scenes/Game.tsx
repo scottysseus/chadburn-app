@@ -15,6 +15,7 @@ import { PlayerView } from "./PlayerView";
 import { PsychicView } from "./PsychicView";
 import { RebuttalView } from "./RebuttalView";
 import { Header } from "../components/Header";
+import { Hint } from "src/components/Hint";
 
 interface GameProps {
   sharedState: SharedState;
@@ -109,34 +110,13 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         setRebuttal={setRebuttal}
       />
 
-      <div className={styles.hintContainer}>
-        {player ? (
-          sharedState.game.turn.hint ? (
-            <h2>{sharedState.game.turn.hint}</h2>
-          ) : (
-            <h2>The Psychic has not chosen a hint yet!</h2>
-          )
-        ) : sharedState.game.turn.hint ? (
-          <h2>The submitted hint is : {sharedState.game.turn.hint} !</h2>
-        ) : (
-          <>
-            <input
-              type="text"
-              onChange={onUpdateHint}
-              style={{
-                width: "400px",
-                height: "34px",
-                zIndex: "4",
-              }}
-              placeholder="Provide hint"
-              id="hint"
-            />
-            <button className={styles.hintBtn} onClick={() => onSubmitHint()}>
-              SUBMIT
-            </button>
-          </>
-        )}
-      </div>
+      <Hint
+        sharedState={sharedState}
+        onSubmitHint={onSubmitHint}
+        onUpdateHint={onUpdateHint}
+        player={player}
+      />
+
       {player ? (
         <PlayerView
           guess={sharedState.guess}
