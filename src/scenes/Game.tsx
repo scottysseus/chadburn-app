@@ -14,6 +14,7 @@ import styles from "./Game.module.css";
 import { PlayerView } from "./PlayerView";
 import { PsychicView } from "./PsychicView";
 import { RebuttalView } from "./RebuttalView";
+import { Header } from "../components/Header";
 
 interface GameProps {
   sharedState: SharedState;
@@ -98,18 +99,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
 
   return (
     <div className={styles.pageContainer} draggable={false}>
-      <div className={styles.pageHeader}>
-        <h1>CHADBURN</h1>
-      </div>
-
-      <div className={styles.turnContainer}>
-        <h3>
-          Blue: {sharedState.game.score.get("blue")} Red:{" "}
-          {sharedState.game.score.get("red")}
-        </h3>
-
-        <h3>{sharedState.game.teamInTurn} team&apos;s turn!</h3>
-      </div>
+      <Header sharedState={sharedState} />
 
       <RebuttalView
         guessSubmitted={guessSubmitted}
