@@ -1,8 +1,11 @@
+import { SharedState } from "src/store/SharedState";
 import { Spectrum, startTurn as turnStateStartTurn, TurnState } from "./turn";
+
+export type Score = Map<string, number>;
 
 export interface GameState {
   // mapping between teams and points
-  readonly score: Map<string, number>;
+  readonly score: Score;
 
   // the team whose turn it is
   readonly teamInTurn: string;
@@ -138,4 +141,20 @@ export function getTeamOutOfTurn(state: GameState): string {
  */
 export function updateTurn(state: GameState, turn: TurnState): GameState {
   return { ...state, turn };
+}
+
+export function isGameOver(state: SharedState): boolean {
+  if (
+    (state.game.score.get(state.game.teamInTurn) || 0) >= 10 ||
+    (state.game.score.get(getTeamOutOfTurn(state.game)) || 0) >= 10
+  ) {
+    return true;
+  } else {
+  }
+
+  return false;
+}
+
+export function finishGame(state: GameState): GameState {
+  return { ...state };
 }
