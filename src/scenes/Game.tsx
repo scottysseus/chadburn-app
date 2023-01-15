@@ -18,6 +18,7 @@ import { Header } from "../components/Header";
 import { Hint } from "src/components/Hint";
 import { Cards } from "src/components/Cards";
 import { ToggleActorBtns } from "src/components/ToggleActorBtns";
+import { NewGameBtn } from "src/components/NewGameBtn";
 
 interface GameProps {
   sharedState: SharedState;
@@ -138,18 +139,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         playerBtn={playerBtn}
         psychicBtn={psychicBtn}
       />
-
-      <div>
-        <button
-          style={{
-            position: "absolute",
-            bottom: "40px",
-          }}
-          onClick={() => onNewGameClick()}
-        >
-          New Game
-        </button>
-      </div>
+      <NewGameBtn onNewGameClick={onNewGameClick} />
     </div>
   );
 };
