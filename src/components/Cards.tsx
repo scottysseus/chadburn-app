@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "../scenes/Game.module.css";
 import { BsArrowLeftSquare, BsArrowRightSquare } from "react-icons/bs";
+import { SharedState } from "src/store/SharedState";
 
 interface CardsProps {
-  sharedState: any;
+  sharedState: SharedState;
 }
 
 export const Cards = ({ sharedState }: CardsProps) => {

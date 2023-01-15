@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 interface RebuttalBtnsProps {
-  setRebuttal: any;
+  setRebuttal: (value: string) => void;
 }
 
 export const RebuttalBtns = ({ setRebuttal }: RebuttalBtnsProps) => {

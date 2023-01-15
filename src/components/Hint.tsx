@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "../scenes/Game.module.css";
+import { SharedState } from "src/store/SharedState";
 
 interface HintProps {
   player: boolean;
-  sharedState: any;
-  onUpdateHint: any;
-  onSubmitHint: any;
+  sharedState: SharedState;
+  onUpdateHint: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmitHint: () => void;
 }
 
 export const Hint = ({

@@ -1,13 +1,15 @@
 import React from "react";
 import styles from "./RebuttalView.module.css";
 import { RebuttalBtns } from "../components/RebuttalBtns";
+import { SharedState } from "src/store/SharedState";
+import { GameState } from "src/game/game";
 
 interface RebuttalViewProps {
   guessSubmitted: boolean;
-  getTeamOutOfTurn: (state: any) => void;
-  sharedState: any;
+  getTeamOutOfTurn: (state: GameState) => string;
+  sharedState: SharedState;
   onSubmitRebuttal: () => void;
-  setRebuttal: any;
+  setRebuttal: (value: string) => void;
 }
 
 export const RebuttalView = ({

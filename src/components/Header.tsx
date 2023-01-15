@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "../scenes/Game.module.css";
+import { SharedState } from "src/store/SharedState";
 
 interface HeaderProps {
-  sharedState: any;
+  sharedState: SharedState;
 }
 
 export const Header = ({ sharedState }: HeaderProps) => {
