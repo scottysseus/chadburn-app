@@ -19,6 +19,7 @@ import { Hint } from "src/components/Hint";
 import { Spectrum } from "src/components/Spectrum";
 import { ActorToggle } from "src/components/ActorToggle";
 import { NewGameButton } from "src/components/NewGameButton";
+import { EndGame } from "./EndGame";
 
 interface GameProps {
   sharedState: SharedState;
@@ -32,6 +33,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   const [rebuttal, setRebuttal] = useState<string>("");
   const [guessSubmitted, setGuessSubmitted] = useState<boolean>(false);
   const [player, setPlayer] = useState<boolean>(true);
+  const [isOver, setIsOver] = useState<boolean>(false);
 
   useEffect(() => {
     if (!sharedState.started) {
@@ -40,8 +42,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   }, [sharedState]);
 
   useEffect(() => {
-    const end = isGameOver(sharedState);
-    if (end === true) {
+    setIsOver(isGameOver(sharedState));
+    if (isOver === true) {
       finishGame(sharedState.game);
     }
   }, [sharedState.game.score]);
@@ -121,6 +123,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         onUpdateHint={onUpdateHint}
         player={player}
       />
+
+      {isOver ? <EndGame /> : null}
 
       {player ? (
         <PlayerView
