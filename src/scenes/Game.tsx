@@ -17,6 +17,7 @@ import { RebuttalView } from "./RebuttalView";
 import { Header } from "../components/Header";
 import { Hint } from "src/components/Hint";
 import { Cards } from "src/components/Cards";
+import { ToggleActorBtns } from "src/components/ToggleActorBtns";
 
 interface GameProps {
   sharedState: SharedState;
@@ -131,30 +132,13 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       )}
 
       <Cards sharedState={sharedState} />
-      <div className={styles.buttomContainer}>
-        <button
-          style={{
-            width: "100px",
-            height: "50px",
-            fontSize: "15px",
-          }}
-          onClick={() => onToggleActorView()}
-          disabled={playerBtn}
-        >
-          Player
-        </button>
-        <button
-          style={{
-            width: "100px",
-            height: "50px",
-            fontSize: "15px",
-          }}
-          onClick={() => onToggleActorView()}
-          disabled={psychicBtn}
-        >
-          Psychic
-        </button>
-      </div>
+
+      <ToggleActorBtns
+        onToggleActorView={onToggleActorView}
+        playerBtn={playerBtn}
+        psychicBtn={psychicBtn}
+      />
+
       <div>
         <button
           style={{
