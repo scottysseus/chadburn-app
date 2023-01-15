@@ -1,0 +1,17 @@
+body {
+  background-color: #f2eecb;
+  font-family: "Public Sans", sans-serif;
+  text-transform: uppercase;
+}
+
+button,
+input {
+  background-color: #f2eecb;
+  font-family: "Public Sans", sans-serif;
+  text-transform: uppercase;
+}
+
+button {
+  border-radius: 5px;
+  border-width: 1px;
+}
