@@ -148,11 +148,6 @@ export function isGameOver(state: SharedState): boolean {
     (state.game.score.get(state.game.teamInTurn) || 0) >= 10 ||
     (state.game.score.get(getTeamOutOfTurn(state.game)) || 0) >= 10
   ) {
-    console.log("teaminturn", state?.game.score.get(state.game.teamInTurn));
-    console.log(
-      "teamoutturn",
-      state?.game.score.get(getTeamOutOfTurn(state.game))
-    );
     return true;
   } else {
   }
