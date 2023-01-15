@@ -1,12 +1,14 @@
 import React from "react";
 import styles from "../scenes/Game.module.css";
-import { SharedState } from "src/store/SharedState";
+
+import { Score } from "../game/game";
 
 interface HeaderProps {
-  sharedState: SharedState;
+  score: Score;
+  teamInTurn: string;
 }
 
-export const Header = ({ sharedState }: HeaderProps) => {
+export const Header = ({ score, teamInTurn }: HeaderProps) => {
   return (
     <>
       <div className={styles.pageHeader}>
@@ -15,11 +17,10 @@ export const Header = ({ sharedState }: HeaderProps) => {
 
       <div className={styles.turnContainer}>
         <h3>
-          Blue: {sharedState.game.score.get("blue")} Red:{" "}
-          {sharedState.game.score.get("red")}
+          Blue: {score.get("blue")} Red: {score.get("red")}
         </h3>
 
-        <h3>{sharedState.game.teamInTurn} team&apos;s turn!</h3>
+        <h3>{teamInTurn} team&apos;s turn!</h3>
       </div>
     </>
   );

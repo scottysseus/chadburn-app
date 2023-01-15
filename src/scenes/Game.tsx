@@ -8,7 +8,7 @@ import {
   SubmitRebuttalAction,
   UpdateGuessAction,
 } from "src/store/actions";
-import { checkForEndOfGame } from "src/game/game";
+import { isGameOver } from "src/game/game";
 import { SharedState } from "src/store/SharedState";
 import styles from "./Game.module.css";
 import { PlayerView } from "./PlayerView";
@@ -16,9 +16,9 @@ import { PsychicView } from "./PsychicView";
 import { RebuttalView } from "./RebuttalView";
 import { Header } from "../components/Header";
 import { Hint } from "src/components/Hint";
-import { Cards } from "src/components/Cards";
-import { ToggleActorBtns } from "src/components/ToggleActorBtns";
-import { NewGameBtn } from "src/components/NewGameBtn";
+import { Spectrum } from "src/components/Spectrum";
+import { ActorToggle } from "src/components/ActorToggle";
+import { NewGameButton } from "src/components/NewGameButton";
 
 interface GameProps {
   sharedState: SharedState;
@@ -40,8 +40,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   }, [sharedState]);
 
   useEffect(() => {
-    console.log(sharedState.game.score);
-    const end = checkForEndOfGame(sharedState);
+    const end = isGameOver(sharedState);
     if (end === true) {
       finishGame(sharedState.game);
     }
@@ -103,12 +102,15 @@ export const Game = ({ sharedState, publish }: GameProps) => {
 
   return (
     <div className={styles.pageContainer} draggable={false}>
-      <Header sharedState={sharedState} />
+      <Header
+        score={sharedState.game.score}
+        teamInTurn={sharedState.game.teamInTurn}
+      />
 
       <RebuttalView
         guessSubmitted={guessSubmitted}
         getTeamOutOfTurn={getTeamOutOfTurn}
-        sharedState={sharedState}
+        game={sharedState.game}
         onSubmitRebuttal={onSubmitRebuttal}
         setRebuttal={setRebuttal}
       />
@@ -132,14 +134,14 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         <PsychicView target={sharedState.game.turn.target} />
       )}
 
-      <Cards sharedState={sharedState} />
+      <Spectrum spectrum={sharedState.game.turn.spectrum} />
 
-      <ToggleActorBtns
+      <ActorToggle
         onToggleActorView={onToggleActorView}
         playerBtn={playerBtn}
         psychicBtn={psychicBtn}
       />
-      <NewGameBtn onNewGameClick={onNewGameClick} />
+      <NewGameButton onNewGameClick={onNewGameClick} />
     </div>
   );
 };

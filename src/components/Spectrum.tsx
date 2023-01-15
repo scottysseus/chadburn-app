@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "../scenes/Game.module.css";
 import { BsArrowLeftSquare, BsArrowRightSquare } from "react-icons/bs";
-import { SharedState } from "src/store/SharedState";
+import { Spectrum as SpectrumType } from "../game/turn";
 
-interface CardsProps {
-  sharedState: SharedState;
+interface SpectrumProps {
+  spectrum: SpectrumType;
 }
 
-export const Cards = ({ sharedState }: CardsProps) => {
+export const Spectrum = ({ spectrum }: SpectrumProps) => {
   return (
     <>
       <div className={styles.cardContainer}>
@@ -17,10 +17,10 @@ export const Cards = ({ sharedState }: CardsProps) => {
               style={{ marginBottom: "-3px", marginRight: "4px" }}
             />
           </span>
-          {sharedState.game.turn.spectrum.left}
+          {spectrum.left}
         </p>
         <p style={{ fontSize: "20px" }}>
-          {sharedState.game.turn.spectrum.right}
+          {spectrum.right}
           <BsArrowRightSquare
             style={{ marginBottom: "-3px", marginLeft: "4px" }}
           />

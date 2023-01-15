@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-interface RebuttalBtnsProps {
+interface RebuttalToggleProps {
   setRebuttal: (value: string) => void;
 }
 
-export const RebuttalBtns = ({ setRebuttal }: RebuttalBtnsProps) => {
+export const RebuttalToggle = ({ setRebuttal }: RebuttalToggleProps) => {
   const [leftRebuttalBtn, setLeftRebuttalBtn] = useState<boolean>(false);
   const [rightRebuttalBtn, setRightRebuttalBtn] = useState<boolean>(false);
 

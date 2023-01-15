@@ -1,17 +1,17 @@
 import React from "react";
 import styles from "../scenes/Game.module.css";
 
-interface ToggleActorBtnsProps {
+interface ActorToggleProps {
   onToggleActorView: () => void;
   psychicBtn: boolean;
   playerBtn: boolean;
 }
 
-export const ToggleActorBtns = ({
+export const ActorToggle = ({
   onToggleActorView,
   playerBtn,
   psychicBtn,
-}: ToggleActorBtnsProps) => {
+}: ActorToggleProps) => {
   return (
     <>
       <div className={styles.buttomContainer}>

@@ -1,13 +1,12 @@
 import React from "react";
 import styles from "./RebuttalView.module.css";
-import { RebuttalBtns } from "../components/RebuttalBtns";
-import { SharedState } from "src/store/SharedState";
+import { RebuttalToggle } from "../components/RebuttalToggle";
 import { GameState } from "src/game/game";
 
 interface RebuttalViewProps {
   guessSubmitted: boolean;
   getTeamOutOfTurn: (state: GameState) => string;
-  sharedState: SharedState;
+  game: GameState;
   onSubmitRebuttal: () => void;
   setRebuttal: (value: string) => void;
 }
@@ -15,7 +14,7 @@ interface RebuttalViewProps {
 export const RebuttalView = ({
   guessSubmitted,
   getTeamOutOfTurn,
-  sharedState,
+  game,
   onSubmitRebuttal,
   setRebuttal,
 }: RebuttalViewProps) => {
@@ -26,10 +25,10 @@ export const RebuttalView = ({
         style={{ display: guessSubmitted ? "flex" : "none" }}
       >
         <h3>
-          {getTeamOutOfTurn(sharedState.game)} team, what side of the target you
-          think the {sharedState.game.teamInTurn} team&apos;s guess is:
+          {getTeamOutOfTurn(game)} team, what side of the target you think the{" "}
+          {game.teamInTurn} team&apos;s guess is:
         </h3>
-        <RebuttalBtns setRebuttal={setRebuttal} />
+        <RebuttalToggle setRebuttal={setRebuttal} />
         <div className={styles.rebuttalSubmitContainer}>
           <button className={styles.hintBtn} onClick={onSubmitRebuttal}>
             SUBMIT
