@@ -58,6 +58,10 @@ export function submitGuess(state: TurnState, guess: number): TurnState {
   return { ...state, guess };
 }
 
+export const isTurnOver = (turn: TurnState) => {
+  return turn.rebuttal !== "";
+};
+
 export function finishTurn(state: TurnState): TurnState {
   return { ...state };
 }

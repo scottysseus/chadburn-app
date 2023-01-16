@@ -5,7 +5,6 @@ import { Hint } from "src/components/Hint";
 import { NewGameButton } from "src/components/NewGameButton";
 import { Spectrum } from "src/components/Spectrum";
 import { finishGame, getTeamOutOfTurn, isGameOver } from "src/game/game";
-import { TurnState } from "src/game/turn";
 import {
   Action,
   ActionTypes,
@@ -34,7 +33,6 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   const [guessSubmitted, setGuessSubmitted] = useState<boolean>(false);
   const [player, setPlayer] = useState<boolean>(true);
   const [isOver, setIsOver] = useState<boolean>(false);
-  const [isTurnOver, setIsTurnOver] = useState<boolean>(false);
 
   useEffect(() => {
     if (!sharedState.started) {
@@ -92,15 +90,9 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     };
     publish(action);
     setGuessSubmitted(false);
-    turnSummary();
-  };
-
-  const turnSummary = () => {
-    setIsTurnOver(true);
   };
 
   const finishTurn = () => {
-    setIsTurnOver(false);
     publish({ type: ActionTypes.START_TURN });
   };
 
@@ -112,7 +104,6 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       <Header
         score={sharedState.game.score}
         teamInTurn={sharedState.game.teamInTurn}
-        isTurnOver={isTurnOver}
         game={sharedState.game}
       />
 
@@ -140,7 +131,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
           onGuessSubmit={onGuessSubmit}
           disableSubmit={disableSubmit}
           target={sharedState.game.turn.target}
-          isTurnOver={isTurnOver}
+          turn={sharedState.game.turn}
           finishTurn={finishTurn}
         />
       ) : (
@@ -153,7 +144,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         onToggleActorView={onToggleActorView}
         playerBtn={playerBtn}
         psychicBtn={psychicBtn}
-        isTurnOver={isTurnOver}
+        turn={sharedState.game.turn}
       />
       <NewGameButton onNewGameClick={onNewGameClick} />
     </div>

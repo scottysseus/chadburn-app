@@ -2,6 +2,7 @@ import React from "react";
 import { GuessDial } from "src/components/GuessDial";
 import styles from "./PlayerView.module.css";
 import { UnselectableImage } from "src/components/UnselectableImage";
+import { isTurnOver, TurnState } from "src/game/turn";
 
 interface PlayerViewProps {
   guess: number;
@@ -9,8 +10,8 @@ interface PlayerViewProps {
   onGuessSubmit: () => void;
   disableSubmit: boolean;
   target: number;
-  isTurnOver: boolean;
   finishTurn: () => void;
+  turn: TurnState;
 }
 
 export const PlayerView = ({
@@ -19,8 +20,8 @@ export const PlayerView = ({
   onGuessSubmit,
   disableSubmit,
   target,
-  isTurnOver,
   finishTurn,
+  turn,
 }: PlayerViewProps) => {
   return (
     <>
@@ -35,7 +36,7 @@ export const PlayerView = ({
       <UnselectableImage
         src="assets/target.svg"
         style={{
-          display: isTurnOver ? "flex" : "none",
+          display: isTurnOver(turn) ? "flex" : "none",
           width: "50%",
           minWidth: "400px",
           height: "50%",
@@ -47,7 +48,7 @@ export const PlayerView = ({
       />
 
       <div className={styles.submitContainer}>
-        {isTurnOver ? (
+        {isTurnOver(turn) ? (
           <button
             className={styles.submitBtn}
             disabled={disableSubmit}
