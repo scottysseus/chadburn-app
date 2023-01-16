@@ -19,6 +19,7 @@ import styles from "./Game.module.css";
 import { PlayerView } from "./PlayerView";
 import { PsychicView } from "./PsychicView";
 import { RebuttalView } from "./RebuttalView";
+import { isTurnOver as isTurnOverFunction } from "../game/turn";
 
 interface GameProps {
   sharedState: SharedState;
@@ -46,6 +47,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       finishGame(sharedState.game);
     }
   }, [sharedState.game.score]);
+
+  const isTurnOver = isTurnOverFunction(sharedState.game.turn);
 
   const onNewGameClick = () => {
     publish({ type: ActionTypes.NEW_GAME });
@@ -144,7 +147,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         onToggleActorView={onToggleActorView}
         playerBtn={playerBtn}
         psychicBtn={psychicBtn}
-        turn={sharedState.game.turn}
+        isTurnOver={isTurnOver}
       />
       <NewGameButton onNewGameClick={onNewGameClick} />
     </div>

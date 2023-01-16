@@ -3,8 +3,6 @@ import { Spectrum, startTurn as turnStateStartTurn, TurnState } from "./turn";
 
 export type Score = Map<string, number>;
 
-export type Turn = TurnState;
-
 export interface GameState {
   // mapping between teams and points
   readonly score: Score;
@@ -12,7 +10,7 @@ export interface GameState {
   // the team whose turn it is
   readonly teamInTurn: string;
 
-  readonly turn: Turn;
+  readonly turn: TurnState;
 }
 
 export function startGame(spectrum: Spectrum, target: number): GameState {

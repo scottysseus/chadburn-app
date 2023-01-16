@@ -1,25 +1,24 @@
 import React from "react";
 import styles from "../scenes/Game.module.css";
-import { isTurnOver, TurnState } from "../game/turn";
 
 interface ActorToggleProps {
   onToggleActorView: () => void;
   psychicBtn: boolean;
   playerBtn: boolean;
-  turn: TurnState;
+  isTurnOver: boolean;
 }
 
 export const ActorToggle = ({
   onToggleActorView,
   playerBtn,
   psychicBtn,
-  turn,
+  isTurnOver,
 }: ActorToggleProps) => {
   return (
     <>
       <div
         className={styles.buttomContainer}
-        style={{ display: isTurnOver(turn) ? "none" : "flex" }}
+        style={{ display: isTurnOver ? "none" : "flex" }}
       >
         <button
           style={{
