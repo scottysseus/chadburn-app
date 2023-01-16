@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../scenes/Game.module.css";
 import { SharedState } from "src/store/SharedState";
+import styles from "../scenes/Game.module.css";
 
 interface HintProps {
   player: boolean;
@@ -40,7 +40,7 @@ export const Hint = ({
               id="hint"
             />
             <button className={styles.hintBtn} onClick={() => onSubmitHint()}>
-              SUBMIT
+              Submit
             </button>
           </>
         )}

@@ -1,4 +1,5 @@
 import React from "react";
+import { isTurnOver } from "src/game/turn";
 import {
   GameState,
   getCorrectRebuttal,
@@ -7,7 +8,6 @@ import {
   getTeamOutOfTurn,
 } from "../game/game";
 import styles from "../scenes/Game.module.css";
-import { isTurnOver } from "src/game/turn";
 
 import { Score } from "../game/game";
 
@@ -21,9 +21,6 @@ export const Header = ({ score, teamInTurn, game }: HeaderProps) => {
   const isMaximumScore = getGuessScore(game) === 4;
   return (
     <>
-      <div className={styles.pageHeader}>
-        <h1>CHADBURN</h1>
-      </div>
       {isTurnOver(game.turn) ? (
         <div className={styles.turnSummary}>
           <h3>

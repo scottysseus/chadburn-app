@@ -14,12 +14,12 @@ import {
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
 import { Header } from "../components/Header";
+import { isTurnOver as isTurnOverFunction } from "../game/turn";
 import { EndGame } from "./EndGame";
 import styles from "./Game.module.css";
 import { PlayerView } from "./PlayerView";
 import { PsychicView } from "./PsychicView";
 import { RebuttalView } from "./RebuttalView";
-import { isTurnOver as isTurnOverFunction } from "../game/turn";
 
 interface GameProps {
   sharedState: SharedState;

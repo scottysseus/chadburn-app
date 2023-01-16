@@ -1,0 +1,13 @@
+.topBar {
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.topBar > h1 {
+  text-align: center;
+}
+
+.topBar > h1 > a {
+  text-decoration: none;
+  color: black;
+}

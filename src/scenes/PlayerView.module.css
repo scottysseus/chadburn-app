@@ -27,11 +27,5 @@
 }
 
 .submitBtn {
-  width: 200px;
-  height: 50px;
-  font-size: 15px;
-  background-color: green;
-  border: 1px solid green;
-  border-radius: 2px;
   z-index: 3;
 }

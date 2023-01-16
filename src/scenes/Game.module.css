@@ -69,10 +69,6 @@
 }
 
 .hintBtn {
-  width: 150px;
-  height: 40px;
-  background-color: green;
-  border: 2px solid green;
   z-index: 3;
 }
 

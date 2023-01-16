@@ -4,6 +4,9 @@ import { StoreContextProvider } from "./scenes/StoreContextProvider";
 
 import { Landing } from "./scenes/Landing";
 
+import { TopBar } from "./components/TopBar";
+import styles from "./index.module.css";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,5 +19,10 @@ const router = createBrowserRouter([
 ]);
 
 export function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <div id={styles.app}>
+      <TopBar />
+      <RouterProvider router={router} />
+    </div>
+  );
 }
