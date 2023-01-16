@@ -5,16 +5,21 @@ interface ActorToggleProps {
   onToggleActorView: () => void;
   psychicBtn: boolean;
   playerBtn: boolean;
+  isTurnOver: boolean;
 }
 
 export const ActorToggle = ({
   onToggleActorView,
   playerBtn,
   psychicBtn,
+  isTurnOver,
 }: ActorToggleProps) => {
   return (
     <>
-      <div className={styles.buttomContainer}>
+      <div
+        className={styles.buttomContainer}
+        style={{ display: isTurnOver ? "none" : "flex" }}
+      >
         <button
           style={{
             width: "100px",
