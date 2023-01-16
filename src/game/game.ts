@@ -76,7 +76,8 @@ export function finishTurn(state: GameState): GameState {
     );
     newState.score.set(
       getTeamOutOfTurn(state),
-      (state.score.get(getTeamOutOfTurn(state)) || 0) + getRebuttalScore(state)
+      (state.score.get(getTeamOutOfTurn(state)) || 0) +
+        getRebuttalScore(state, getCorrectRebuttal(state))
     );
   }
 
@@ -113,15 +114,21 @@ export function getGuessScore(state: GameState): number {
  * @param state
  * @returns
  */
-export function getRebuttalScore(state: GameState): number {
+export function getCorrectRebuttal(state: GameState): string {
   let correctRebuttal = "";
-
   if (state.turn.guess < state.turn.target) {
     correctRebuttal = "right";
   } else if (state.turn.guess > state.turn.target) {
     correctRebuttal = "left";
   }
 
+  return correctRebuttal;
+}
+
+export function getRebuttalScore(
+  state: GameState,
+  correctRebuttal: string
+): number {
   if (correctRebuttal === state.turn.rebuttal) {
     return 1;
   } else {

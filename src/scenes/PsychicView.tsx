@@ -18,7 +18,7 @@ export const PsychicView = ({ target }: PsychicViewProps) => {
           minWidth: "400px",
           height: "50%",
           position: "absolute",
-          zIndex: 1,
+          zIndex: -1,
           top: "32%",
           transform: `rotate(${target}deg)`,
         }}
