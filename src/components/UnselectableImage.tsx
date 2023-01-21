@@ -8,7 +8,13 @@ import styles from "./UnselectableImage.module.css";
  */
 
 const UnselectableImage = React.forwardRef((props: any, ref) => {
-  return <img className={styles.styledImage} ref={ref} {...props} />;
+  return (
+    <img
+      className={`${props?.className} ${styles.styledImage}`}
+      ref={ref}
+      {...props}
+    />
+  );
 });
 
 UnselectableImage.displayName = "UnselectableImage";

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../scenes/Game.module.css";
+import styles from "./Game.module.css";
 
 interface ActorToggleProps {
   onToggleActorView: () => void;

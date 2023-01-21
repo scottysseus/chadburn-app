@@ -161,7 +161,3 @@ export function isGameOver(state: SharedState): boolean {
 
   return false;
 }
-
-export function finishGame(state: GameState): GameState {
-  return { ...state };
-}

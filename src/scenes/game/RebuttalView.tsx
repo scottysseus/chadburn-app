@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./RebuttalView.module.css";
-import { RebuttalToggle } from "../components/RebuttalToggle";
 import { GameState } from "src/game/game";
+import { RebuttalToggle } from "src/scenes/game/RebuttalToggle";
+import styles from "./RebuttalView.module.css";
 
 interface RebuttalViewProps {
   guessSubmitted: boolean;

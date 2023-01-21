@@ -24,16 +24,16 @@ body {
 button,
 input {
   font-family: inherit;
-}
-
-button {
-  border: solid 2px #252024ff;
-  background-color: transparent;
-  text-align: center;
   vertical-align: bottom;
   padding: 0.5rem;
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
   outline: none;
+  border: solid 2px #252024ff;
+  background-color: transparent;
+}
+
+button {
+  text-align: center;
   cursor: pointer;
 }
 

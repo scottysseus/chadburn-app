@@ -70,6 +70,7 @@ export interface RotatableImageProps {
   angle?: number;
   src: string;
   style?: CSSProperties;
+  className: string;
   onUpdated?: (angle: number) => void;
   onUpdating?: (event: OnUpdatingEvent) => number;
 }
@@ -85,6 +86,7 @@ export interface RotatableImageProps {
  */
 export const RotatableImage = ({
   src,
+  className,
   style,
   onUpdated,
   onUpdating,
@@ -183,6 +185,7 @@ export const RotatableImage = ({
       onLoad={setImageOriginFromRef}
       draggable={false}
       src={src}
+      className={className}
       style={{
         ...style,
         transform: `rotate(${editModeAngle}deg)`,

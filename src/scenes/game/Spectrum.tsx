@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../scenes/Game.module.css";
 import { BsArrowLeftSquare, BsArrowRightSquare } from "react-icons/bs";
-import { Spectrum as SpectrumType } from "../game/turn";
+import { Spectrum as SpectrumType } from "src/game/turn";
+import styles from "./Game.module.css";
 
 interface SpectrumProps {
   spectrum: SpectrumType;
@@ -9,9 +9,9 @@ interface SpectrumProps {
 
 export const Spectrum = ({ spectrum }: SpectrumProps) => {
   return (
-    <>
-      <div className={styles.cardContainer}>
-        <p style={{ fontSize: "20px" }}>
+    <div className={styles.spectrumContainer}>
+      <div className={styles.spectrum}>
+        <p>
           <span>
             <BsArrowLeftSquare
               style={{ marginBottom: "-3px", marginRight: "4px" }}
@@ -19,13 +19,13 @@ export const Spectrum = ({ spectrum }: SpectrumProps) => {
           </span>
           {spectrum.left}
         </p>
-        <p style={{ fontSize: "20px" }}>
+        <p>
           {spectrum.right}
           <BsArrowRightSquare
             style={{ marginBottom: "-3px", marginLeft: "4px" }}
           />
         </p>
       </div>
-    </>
+    </div>
   );
 };

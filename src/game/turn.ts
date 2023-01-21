@@ -5,13 +5,15 @@ export enum Actors {
   Player = "player",
 }
 
+export type Actor = Actors.Player | Actors.Psychic;
+
 export interface Spectrum {
   left: string;
   right: string;
 }
 
 export interface TurnState {
-  readonly actor: Actors.Player | Actors.Psychic;
+  readonly actor: Actor;
   readonly spectrum: Spectrum;
   readonly target: number;
   readonly hint: string;
@@ -41,7 +43,7 @@ export function startTurn(spectrum: Spectrum, target: number): TurnState {
     spectrum: spectrum,
     target: target,
     hint: "",
-    guess: 0,
+    guess: NaN,
     rebuttal: "",
   };
 }

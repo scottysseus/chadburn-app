@@ -1,15 +1,15 @@
 import React from "react";
-import { isTurnOver } from "src/game/turn";
 import {
   GameState,
   getCorrectRebuttal,
   getGuessScore,
   getRebuttalScore,
   getTeamOutOfTurn,
-} from "../game/game";
-import styles from "../scenes/Game.module.css";
+} from "src/game/game";
+import { isTurnOver } from "src/game/turn";
+import styles from "./Game.module.css";
 
-import { Score } from "../game/game";
+import { Score } from "src/game/game";
 
 interface HeaderProps {
   score: Score;
@@ -41,11 +41,11 @@ export const Header = ({ score, teamInTurn, game }: HeaderProps) => {
         </div>
       ) : (
         <div className={styles.turnContainer}>
-          <h3>
+          <p>
             Blue: {score.get("blue")} Red: {score.get("red")}
-          </h3>
+          </p>
 
-          <h3>{teamInTurn} team&apos;s turn!</h3>
+          <p className={styles.turnTracker}>{teamInTurn} team&apos;s turn!</p>
         </div>
       )}
     </>
