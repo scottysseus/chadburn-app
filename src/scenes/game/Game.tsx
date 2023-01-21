@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Toggle } from "src/components/Toggle";
 
 import { getTeamOutOfTurn, isGameOver } from "src/game/game";
 import { isTurnOver } from "src/game/turn";
-import { ActorToggle } from "src/scenes/game/ActorToggle";
 import { EndGame } from "src/scenes/game/EndGame";
 import { Header } from "src/scenes/game/Header";
 import { Hint } from "src/scenes/game/Hint";
@@ -27,10 +27,8 @@ interface GameProps {
 }
 
 export const Game = ({ sharedState, publish }: GameProps) => {
-  const [playerBtn, setPlayerBtn] = useState<boolean>(false);
-  const [psychicBtn, setPsychicBtn] = useState<boolean>(false);
   const [rebuttal, setRebuttal] = useState<string>("");
-  const [player, setPlayer] = useState<boolean>(true);
+  const [isPlayer, setIsPlayer] = useState<boolean>(true);
 
   const guessSubmitted = !isNaN(sharedState.game.turn.guess);
   const turnOver = isTurnOver(sharedState.game.turn);
@@ -57,11 +55,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onToggleActorView = () => {
-    setPlayer(!player);
-    player
-      ? (setPsychicBtn(true), setPlayerBtn(false))
-      : (setPsychicBtn(false), setPlayerBtn(true));
+  const onToggleActor = (isPlayer: boolean) => {
+    setIsPlayer(isPlayer);
   };
 
   const onGuessSubmit = () => {
@@ -113,7 +108,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       <Chadburn
         guess={sharedState.guess}
         onGuessUpdated={onUpdateGuess}
-        showTarget={!player || turnOver}
+        showTarget={!isPlayer || turnOver}
         target={sharedState.game.turn.target}
       />
 
@@ -123,12 +118,14 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         {currentActionForm}
       </div>
 
-      <ActorToggle
-        onToggleActorView={onToggleActorView}
-        playerBtn={playerBtn}
-        psychicBtn={psychicBtn}
-        isTurnOver={turnOver}
-      />
+      <div className={styles.actorToggleContainer}>
+        <Toggle
+          left="Player"
+          right="Psychic"
+          isLeft={isPlayer}
+          onToggled={onToggleActor}
+        />
+      </div>
     </div>
   );
 };
