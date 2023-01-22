@@ -28,6 +28,7 @@ button,
 input {
   font-family: inherit;
   vertical-align: bottom;
+  width: 6rem;
   padding: 0.5rem;
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
   outline: none;

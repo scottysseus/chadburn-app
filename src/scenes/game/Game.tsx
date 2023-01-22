@@ -5,14 +5,14 @@ import {
   getGuessScore,
   getTeamOutOfTurn,
   isCatchUp,
-  isGameOver,
+  isGameOver
 } from "src/game/game";
 import {
   isGuessSubmitted,
   isRebuttalSubmitted,
   isTurnOver,
   Rebuttal,
-  Rebuttals,
+  Rebuttals
 } from "src/game/turn";
 import { Chadburn } from "src/scenes/game/Chadburn";
 import { EndGame } from "src/scenes/game/EndGame";
@@ -29,10 +29,19 @@ import {
   SubmitHintAction,
   SubmitRebuttalAction,
   UpdateGuessAction,
-  UpdateHintAction,
+  UpdateHintAction
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
+<<<<<<< HEAD:src/scenes/game/Game.tsx
 import styles from "../Game.module.css";
+=======
+import { Chadburn } from "./Chadburn";
+import { Footer } from "./Footer";
+import styles from "./Game.module.css";
+import { GuessForm } from "./GuessForm";
+import { HintForm } from "./HintForm";
+import { Spectrum } from "./Spectrum";
+>>>>>>> 93f54e5 (created new game button):src/scenes/Game.tsx
 
 interface GameProps {
   sharedState: SharedState;
