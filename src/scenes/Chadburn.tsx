@@ -11,6 +11,12 @@ export interface ChadburnProps {
   target: number;
 }
 
+/**
+ * Chadburn encapsulates the graphical parts of the game display: the guess dial,
+ * the target overlay, and the border image.
+ *
+ * The target can optionally be hidden e.g. for the player view.
+ */
 export const Chadburn = ({
   guess,
   onGuessUpdated,

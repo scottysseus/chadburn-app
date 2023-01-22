@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export const Header = ({ score, teamInTurn }: HeaderProps) => {
   return (
-    <div className={styles.turnContainer}>
+    <div className={styles.header}>
       <p>
         Blue: {score.get("blue")} Red: {score.get("red")}
       </p>

@@ -93,13 +93,14 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
     };
     publish(action);
-    finishTurn();
-  };
-
-  const finishTurn = () => {
     publish({ type: ActionTypes.START_TURN });
   };
 
+  /**
+   * The current action form depends on the current actor, view, and
+   * step within the turn. At the start of the turn, for example, it
+   * contains the hint form in the psychic view.
+   */
   let currentActionFormVisible = !isPlayer;
   let currentActionForm = (
     <HintForm
