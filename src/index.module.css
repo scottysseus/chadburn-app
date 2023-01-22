@@ -40,3 +40,13 @@ button {
 button:hover {
   text-decoration: underline;
 }
+
+button:disabled {
+  text-decoration: none;
+  border-color: gray;
+  color: gray;
+}
+
+button:hover:disabled {
+  cursor: default;
+}

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Game.module.css";
 
 interface HintProps {
-  hint: string;
+  hint: string | undefined;
 }
 
 export const Hint = ({ hint }: HintProps) => {

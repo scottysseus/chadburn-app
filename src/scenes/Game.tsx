@@ -2,17 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Toggle } from "src/components/Toggle";
 
 import { getTeamOutOfTurn, isGameOver } from "src/game/game";
-import { isTurnOver } from "src/game/turn";
-import { EndGame } from "src/scenes/game/EndGame";
-import { Header } from "src/scenes/game/Header";
-import { Hint } from "src/scenes/game/Hint";
-import { RebuttalView } from "src/scenes/game/RebuttalView";
+import {
+  isGuessSubmitted,
+  isRebuttalSubmitted,
+  isTurnOver,
+  Rebuttal,
+  Rebuttals,
+} from "src/game/turn";
+import { EndGame } from "src/scenes/EndGame";
+import { Header } from "src/scenes/Header";
+import { Hint } from "src/scenes/Hint";
+import { RebuttalForm } from "src/scenes/RebuttalForm";
 import {
   Action,
   ActionTypes,
+  SubmitGuessAction,
   SubmitHintAction,
   SubmitRebuttalAction,
   UpdateGuessAction,
+  UpdateHintAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
 import { Chadburn } from "./Chadburn";
@@ -26,11 +34,11 @@ interface GameProps {
   publish: <T extends Action>(action: T) => void;
 }
 
+const DEFAULT_REBUTTAL = Rebuttals.LEFT;
+
 export const Game = ({ sharedState, publish }: GameProps) => {
-  const [rebuttal, setRebuttal] = useState<string>("");
   const [isPlayer, setIsPlayer] = useState<boolean>(true);
 
-  const guessSubmitted = !isNaN(sharedState.game.turn.guess);
   const turnOver = isTurnOver(sharedState.game.turn);
 
   useEffect(() => {
@@ -47,10 +55,18 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onSubmitHint = (hint: string) => {
+  const onUpdateHint = (hint: string) => {
+    const action: UpdateHintAction = {
+      type: ActionTypes.UPDATE_HINT,
+      hint,
+    };
+    publish(action);
+  };
+
+  const onSubmitHint = () => {
     const action: SubmitHintAction = {
       type: ActionTypes.SUBMIT_HINT,
-      hint: hint,
+      hint: sharedState.hint || "",
     };
     publish(action);
   };
@@ -60,23 +76,39 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   };
 
   const onGuessSubmit = () => {
-    publish({ type: ActionTypes.SUBMIT_GUESS });
+    const action: SubmitGuessAction = {
+      type: ActionTypes.SUBMIT_GUESS,
+      guess: sharedState.guess,
+    };
+    publish(action);
+  };
+
+  const onRebuttalUpdated = (rebuttal: Rebuttal) => {
+    publish({ type: ActionTypes.UPDATE_REBUTTAL, rebuttal });
   };
 
   const onSubmitRebuttal = () => {
     const action: SubmitRebuttalAction = {
       type: ActionTypes.SUBMIT_REBUTTAL,
-      rebuttal: rebuttal,
+      rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
     };
     publish(action);
+    finishTurn();
   };
 
   const finishTurn = () => {
     publish({ type: ActionTypes.START_TURN });
   };
 
-  let currentActionForm = <HintForm onHintSubmitted={onSubmitHint} />;
-  if (sharedState.game.turn.hint) {
+  let currentActionFormVisible = !isPlayer;
+  let currentActionForm = (
+    <HintForm
+      hint={sharedState.hint || ""}
+      onHintUpdated={onUpdateHint}
+      onHintSubmitted={onSubmitHint}
+    />
+  );
+  if (sharedState.game.turn.hint && sharedState.game.turn.guess === undefined) {
     currentActionForm = (
       <GuessForm
         guess={sharedState.guess}
@@ -84,21 +116,30 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         onGuessSubmitted={onGuessSubmit}
       />
     );
+    currentActionFormVisible = isPlayer;
+  } else if (
+    isGuessSubmitted(sharedState.game.turn) &&
+    !isRebuttalSubmitted(sharedState.game.turn)
+  ) {
+    currentActionForm = (
+      <RebuttalForm
+        rebuttal={
+          sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL
+        }
+        teamInTurn={sharedState.game.teamInTurn}
+        otherTeam={getTeamOutOfTurn(sharedState.game)}
+        onRebuttalUpdated={onRebuttalUpdated}
+        onRebuttalSubmitted={onSubmitRebuttal}
+      />
+    );
+    currentActionFormVisible = isPlayer;
   }
+
   return (
     <div className={styles.gameSceneContainer} draggable={false}>
       <Header
         score={sharedState.game.score}
         teamInTurn={sharedState.game.teamInTurn}
-        game={sharedState.game}
-      />
-
-      <RebuttalView
-        guessSubmitted={guessSubmitted}
-        getTeamOutOfTurn={getTeamOutOfTurn}
-        game={sharedState.game}
-        onSubmitRebuttal={onSubmitRebuttal}
-        setRebuttal={setRebuttal}
       />
 
       <Hint hint={sharedState.game.turn.hint} />
@@ -114,7 +155,10 @@ export const Game = ({ sharedState, publish }: GameProps) => {
 
       <Spectrum spectrum={sharedState.game.turn.spectrum} />
 
-      <div className={styles.currentActionFormContainer}>
+      <div
+        style={{ visibility: currentActionFormVisible ? "visible" : "hidden" }}
+        className={styles.currentActionFormContainer}
+      >
         {currentActionForm}
       </div>
 

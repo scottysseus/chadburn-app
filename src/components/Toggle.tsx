@@ -1,7 +1,5 @@
 import React from "react";
 
-import styles from "./Toggle.module.css";
-
 export interface ToggleProps {
   left: string;
   right: string;
@@ -13,16 +11,10 @@ export interface ToggleProps {
 export const Toggle = ({ left, right, isLeft, onToggled }: ToggleProps) => {
   return (
     <>
-      <button
-        onClick={() => onToggled(true)}
-        className={isLeft ? styles.toggledOn : ""}
-      >
+      <button onClick={() => onToggled(true)} disabled={isLeft}>
         {left}
       </button>
-      <button
-        onClick={() => onToggled(false)}
-        className={!isLeft ? styles.toggledOn : ""}
-      >
+      <button onClick={() => onToggled(false)} disabled={!isLeft}>
         {right}
       </button>
     </>

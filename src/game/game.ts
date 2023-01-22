@@ -1,5 +1,11 @@
 import { SharedState } from "src/store/SharedState";
-import { Spectrum, startTurn as turnStateStartTurn, TurnState } from "./turn";
+import {
+  Rebuttal,
+  Rebuttals,
+  Spectrum,
+  startTurn as turnStateStartTurn,
+  TurnState,
+} from "./turn";
 
 export type Score = Map<string, number>;
 
@@ -48,10 +54,6 @@ export function startTurn(
 /**
  * finishTurn updates the game state with the results of the current turn.
  * It also updates the game state's turn state to prepare for the next turn.
- * TODO calculate the score from the target and guess
- * TODO update the score team
- * TODO determine if the game is finished here
- * TODO Make sure case in which guess === target
  * @param state current state to update
  * @returns the update state
  */
@@ -96,6 +98,10 @@ export function finishTurn(state: GameState): GameState {
   */
 
 export function getGuessScore(state: GameState): number {
+  if (state.turn.guess === undefined) {
+    throw "guess undefined";
+  }
+
   const absDifference = Math.abs(state.turn.guess - state.turn.target);
 
   if (absDifference < 5) {
@@ -114,20 +120,20 @@ export function getGuessScore(state: GameState): number {
  * @param state
  * @returns
  */
-export function getCorrectRebuttal(state: GameState): string {
-  let correctRebuttal = "";
-  if (state.turn.guess < state.turn.target) {
-    correctRebuttal = "right";
-  } else if (state.turn.guess > state.turn.target) {
-    correctRebuttal = "left";
+export function getCorrectRebuttal(state: GameState): Rebuttal {
+  if (state.turn.guess === undefined) {
+    throw "guess undefined";
   }
 
-  return correctRebuttal;
+  if (state.turn.guess < state.turn.target) {
+    return Rebuttals.RIGHT;
+  }
+  return Rebuttals.LEFT;
 }
 
 export function getRebuttalScore(
   state: GameState,
-  correctRebuttal: string
+  correctRebuttal: Rebuttal
 ): number {
   if (correctRebuttal === state.turn.rebuttal) {
     return 1;
