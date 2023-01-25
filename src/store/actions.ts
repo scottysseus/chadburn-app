@@ -5,6 +5,7 @@ export enum ActionTypes {
   NEW_GAME = "NEW_GAME",
   START_GAME = "START_GAME",
   START_TURN = "START_TURN",
+  START_CATCH_UP_TURN = "START_CATCH_UP_TURN",
 
   // turn actions
   SUBMIT_GUESS = "SUBMIT_GUESS",

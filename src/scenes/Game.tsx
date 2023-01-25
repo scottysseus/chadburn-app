@@ -93,7 +93,12 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
     };
     publish(action);
-    publish({ type: ActionTypes.START_TURN });
+    //   if (getGuessScore(sharedState.game) === 4 && isCatchUp(sharedState.game)) {
+    //     publish({ type: ActionTypes.START_CATCH_UP_TURN });
+    //   } else {
+    //     publish({ type: ActionTypes.START_TURN });
+    //   }
+    // };
   };
 
   /**
