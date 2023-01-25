@@ -130,20 +130,20 @@ export class YStore implements Store {
         };
         break;
 
-        case ActionTypes.START_CATCH_UP_TURN:
-          toShare = {
-            ...toShare,
-            guess: START_GUESS,
-            hint: undefined,
-            rebuttal: undefined,
-            game: startTurn(
-              toShare.game,
-              toShare.game.teamInTurn,
-              getRandomSpectrum(),
-              getRandomTarget()
-            ),
-          };
-          break;
+      case ActionTypes.START_CATCH_UP_TURN:
+        toShare = {
+          ...toShare,
+          guess: START_GUESS,
+          hint: undefined,
+          rebuttal: undefined,
+          game: startTurn(
+            toShare.game,
+            toShare.game.teamInTurn,
+            getRandomSpectrum(),
+            getRandomTarget()
+          ),
+        };
+        break;
 
       case ActionTypes.SUBMIT_HINT:
         const submitHintAction = action as unknown as SubmitHintAction;
