@@ -1,0 +1,18 @@
+.landingMenuContainer {
+  margin: auto;
+  width: 100%;
+  display: block;
+}
+
+p {
+  font-size: 1rem;
+}
+
+button {
+  width: 8rem;
+}
+
+.landingMenuContainer > button {
+  display: block;
+  margin: 0 auto;
+}

@@ -3,7 +3,9 @@ import {
   OnUpdatingEvent,
   RotatableImage,
   RotationDirection,
-} from "../components/RotatableImage";
+} from "src/components/RotatableImage";
+
+import styles from "./Game.module.css";
 
 export interface GuessDialProps {
   guess: number;
@@ -38,14 +40,9 @@ export const GuessDial = ({ guess, onUpdated }: GuessDialProps) => {
   return (
     <RotatableImage
       src="assets/guess.svg"
+      className={styles.chadburnImage}
       style={{
-        width: "50%",
-        minWidth: "400px",
-        height: "50%",
-        position: "absolute",
-        zIndex: 2,
-        top: "32%",
-        overflow: "hidden",
+        zIndex: 1,
       }}
       onUpdated={onUpdated}
       onUpdating={restrictToUpperHalf}

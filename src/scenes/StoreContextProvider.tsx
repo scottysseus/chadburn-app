@@ -1,9 +1,9 @@
 import React from "react";
 
 import { useParams } from "react-router";
+import { GameController } from "src/scenes/GameController";
+import { StoreContext } from "src/scenes/StoreContext";
 import { YStoreFactory } from "src/store/Store";
-import { GameController } from "./GameController";
-import { StoreContext } from "./StoreContext";
 
 export const StoreContextProvider = () => {
   const { gameId } = useParams();

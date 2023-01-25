@@ -17,14 +17,18 @@ import * as Y from "yjs";
 import {
   Action,
   ActionTypes,
+  SubmitGuessAction,
   SubmitHintAction,
   SubmitRebuttalAction,
   UpdateGuessAction,
+  UpdateHintAction,
+  UpdateRebuttalAction,
 } from "./actions";
 import { SharedState } from "./SharedState";
 
 const YMapKeys = {
   GUESS: "guess",
+
   STARTED: "started",
 
   GAME: "game",
@@ -85,10 +89,22 @@ export class YStore implements Store {
   publish<T extends Action>(action: T): void {
     let toShare: SharedState = this.getSnapshot();
     switch (action.type) {
+      case ActionTypes.UPDATE_HINT:
+        const updateHint: UpdateHintAction =
+          action as unknown as UpdateHintAction;
+        toShare = { ...toShare, hint: updateHint.hint };
+        break;
+
       case ActionTypes.UPDATE_GUESS:
         const updateGuess: UpdateGuessAction =
           action as unknown as UpdateGuessAction;
         toShare = { ...toShare, guess: updateGuess.guess };
+        break;
+
+      case ActionTypes.UPDATE_REBUTTAL:
+        const updateRebuttal: UpdateRebuttalAction =
+          action as unknown as UpdateRebuttalAction;
+        toShare = { ...toShare, rebuttal: updateRebuttal.rebuttal };
         break;
 
       case ActionTypes.NEW_GAME:
@@ -102,6 +118,9 @@ export class YStore implements Store {
       case ActionTypes.START_TURN:
         toShare = {
           ...toShare,
+          guess: START_GUESS,
+          hint: undefined,
+          rebuttal: undefined,
           game: startTurn(
             toShare.game,
             getTeamOutOfTurn(toShare.game),
@@ -123,11 +142,12 @@ export class YStore implements Store {
         break;
 
       case ActionTypes.SUBMIT_GUESS:
+        const submitGuessAction = action as unknown as SubmitGuessAction;
         toShare = {
           ...toShare,
           game: updateTurn(
             toShare.game,
-            submitGuess(toShare.game.turn, toShare.guess)
+            submitGuess(toShare.game.turn, submitGuessAction.guess)
           ),
         };
         break;
@@ -185,7 +205,9 @@ export class YStore implements Store {
 
     const sharedState: SharedState = {
       started: this.ymap.get(YMapKeys.STARTED),
+      hint: this.ymap.get(YMapKeys.HINT),
       guess: this.ymap.get(YMapKeys.GUESS),
+      rebuttal: this.ymap.get(YMapKeys.REBUTTAL),
       game: {
         teamInTurn: gameState.get(YMapKeys.TEAM_IN_TURN),
         score: updatedScore,
@@ -217,7 +239,9 @@ export class YStore implements Store {
       this.initializeYMap();
     }
 
+    this.ymap.set(YMapKeys.HINT, toShare.hint);
     this.ymap.set(YMapKeys.GUESS, toShare.guess);
+    this.ymap.set(YMapKeys.REBUTTAL, toShare.rebuttal);
     this.ymap.set(YMapKeys.STARTED, toShare.started);
 
     const gameState = this.ymap.get(YMapKeys.GAME) as Y.Map<any>;

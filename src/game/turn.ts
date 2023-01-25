@@ -5,18 +5,27 @@ export enum Actors {
   Player = "player",
 }
 
+export type Actor = Actors.Player | Actors.Psychic;
+
+export enum Rebuttals {
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
+}
+
+export type Rebuttal = Rebuttals.LEFT | Rebuttals.RIGHT;
+
 export interface Spectrum {
   left: string;
   right: string;
 }
 
 export interface TurnState {
-  readonly actor: Actors.Player | Actors.Psychic;
+  readonly actor: Actor;
   readonly spectrum: Spectrum;
   readonly target: number;
-  readonly hint: string;
-  readonly guess: number;
-  readonly rebuttal: string;
+  hint?: string | undefined;
+  guess?: number | undefined;
+  rebuttal?: Rebuttal | undefined;
 }
 
 function getRandomInteger(min: number, max: number): number {
@@ -40,9 +49,6 @@ export function startTurn(spectrum: Spectrum, target: number): TurnState {
     actor: Actors.Psychic,
     spectrum: spectrum,
     target: target,
-    hint: "",
-    guess: 0,
-    rebuttal: "",
   };
 }
 
@@ -50,7 +56,10 @@ export function submitHint(state: TurnState, hint: string): TurnState {
   return { ...state, actor: Actors.Player, hint: hint };
 }
 
-export function submitRebuttal(state: TurnState, rebuttal: string): TurnState {
+export function submitRebuttal(
+  state: TurnState,
+  rebuttal: Rebuttal
+): TurnState {
   return { ...state, actor: Actors.Player, rebuttal: rebuttal };
 }
 
@@ -59,9 +68,21 @@ export function submitGuess(state: TurnState, guess: number): TurnState {
 }
 
 export const isTurnOver = (turn: TurnState) => {
-  return turn.rebuttal !== "";
+  return !!turn.rebuttal;
 };
 
 export function finishTurn(state: TurnState): TurnState {
   return { ...state };
+}
+
+export function isHintSubmitted(state: TurnState): boolean {
+  return !!state.hint;
+}
+
+export function isGuessSubmitted(state: TurnState): boolean {
+  return state.guess !== undefined && !isNaN(state.guess);
+}
+
+export function isRebuttalSubmitted(state: TurnState): boolean {
+  return !!state.rebuttal;
 }

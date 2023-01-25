@@ -1,58 +1,51 @@
 import React, { useEffect, useState } from "react";
+import { Toggle } from "src/components/Toggle";
 
-import { ActorToggle } from "src/components/ActorToggle";
-import { Hint } from "src/components/Hint";
-import { NewGameButton } from "src/components/NewGameButton";
-import { Spectrum } from "src/components/Spectrum";
-import { finishGame, getTeamOutOfTurn, isGameOver } from "src/game/game";
+import { getTeamOutOfTurn, isGameOver } from "src/game/game";
+import {
+  isGuessSubmitted,
+  isRebuttalSubmitted,
+  isTurnOver,
+  Rebuttal,
+  Rebuttals,
+} from "src/game/turn";
+import { EndGame } from "src/scenes/EndGame";
+import { Header } from "src/scenes/Header";
+import { Hint } from "src/scenes/Hint";
+import { RebuttalForm } from "src/scenes/RebuttalForm";
 import {
   Action,
   ActionTypes,
+  SubmitGuessAction,
   SubmitHintAction,
   SubmitRebuttalAction,
   UpdateGuessAction,
+  UpdateHintAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
-import { Header } from "../components/Header";
-import { EndGame } from "./EndGame";
+import { Chadburn } from "./Chadburn";
 import styles from "./Game.module.css";
-import { PlayerView } from "./PlayerView";
-import { PsychicView } from "./PsychicView";
-import { RebuttalView } from "./RebuttalView";
-import { isTurnOver as isTurnOverFunction } from "../game/turn";
+import { GuessForm } from "./GuessForm";
+import { HintForm } from "./HintForm";
+import { Spectrum } from "./Spectrum";
 
 interface GameProps {
   sharedState: SharedState;
   publish: <T extends Action>(action: T) => void;
 }
 
+const DEFAULT_REBUTTAL = Rebuttals.LEFT;
+
 export const Game = ({ sharedState, publish }: GameProps) => {
-  const [hint, setHint] = useState<string>("");
-  const [playerBtn, setPlayerBtn] = useState<boolean>(false);
-  const [psychicBtn, setPsychicBtn] = useState<boolean>(false);
-  const [rebuttal, setRebuttal] = useState<string>("");
-  const [guessSubmitted, setGuessSubmitted] = useState<boolean>(false);
-  const [player, setPlayer] = useState<boolean>(true);
-  const [isOver, setIsOver] = useState<boolean>(false);
+  const [isPlayer, setIsPlayer] = useState<boolean>(true);
+
+  const turnOver = isTurnOver(sharedState.game.turn);
 
   useEffect(() => {
     if (!sharedState.started) {
       publish({ type: ActionTypes.START_GAME });
     }
   }, [sharedState]);
-
-  useEffect(() => {
-    setIsOver(isGameOver(sharedState));
-    if (isOver === true) {
-      finishGame(sharedState.game);
-    }
-  }, [sharedState.game.score]);
-
-  const isTurnOver = isTurnOverFunction(sharedState.game.turn);
-
-  const onNewGameClick = () => {
-    publish({ type: ActionTypes.NEW_GAME });
-  };
 
   const onUpdateGuess = (guess: number) => {
     const action: UpdateGuessAction = {
@@ -62,94 +55,122 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onUpdateHint = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setHint(event.target.value);
+  const onUpdateHint = (hint: string) => {
+    const action: UpdateHintAction = {
+      type: ActionTypes.UPDATE_HINT,
+      hint,
+    };
+    publish(action);
   };
 
   const onSubmitHint = () => {
     const action: SubmitHintAction = {
       type: ActionTypes.SUBMIT_HINT,
-      hint: hint,
+      hint: sharedState.hint || "",
     };
     publish(action);
   };
 
-  const onToggleActorView = () => {
-    setPlayer(!player);
-    player
-      ? (setPsychicBtn(true), setPlayerBtn(false))
-      : (setPsychicBtn(false), setPlayerBtn(true));
+  const onToggleActor = (isPlayer: boolean) => {
+    setIsPlayer(isPlayer);
   };
 
   const onGuessSubmit = () => {
-    publish({ type: ActionTypes.SUBMIT_GUESS });
-    setGuessSubmitted(true);
+    const action: SubmitGuessAction = {
+      type: ActionTypes.SUBMIT_GUESS,
+      guess: sharedState.guess,
+    };
+    publish(action);
+  };
+
+  const onRebuttalUpdated = (rebuttal: Rebuttal) => {
+    publish({ type: ActionTypes.UPDATE_REBUTTAL, rebuttal });
   };
 
   const onSubmitRebuttal = () => {
     const action: SubmitRebuttalAction = {
       type: ActionTypes.SUBMIT_REBUTTAL,
-      rebuttal: rebuttal,
+      rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
     };
     publish(action);
-    setGuessSubmitted(false);
-  };
-
-  const finishTurn = () => {
     publish({ type: ActionTypes.START_TURN });
   };
 
-  const disableSubmit =
-    sharedState.game.turn.actor === "psychic" ? true : false;
+  /**
+   * The current action form depends on the current actor, view, and
+   * step within the turn. At the start of the turn, for example, it
+   * contains the hint form in the psychic view.
+   */
+  let currentActionFormVisible = !isPlayer;
+  let currentActionForm = (
+    <HintForm
+      hint={sharedState.hint || ""}
+      onHintUpdated={onUpdateHint}
+      onHintSubmitted={onSubmitHint}
+    />
+  );
+  if (sharedState.game.turn.hint && sharedState.game.turn.guess === undefined) {
+    currentActionForm = (
+      <GuessForm
+        guess={sharedState.guess}
+        onGuessUpdated={onUpdateGuess}
+        onGuessSubmitted={onGuessSubmit}
+      />
+    );
+    currentActionFormVisible = isPlayer;
+  } else if (
+    isGuessSubmitted(sharedState.game.turn) &&
+    !isRebuttalSubmitted(sharedState.game.turn)
+  ) {
+    currentActionForm = (
+      <RebuttalForm
+        rebuttal={
+          sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL
+        }
+        teamInTurn={sharedState.game.teamInTurn}
+        otherTeam={getTeamOutOfTurn(sharedState.game)}
+        onRebuttalUpdated={onRebuttalUpdated}
+        onRebuttalSubmitted={onSubmitRebuttal}
+      />
+    );
+    currentActionFormVisible = isPlayer;
+  }
 
   return (
-    <div className={styles.pageContainer} draggable={false}>
+    <div className={styles.gameSceneContainer} draggable={false}>
       <Header
         score={sharedState.game.score}
         teamInTurn={sharedState.game.teamInTurn}
-        game={sharedState.game}
       />
 
-      <RebuttalView
-        guessSubmitted={guessSubmitted}
-        getTeamOutOfTurn={getTeamOutOfTurn}
-        game={sharedState.game}
-        onSubmitRebuttal={onSubmitRebuttal}
-        setRebuttal={setRebuttal}
+      <Hint hint={sharedState.game.turn.hint} />
+
+      {isGameOver(sharedState) && <EndGame />}
+
+      <Chadburn
+        guess={sharedState.guess}
+        onGuessUpdated={onUpdateGuess}
+        showTarget={!isPlayer || turnOver}
+        target={sharedState.game.turn.target}
       />
-
-      <Hint
-        sharedState={sharedState}
-        onSubmitHint={onSubmitHint}
-        onUpdateHint={onUpdateHint}
-        player={player}
-      />
-
-      {isOver ? <EndGame /> : null}
-
-      {player ? (
-        <PlayerView
-          guess={sharedState.guess}
-          onUpdated={onUpdateGuess}
-          onGuessSubmit={onGuessSubmit}
-          disableSubmit={disableSubmit}
-          target={sharedState.game.turn.target}
-          turn={sharedState.game.turn}
-          finishTurn={finishTurn}
-        />
-      ) : (
-        <PsychicView target={sharedState.game.turn.target} />
-      )}
 
       <Spectrum spectrum={sharedState.game.turn.spectrum} />
 
-      <ActorToggle
-        onToggleActorView={onToggleActorView}
-        playerBtn={playerBtn}
-        psychicBtn={psychicBtn}
-        isTurnOver={isTurnOver}
-      />
-      <NewGameButton onNewGameClick={onNewGameClick} />
+      <div
+        style={{ visibility: currentActionFormVisible ? "visible" : "hidden" }}
+        className={styles.currentActionFormContainer}
+      >
+        {currentActionForm}
+      </div>
+
+      <div className={styles.actorToggleContainer}>
+        <Toggle
+          left="Player"
+          right="Psychic"
+          isLeft={isPlayer}
+          onToggled={onToggleActor}
+        />
+      </div>
     </div>
   );
 };
