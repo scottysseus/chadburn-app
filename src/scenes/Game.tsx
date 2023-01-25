@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Toggle } from "src/components/Toggle";
 
-import { getTeamOutOfTurn, isGameOver } from "src/game/game";
+import {
+  getGuessScore,
+  getTeamOutOfTurn,
+  isCatchUp,
+  isGameOver,
+} from "src/game/game";
 import {
   isGuessSubmitted,
   isRebuttalSubmitted,
@@ -93,12 +98,11 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
     };
     publish(action);
-    //   if (getGuessScore(sharedState.game) === 4 && isCatchUp(sharedState.game)) {
-    //     publish({ type: ActionTypes.START_CATCH_UP_TURN });
-    //   } else {
-    //     publish({ type: ActionTypes.START_TURN });
-    //   }
-    // };
+    if (getGuessScore(sharedState.game) === 4 && isCatchUp(sharedState.game)) {
+      publish({ type: ActionTypes.START_CATCH_UP_TURN });
+    } else {
+      publish({ type: ActionTypes.START_TURN });
+    }
   };
 
   /**

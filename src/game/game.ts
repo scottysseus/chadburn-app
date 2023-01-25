@@ -156,6 +156,16 @@ export function updateTurn(state: GameState, turn: TurnState): GameState {
   return { ...state, turn };
 }
 
+export const isCatchUp = (state: GameState): boolean => {
+  if (
+    (state.score.get(state.teamInTurn) || 0) <
+    (state.score.get(getTeamOutOfTurn(state)) || 0)
+  ) {
+    return true;
+  }
+  return false;
+};
+
 export function isGameOver(state: SharedState): boolean {
   if (
     (state.game.score.get(state.game.teamInTurn) || 0) >= 10 ||
