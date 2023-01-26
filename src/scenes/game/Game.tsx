@@ -15,8 +15,8 @@ import {
   Rebuttals,
 } from "src/game/turn";
 import { EndGame } from "src/scenes/EndGame";
-import { Header } from "src/scenes/Header";
-import { Hint } from "src/scenes/Hint";
+import { Header } from "src/scenes/game/Header";
+import { Hint } from "src/scenes/game/Hint";
 import { RebuttalForm } from "src/scenes/RebuttalForm";
 import {
   Action,
@@ -28,11 +28,11 @@ import {
   UpdateHintAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
-import { Chadburn } from "./Chadburn";
+import { Chadburn } from "../Chadburn";
+import { GuessForm } from "../GuessForm";
+import { HintForm } from "../HintForm";
+import { Spectrum } from "../Spectrum";
 import styles from "./Game.module.css";
-import { GuessForm } from "./GuessForm";
-import { HintForm } from "./HintForm";
-import { Spectrum } from "./Spectrum";
 
 interface GameProps {
   sharedState: SharedState;

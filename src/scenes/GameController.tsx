@@ -1,5 +1,5 @@
 import React, { useContext, useSyncExternalStore } from "react";
-import { Game } from "src/scenes/Game";
+import { Game } from "src/scenes/game/Game";
 import { StoreContext } from "src/scenes/StoreContext";
 
 /**
