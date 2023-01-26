@@ -1,16 +1,46 @@
-import { finishTurn, startGame, updateTurn } from "./game";
-import { submitGuess, submitHint } from "./turn";
+import { finishTurn, getTeamOutOfTurn, startGame, updateTurn } from "./game";
+import { submitGuess, submitHint, submitRebuttal } from "./turn";
 
 describe("game state machine", () => {
-  it("computes the correct score at the end of a turn", () => {
-    // the guess matches the target, so the team-in-turn should be
-    // awarded 4 points, and we should skip the rebuttal
-    let game = startGame({ left: "left", right: "right" }, 0);
-    game = updateTurn(game, submitHint(game.turn, "hint :)"));
-    game = updateTurn(game, submitGuess(game.turn, 0));
+  describe("computes the correct score at the end of a turn", () => {
+    const turnTable = [
+      /* target, guess, rebuttal, expected turn team score, expected other team score */
 
-    game = finishTurn(game);
+      // if the guess matches the target, the turn team should receive 4 points
+      // and the rebuttal should be skipped.
+      [0, 0, null, 4, 0],
 
-    expect(game.score.get(game.teamInTurn)).toBe(4);
+      // if the guess is close enough to the target, the turn team still receives
+      // 4 points and the rebuttal should be skipped.
+      [0, 2, null, 4, 0],
+      [10, 0, "right", 3, 1],
+      [10, 0, "left", 3, 0],
+    ];
+
+    it.each(turnTable)(
+      "target: %d, guess: %d, rebuttal: %s",
+      (
+        target,
+        guess,
+        rebuttal,
+        expectedTurnTeamScore,
+        expectedOtherTeamScore
+      ) => {
+        let game = startGame({ left: "left", right: "right" }, target);
+        game = updateTurn(game, submitHint(game.turn, "hint :)"));
+        game = updateTurn(game, submitGuess(game.turn, guess));
+
+        if (target !== guess) {
+          game = updateTurn(game, submitRebuttal(game.turn, rebuttal));
+        }
+
+        game = finishTurn(game);
+
+        expect(game.score.get(game.teamInTurn)).toBe(expectedTurnTeamScore);
+        expect(game.score.get(getTeamOutOfTurn(game))).toBe(
+          expectedOtherTeamScore
+        );
+      }
+    );
   });
 });
