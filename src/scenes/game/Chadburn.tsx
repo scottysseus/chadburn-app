@@ -1,6 +1,6 @@
 import React from "react";
 import { UnselectableImage } from "src/components/UnselectableImage";
-import { GuessDial } from "../../components/GuessDial";
+import { GuessDial } from "src/components/GuessDial";
 import styles from "../Game.module.css";
 
 export interface ChadburnProps {
