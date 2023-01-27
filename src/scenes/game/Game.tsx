@@ -31,7 +31,7 @@ import { SharedState } from "src/store/SharedState";
 import { Chadburn } from "../Chadburn";
 import { GuessForm } from "../GuessForm";
 import { HintForm } from "../HintForm";
-import { Spectrum } from "../Spectrum";
+import { Spectrum } from "./Spectrum";
 import styles from "./Game.module.css";
 
 interface GameProps {
