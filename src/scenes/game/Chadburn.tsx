@@ -1,7 +1,7 @@
 import React from "react";
 import { UnselectableImage } from "src/components/UnselectableImage";
+import { GuessDial } from "../GuessDial";
 import styles from "./Game.module.css";
-import { GuessDial } from "./GuessDial";
 
 export interface ChadburnProps {
   guess: number;

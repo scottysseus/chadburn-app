@@ -28,11 +28,11 @@ import {
   UpdateHintAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
-import { Chadburn } from "../Chadburn";
 import { GuessForm } from "../GuessForm";
 import { HintForm } from "../HintForm";
-import { Spectrum } from "./Spectrum";
+import { Chadburn } from "./Chadburn";
 import styles from "./Game.module.css";
+import { Spectrum } from "./Spectrum";
 
 interface GameProps {
   sharedState: SharedState;
