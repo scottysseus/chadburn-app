@@ -1,5 +1,5 @@
 import { finishTurn, getTeamOutOfTurn, startGame, updateTurn } from "./game";
-import { submitGuess, submitHint, submitRebuttal } from "./turn";
+import { Rebuttals, submitGuess, submitHint, submitRebuttal } from "./turn";
 
 describe("game state machine", () => {
   describe("computes the correct score at the end of a turn", () => {
@@ -13,8 +13,8 @@ describe("game state machine", () => {
       // if the guess is close enough to the target, the turn team still receives
       // 4 points and the rebuttal should be skipped.
       [0, 2, null, 4, 0],
-      [10, 0, "right", 3, 1],
-      [10, 0, "left", 3, 0],
+      [10, 0, Rebuttals.RIGHT, 3, 1],
+      [10, 0, Rebuttals.LEFT, 3, 0],
     ];
 
     it.each(turnTable)(
