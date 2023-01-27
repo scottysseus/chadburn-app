@@ -22,7 +22,7 @@ export const RebuttalForm = ({
         left="Left"
         right="Right"
         isLeft={rebuttal === Rebuttals.LEFT}
-        onToggleClick={(isLeft) =>
+        onToggle={(isLeft) =>
           onRebuttalUpdate(isLeft ? Rebuttals.LEFT : Rebuttals.RIGHT)
         }
       />

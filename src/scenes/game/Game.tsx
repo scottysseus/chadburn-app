@@ -177,7 +177,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
           left="Player"
           right="Psychic"
           isLeft={isPlayer}
-          onToggleClick={onToggleActor}
+          onToggle={onToggleActor}
         />
       </div>
     </div>
