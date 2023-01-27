@@ -14,7 +14,7 @@ import {
   Rebuttal,
   Rebuttals,
 } from "src/game/turn";
-import { EndGame } from "src/scenes/EndGame";
+import { EndGame } from "src/scenes/game/EndGame";
 import { Header } from "src/scenes/game/Header";
 import { Hint } from "src/scenes/game/Hint";
 import { RebuttalForm } from "src/scenes/RebuttalForm";
