@@ -1,6 +1,6 @@
+import { ActionTypes } from "src/store/actions";
+import { SHARED_STATE_YMAP_NAME, YMapKeys, YStore } from "src/store/Store";
 import * as Y from "yjs";
-import { ActionTypes } from "./actions";
-import { SHARED_STATE_YMAP_NAME, YMapKeys, YStore } from "./Store";
 
 function getConnectedDocuments() {
   const doc1 = new Y.Doc();

@@ -1,11 +1,11 @@
-import { SharedState } from "src/store/SharedState";
 import {
   Rebuttal,
   Rebuttals,
   Spectrum,
   startTurn as turnStateStartTurn,
   TurnState,
-} from "./turn";
+} from "src/game/turn";
+import { SharedState } from "src/store/SharedState";
 
 export type Score = Map<string, number>;
 

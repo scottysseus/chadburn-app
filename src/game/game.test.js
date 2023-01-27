@@ -1,5 +1,15 @@
-import { finishTurn, getTeamOutOfTurn, startGame, updateTurn } from "./game";
-import { Rebuttals, submitGuess, submitHint, submitRebuttal } from "./turn";
+import {
+  finishTurn,
+  getTeamOutOfTurn,
+  startGame,
+  updateTurn,
+} from "src/game/game";
+import {
+  Rebuttals,
+  submitGuess,
+  submitHint,
+  submitRebuttal,
+} from "src/game/turn";
 
 describe("game state machine", () => {
   describe("computes the correct score at the end of a turn", () => {

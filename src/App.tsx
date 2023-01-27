@@ -1,10 +1,10 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { StoreContextProvider } from "./scenes/StoreContextProvider";
+import { StoreContextProvider } from "src/scenes/StoreContextProvider";
 
-import { Landing } from "./scenes/Landing";
+import { Landing } from "src/scenes/Landing";
 
-import { TopBar } from "./components/TopBar";
+import { TopBar } from "src/components/TopBar";
 import styles from "./index.module.css";
 
 const router = createBrowserRouter([

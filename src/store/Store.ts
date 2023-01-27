@@ -12,8 +12,6 @@ import {
   submitHint,
   submitRebuttal,
 } from "src/game/turn";
-import { WebrtcProvider } from "y-webrtc";
-import * as Y from "yjs";
 import {
   Action,
   ActionTypes,
@@ -23,8 +21,10 @@ import {
   UpdateGuessAction,
   UpdateHintAction,
   UpdateRebuttalAction,
-} from "./actions";
-import { SharedState } from "./SharedState";
+} from "src/store/actions";
+import { SharedState } from "src/store/SharedState";
+import { WebrtcProvider } from "y-webrtc";
+import * as Y from "yjs";
 
 export const YMapKeys = {
   GUESS: "guess",
