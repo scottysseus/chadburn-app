@@ -47,7 +47,7 @@ export const YMapKeys = {
 
 const START_GUESS = 0;
 
-export const SHARED_STATE_YDOC_NAME = "sharedState";
+export const SHARED_STATE_YMAP_NAME = "sharedState";
 
 export function getInitialSharedState(): SharedState {
   return {
@@ -75,7 +75,7 @@ export class YStore implements Store {
     this.listeners = [];
 
     this.ydoc = ydoc;
-    this.ymap = this.ydoc.getMap<any>(SHARED_STATE_YDOC_NAME);
+    this.ymap = this.ydoc.getMap<any>(SHARED_STATE_YMAP_NAME);
     this.transactShareState(getInitialSharedState());
     this.ymap.observeDeep(() => {
       this.updateCachedSnapshot();
