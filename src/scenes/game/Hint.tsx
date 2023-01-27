@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Game.module.css";
+import styles from "../Game.module.css";
 
 interface HintProps {
   hint: string | undefined;

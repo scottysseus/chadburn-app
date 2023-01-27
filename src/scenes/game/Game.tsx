@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Toggle } from "src/components/Toggle";
 
-import { getTeamOutOfTurn, isGameOver } from "src/game/game";
+import {
+  getGuessScore,
+  getTeamOutOfTurn,
+  isCatchUp,
+  isGameOver,
+} from "src/game/game";
 import {
   isGuessSubmitted,
   isRebuttalSubmitted,
@@ -9,10 +14,10 @@ import {
   Rebuttal,
   Rebuttals,
 } from "src/game/turn";
-import { EndGame } from "src/scenes/EndGame";
-import { Header } from "src/scenes/Header";
-import { Hint } from "src/scenes/Hint";
-import { RebuttalForm } from "src/scenes/RebuttalForm";
+import { EndGame } from "src/scenes/game/EndGame";
+import { Header } from "src/scenes/game/Header";
+import { Hint } from "src/scenes/game/Hint";
+import { RebuttalForm } from "src/scenes/game/RebuttalForm";
 import {
   Action,
   ActionTypes,
@@ -23,10 +28,10 @@ import {
   UpdateHintAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
-import { Chadburn } from "./Chadburn";
-import styles from "./Game.module.css";
 import { GuessForm } from "./GuessForm";
 import { HintForm } from "./HintForm";
+import { Chadburn } from "./Chadburn";
+import styles from "../Game.module.css";
 import { Spectrum } from "./Spectrum";
 
 interface GameProps {
@@ -83,7 +88,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onRebuttalUpdated = (rebuttal: Rebuttal) => {
+  const onRebuttalUpdate = (rebuttal: Rebuttal) => {
     publish({ type: ActionTypes.UPDATE_REBUTTAL, rebuttal });
   };
 
@@ -93,7 +98,11 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
     };
     publish(action);
-    publish({ type: ActionTypes.START_TURN });
+    if (getGuessScore(sharedState.game) === 4 && isCatchUp(sharedState.game)) {
+      publish({ type: ActionTypes.START_CATCH_UP_TURN });
+    } else {
+      publish({ type: ActionTypes.START_TURN });
+    }
   };
 
   /**
@@ -129,8 +138,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         }
         teamInTurn={sharedState.game.teamInTurn}
         otherTeam={getTeamOutOfTurn(sharedState.game)}
-        onRebuttalUpdated={onRebuttalUpdated}
-        onRebuttalSubmitted={onSubmitRebuttal}
+        onRebuttalUpdate={onRebuttalUpdate}
+        onRebuttalSubmit={onSubmitRebuttal}
       />
     );
     currentActionFormVisible = isPlayer;
@@ -168,7 +177,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
           left="Player"
           right="Psychic"
           isLeft={isPlayer}
-          onToggled={onToggleActor}
+          onToggle={onToggleActor}
         />
       </div>
     </div>
