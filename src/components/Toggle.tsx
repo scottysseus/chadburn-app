@@ -5,16 +5,16 @@ export interface ToggleProps {
   right: string;
 
   isLeft: boolean;
-  onToggled: (isLeft: boolean) => void;
+  onToggleClick: (isLeft: boolean) => void;
 }
 
-export const Toggle = ({ left, right, isLeft, onToggled }: ToggleProps) => {
+export const Toggle = ({ left, right, isLeft, onToggleClick }: ToggleProps) => {
   return (
     <>
-      <button onClick={() => onToggled(true)} disabled={isLeft}>
+      <button onClick={() => onToggleClick(true)} disabled={isLeft}>
         {left}
       </button>
-      <button onClick={() => onToggled(false)} disabled={!isLeft}>
+      <button onClick={() => onToggleClick(false)} disabled={!isLeft}>
         {right}
       </button>
     </>

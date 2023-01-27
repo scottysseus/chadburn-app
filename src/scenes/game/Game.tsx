@@ -88,7 +88,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onRebuttalUpdated = (rebuttal: Rebuttal) => {
+  const onRebuttalUpdate = (rebuttal: Rebuttal) => {
     publish({ type: ActionTypes.UPDATE_REBUTTAL, rebuttal });
   };
 
@@ -138,8 +138,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         }
         teamInTurn={sharedState.game.teamInTurn}
         otherTeam={getTeamOutOfTurn(sharedState.game)}
-        onRebuttalUpdated={onRebuttalUpdated}
-        onRebuttalSubmitted={onSubmitRebuttal}
+        onRebuttalUpdate={onRebuttalUpdate}
+        onRebuttalSubmit={onSubmitRebuttal}
       />
     );
     currentActionFormVisible = isPlayer;
@@ -177,7 +177,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
           left="Player"
           right="Psychic"
           isLeft={isPlayer}
-          onToggled={onToggleActor}
+          onToggleClick={onToggleActor}
         />
       </div>
     </div>

@@ -7,14 +7,14 @@ interface RebuttalViewProps {
   teamInTurn: string;
   otherTeam: string;
 
-  onRebuttalUpdated: (rebuttal: Rebuttal) => void;
-  onRebuttalSubmitted: () => void;
+  onRebuttalUpdate: (rebuttal: Rebuttal) => void;
+  onRebuttalSubmit: () => void;
 }
 
 export const RebuttalForm = ({
   rebuttal,
-  onRebuttalUpdated,
-  onRebuttalSubmitted,
+  onRebuttalUpdate,
+  onRebuttalSubmit,
 }: RebuttalViewProps) => {
   return (
     <>
@@ -22,12 +22,12 @@ export const RebuttalForm = ({
         left="Left"
         right="Right"
         isLeft={rebuttal === Rebuttals.LEFT}
-        onToggled={(isLeft) =>
-          onRebuttalUpdated(isLeft ? Rebuttals.LEFT : Rebuttals.RIGHT)
+        onToggleClick={(isLeft) =>
+          onRebuttalUpdate(isLeft ? Rebuttals.LEFT : Rebuttals.RIGHT)
         }
       />
 
-      <button onClick={onRebuttalSubmitted}>Submit</button>
+      <button onClick={onRebuttalSubmit}>Submit</button>
     </>
   );
 };
