@@ -1,7 +1,7 @@
 import React from "react";
 import { BsArrowLeftSquare, BsArrowRightSquare } from "react-icons/bs";
 import { Spectrum as SpectrumType } from "src/game/turn";
-import styles from "./Game.module.css";
+import styles from "../Game.module.css";
 
 interface SpectrumProps {
   spectrum: SpectrumType;

@@ -5,7 +5,7 @@ import {
   RotationDirection,
 } from "src/components/RotatableImage";
 
-import styles from "./Game.module.css";
+import styles from "../scenes/Game.module.css";
 
 export interface GuessDialProps {
   guess: number;
