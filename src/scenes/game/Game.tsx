@@ -28,7 +28,7 @@ import {
   UpdateHintAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
-import { GuessForm } from "../GuessForm";
+import { GuessForm } from "./GuessForm";
 import { HintForm } from "./HintForm";
 import { Chadburn } from "./Chadburn";
 import styles from "./Game.module.css";
