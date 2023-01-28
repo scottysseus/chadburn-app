@@ -41,6 +41,6 @@ jobs:
       - run: echo ${{needs.build_and_preview.outputs.details_url}}
       - uses: actions/checkout@v2
       - name: Cypress run
-        uses: cypress-io/github-action@v5.x.x # use the explicit version number
+        uses: cypress-io/github-action@v5
         with:
           config: baseUrl=${{needs.build_and_preview.outputs.details_url}}
