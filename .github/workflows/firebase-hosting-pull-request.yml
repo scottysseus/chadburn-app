@@ -43,4 +43,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
+          install-command: pnpm fetch --dev && pnpm install -r --ignore-scripts
           config: baseUrl=${{needs.build_and_preview.outputs.details_url}}
