@@ -24,6 +24,8 @@ jobs:
         run: pnpm fetch --prod && pnpm install -r --ignore-scripts --prod
       - name: run esbuild
         run: "pnpm run build:prod"
+      - name: run unit tests
+        run: "pnpm exec jest"
       - id: firebase_deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -31,29 +33,9 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHADBURN_8BB24 }}"
           projectId: chadburn-8bb24
 
-  unit_test:
-    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: install node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 19
-      - name: install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7.14.2
-          run_install: false
-      - name: install dependencies
-        run: pnpm fetch --dev && pnpm install -r --ignore-scripts
-      - name: run jest
-        run: "pnpm exec jest"
-
   e2e_test:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     needs: build_and_preview
     runs-on: ubuntu-latest
     steps:
-      - run: "echo ${{needs.build_and_preview.outputs.urls}}"
-      - run: echo "hello world"
+      - run: echo ${{needs.build_and_preview.outputs.urls[0]}}
