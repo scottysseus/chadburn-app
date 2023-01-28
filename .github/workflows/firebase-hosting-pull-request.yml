@@ -38,8 +38,11 @@ jobs:
     needs: build_and_preview
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{needs.build_and_preview.outputs.details_url}}
       - uses: actions/checkout@v2
+      - name: install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
       - name: run cypress
         uses: cypress-io/github-action@v5
         with:
