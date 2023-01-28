@@ -1,27 +1,27 @@
 import React from "react";
 import { Toggle } from "src/components/Toggle";
 
-import styles from "./Game.module.css";
+import styles from "../Game.module.css";
 
 export interface FooterProps {
   isPlayer: boolean;
-  onActorToggled: (isPlayer: boolean) => void;
-  onNewGameClicked: () => void;
+  onActorToggle: (isPlayer: boolean) => void;
+  onNewGameClick: () => void;
 }
 
 export const Footer = ({
   isPlayer,
-  onActorToggled,
-  onNewGameClicked,
+  onActorToggle,
+  onNewGameClick,
 }: FooterProps) => {
   return (
     <div className={styles.actorToggleContainer}>
-      <button onClick={onNewGameClicked}>New Game</button>
+      <button onClick={onNewGameClick}>New Game</button>
       <Toggle
         left="Player"
         right="Psychic"
         isLeft={isPlayer}
-        onToggled={onActorToggled}
+        onToggle={onActorToggle}
       />
     </div>
   );
