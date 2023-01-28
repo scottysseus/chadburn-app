@@ -43,8 +43,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 19
-      - name: run cypress
-        uses: cypress-io/github-action@v5
+      - name: install pnpm
+        uses: pnpm/action-setup@v2
         with:
-          install-command: npm ci --ignore-scripts
-          config: baseUrl=${{needs.build_and_preview.outputs.details_url}}
+          version: 7.14.2
+          run_install: false
+      - name: install dependencies
+        run: pnpm fetch --dev && pnpm install -r --ignore-scripts
+      - name: run e2e tests
+        run: "./node_modules/cypress/bin/cypress install && CYPRESS_BASE_URL=${{needs.build_and_preview.outputs.details_url}} pnpm exec cypress run"
