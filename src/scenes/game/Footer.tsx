@@ -17,12 +17,14 @@ export const Footer = ({
   return (
     <div className={styles.actorToggleContainer}>
       <button onClick={onNewGameClick}>New Game</button>
-      <Toggle
-        left="Player"
-        right="Psychic"
-        isLeft={isPlayer}
-        onToggle={onActorToggle}
-      />
+      <div data-cy="game_toggle_view">
+        <Toggle
+          left="Player"
+          right="Psychic"
+          isLeft={isPlayer}
+          onToggle={onActorToggle}
+        />
+      </div>
     </div>
   );
 };

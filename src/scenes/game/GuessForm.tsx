@@ -51,8 +51,17 @@ export const GuessForm = ({
    */
   return (
     <>
-      <input type="text" value={localGuess} onChange={onInputChange} />
-      <button onClick={onGuessSubmit} disabled={isGuessInvalid(localGuess)}>
+      <input
+        data-cy="game_input_guess"
+        type="text"
+        value={localGuess}
+        onChange={onInputChange}
+      />
+      <button
+        data-cy="game_btn_submit_guess"
+        onClick={onGuessSubmit}
+        disabled={isGuessInvalid(localGuess)}
+      >
         Submit
       </button>
     </>

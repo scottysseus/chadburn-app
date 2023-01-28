@@ -31,12 +31,26 @@ function getRotationDegreesFromCssMatrix(cssMatrix) {
   return normalizeDegrees(angle < 0 ? angle + 360 : angle);
 }
 
-export const PlayerView = {
-  get_guess_dial() {
+export const Game = {
+  enablePsychicView() {
+    return cy.contains("button", "Psychic").then(($btn) => {
+      if (!$btn.is(":disabled")) {
+        $btn.trigger("click");
+      }
+    });
+  },
+  enablePlayerView() {
+    return cy.contains("button", "Player").then(($btn) => {
+      if (!$btn.is(":disabled")) {
+        $btn.trigger("click");
+      }
+    });
+  },
+  getGuessDial() {
     return cy.get('img[src="assets/guess.svg"]');
   },
-  get_guess_angle() {
-    return PlayerView.get_guess_dial().then(($guessDial) => {
+  getGuessAngle() {
+    return Game.getGuessDial().then(($guessDial) => {
       const transform = $guessDial.css("transform");
       let angle = NaN;
 

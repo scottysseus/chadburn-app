@@ -18,12 +18,17 @@ export const HintForm = ({
   return (
     <div>
       <input
+        data-cy="game_input_hint"
         type="text"
         placeholder="Provide a hint"
         onChange={onInputChanged}
         value={hint}
       ></input>
-      <button disabled={hint === ""} onClick={onHintSubmit}>
+      <button
+        data-cy="game_btn_submit_hint"
+        disabled={hint === ""}
+        onClick={onHintSubmit}
+      >
         Submit
       </button>
     </div>
