@@ -40,7 +40,16 @@ jobs:
     steps:
       - run: echo ${{needs.build_and_preview.outputs.details_url}}
       - uses: actions/checkout@v2
-      - name: Cypress run
+      - name: install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+      - name: install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.14.2
+          run_install: false
+      - name: run cypress
         uses: cypress-io/github-action@v5
         with:
           install-command: pnpm fetch --dev && pnpm install -r --ignore-scripts
