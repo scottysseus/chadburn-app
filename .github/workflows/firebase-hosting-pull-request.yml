@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       urls: ${{steps.firebase_deploy.outputs.urls}}
+      details_url: ${{steps.firebase_deploy.outputs.details_url}}
     steps:
       - uses: actions/checkout@v2
       - name: install node.js
@@ -39,3 +40,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{join(needs.build_and_preview.outputs.urls, '')}}
+      - run: echo ${{needs.build_and_preview.outputs.details_url}}
