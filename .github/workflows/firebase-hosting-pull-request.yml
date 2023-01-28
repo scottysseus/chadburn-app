@@ -7,6 +7,8 @@ jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
+    outputs:
+      details_url: ${{steps.firebase_deploy.outputs.details_url}}
     steps:
       - uses: actions/checkout@v2
       - name: install node.js
@@ -16,13 +18,16 @@ jobs:
       - name: install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 6.0.2
+          version: 7.14.2
           run_install: false
       - name: install dependencies
-        run: pnpm fetch --prod && pnpm install -r --ignore-scripts --prod
+        run: pnpm fetch --dev && pnpm install -r --ignore-scripts
       - name: run esbuild
         run: "pnpm run build:prod"
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: run unit tests
+        run: "pnpm exec jest"
+      - id: firebase_deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHADBURN_8BB24 }}"
@@ -33,5 +38,17 @@ jobs:
     needs: build_and_preview
     runs-on: ubuntu-latest
     steps:
-      # - run: echo ${{needs.build_and_preview.outputs.urls}}
-      - run: echo "hello world"
+      - uses: actions/checkout@v2
+      - name: install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+      - name: install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.14.2
+          run_install: false
+      - name: install dependencies
+        run: pnpm fetch --dev && pnpm install -r --ignore-scripts
+      - name: run e2e tests
+        run: "./node_modules/cypress/bin/cypress install && CYPRESS_BASE_URL=${{needs.build_and_preview.outputs.details_url}} pnpm exec cypress run video=false screenshotOnRunFailure=false"
