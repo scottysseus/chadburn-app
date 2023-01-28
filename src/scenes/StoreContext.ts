@@ -1,9 +1,9 @@
 import { createContext } from "react";
-import { getInitialSharedState, Store } from "src/store/Store";
+import { Store } from "src/store/Store";
 
 export const StoreContext = createContext<Store>({
   getSnapshot() {
-    return getInitialSharedState();
+    throw "Not implemented!";
   },
   publish() {
     throw "Not implemented!";

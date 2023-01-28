@@ -9,5 +9,6 @@
     "source.fixAll": true,
     "source.organizeImports": true,
     "source.sortMembers": true
-  }
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }

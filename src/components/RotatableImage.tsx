@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { UnselectableImage } from "./UnselectableImage";
+import { UnselectableImage } from "src/components/UnselectableImage";
 
 type Point = {
   x: number;
