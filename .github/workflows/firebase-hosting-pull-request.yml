@@ -40,16 +40,7 @@ jobs:
     steps:
       - run: echo ${{needs.build_and_preview.outputs.details_url}}
       - uses: actions/checkout@v2
-      - name: install node.js
-        uses: actions/setup-node@v3
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
-          node-version: 19
-      - name: install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7.14.2
-          run_install: false
-      - name: install dependencies
-        run: pnpm fetch --dev && pnpm install -r --ignore-scripts
-      - name: run unit tests
-        run: "CYPRESS_BASE_URL=${{needs.build_and_preview.outputs.details_url}} pnpm exec cypress run"
+          config: baseUrl=${{needs.build_and_preview.outputs.details_url}}
