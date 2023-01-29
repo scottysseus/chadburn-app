@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export interface GuessFormProps {
   guess: number;
@@ -11,14 +11,40 @@ export const GuessForm = ({
   onGuessUpdated,
   onGuessSubmitted,
 }: GuessFormProps) => {
-  const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    onGuessUpdated(Number(event.target.value));
+  const [localGuess, setLocalGuess] = useState<string>(String(guess));
+
+  useEffect(() => {
+    setLocalGuess(String(guess));
+  }, [guess]);
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    let newGuess = event.target.value;
+
+    if (!isGuessInvalid(newGuess)) {
+      const newGuessAsNumber = Number(newGuess);
+      if (newGuessAsNumber > 90) newGuess = String(90);
+      if (newGuessAsNumber < -90) newGuess = String(-90);
+      onGuessUpdated(Number(newGuess));
+    }
+
+    setLocalGuess(newGuess);
+  };
+
+  const isGuessInvalid = (guess: string) => {
+    return isNaN(Number(guess)) || guess === "";
   };
 
   return (
     <>
-      <input type="number" value={guess} onChange={onInputChanged} />
-      <button onClick={onGuessSubmitted}>Submit</button>
+      <input
+        inputMode="decimal"
+        type="text"
+        value={localGuess}
+        onChange={onInputChange}
+      />
+      <button onClick={onGuessSubmitted} disabled={isGuessInvalid(localGuess)}>
+        Submit
+      </button>
     </>
   );
 };
