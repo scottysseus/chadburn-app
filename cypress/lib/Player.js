@@ -8,7 +8,7 @@ export const Rebuttals = {
 export const Player = {
   setsGuess(guess) {
     Game.enablePlayerView();
-    cy.get('[data-cy="game_input_guess"]').type(guess);
+    cy.get('[data-cy="game_input_guess"]').clear().type(guess);
     cy.get('[data-cy="game_btn_submit_guess"]').click();
   },
   choosesRebuttal(rebuttal) {
