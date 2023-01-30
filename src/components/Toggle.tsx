@@ -10,13 +10,13 @@ export interface ToggleProps {
 
 export const Toggle = ({ left, right, isLeft, onToggle }: ToggleProps) => {
   return (
-    <>
+    <div>
       <button onClick={() => onToggle(true)} disabled={isLeft}>
         {left}
       </button>
       <button onClick={() => onToggle(false)} disabled={!isLeft}>
         {right}
       </button>
-    </>
+    </div>
   );
 };

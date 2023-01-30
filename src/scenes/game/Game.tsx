@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Toggle } from "src/components/Toggle";
 
 import {
   getGuessScore,
@@ -16,6 +15,7 @@ import {
 } from "src/game/turn";
 import { Chadburn } from "src/scenes/game/Chadburn";
 import { EndGame } from "src/scenes/game/EndGame";
+import { Footer } from "src/scenes/game/Footer";
 import { GuessForm } from "src/scenes/game/GuessForm";
 import { Header } from "src/scenes/game/Header";
 import { Hint } from "src/scenes/game/Hint";
@@ -78,6 +78,10 @@ export const Game = ({ sharedState, publish }: GameProps) => {
 
   const onToggleActor = (isPlayer: boolean) => {
     setIsPlayer(isPlayer);
+  };
+
+  const onNewGameClick = () => {
+    publish({ type: ActionTypes.NEW_GAME });
   };
 
   const onGuessSubmit = () => {
@@ -173,11 +177,10 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       </div>
 
       <div className={styles.actorToggleContainer}>
-        <Toggle
-          left="Player"
-          right="Psychic"
-          isLeft={isPlayer}
-          onToggle={onToggleActor}
+        <Footer
+          isPlayer={isPlayer}
+          onActorToggle={onToggleActor}
+          onNewGameClick={onNewGameClick}
         />
       </div>
     </div>
