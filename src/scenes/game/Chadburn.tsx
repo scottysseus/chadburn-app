@@ -1,11 +1,11 @@
 import React from "react";
-import { UnselectableImage } from "src/components/UnselectableImage";
 import { GuessDial } from "src/components/GuessDial";
+import { UnselectableImage } from "src/components/UnselectableImage";
 import styles from "../Game.module.css";
 
 export interface ChadburnProps {
   guess: number;
-  onGuessUpdated: (angle: number) => void;
+  onGuessUpdate: (angle: number) => void;
 
   showTarget: boolean;
   target: number;
@@ -19,13 +19,13 @@ export interface ChadburnProps {
  */
 export const Chadburn = ({
   guess,
-  onGuessUpdated,
+  onGuessUpdate,
   showTarget,
   target,
 }: ChadburnProps) => {
   return (
     <div className={styles.chadburn}>
-      <GuessDial guess={guess} onUpdated={onGuessUpdated} />
+      <GuessDial guess={guess} onUpdate={onGuessUpdate} />
       {showTarget && (
         <UnselectableImage
           src="assets/target.svg"

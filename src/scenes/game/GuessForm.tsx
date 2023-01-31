@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 
 export interface GuessFormProps {
   guess: number;
-  onGuessUpdated: (guess: number) => void;
-  onGuessSubmitted: () => void;
+  onGuessUpdate: (guess: number) => void;
+  onGuessSubmit: () => void;
 }
 
 export const GuessForm = ({
   guess,
-  onGuessUpdated,
-  onGuessSubmitted,
+  onGuessUpdate,
+  onGuessSubmit,
 }: GuessFormProps) => {
   const [localGuess, setLocalGuess] = useState<string>(String(guess));
 
@@ -31,7 +31,7 @@ export const GuessForm = ({
       const newGuessAsNumber = Number(newGuess);
       if (newGuessAsNumber > 90) newGuess = String(90);
       if (newGuessAsNumber < -90) newGuess = String(-90);
-      onGuessUpdated(Number(newGuess));
+      onGuessUpdate(Number(newGuess));
     }
 
     setLocalGuess(newGuess);
@@ -52,7 +52,7 @@ export const GuessForm = ({
   return (
     <>
       <input type="text" value={localGuess} onChange={onInputChange} />
-      <button onClick={onGuessSubmitted} disabled={isGuessInvalid(localGuess)}>
+      <button onClick={onGuessSubmit} disabled={isGuessInvalid(localGuess)}>
         Submit
       </button>
     </>

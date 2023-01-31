@@ -2,17 +2,17 @@ import React from "react";
 
 export interface HintFormProps {
   hint: string;
-  onHintUpdated: (hint: string) => void;
-  onHintSubmitted: () => void;
+  onHintUpdate: (hint: string) => void;
+  onHintSubmit: () => void;
 }
 
 export const HintForm = ({
   hint,
-  onHintUpdated,
-  onHintSubmitted,
+  onHintUpdate,
+  onHintSubmit,
 }: HintFormProps) => {
   const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    onHintUpdated(event.target.value);
+    onHintUpdate(event.target.value);
   };
 
   return (
@@ -23,7 +23,7 @@ export const HintForm = ({
         onChange={onInputChanged}
         value={hint}
       ></input>
-      <button disabled={hint === ""} onClick={onHintSubmitted}>
+      <button disabled={hint === ""} onClick={onHintSubmit}>
         Submit
       </button>
     </div>
