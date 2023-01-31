@@ -16,16 +16,19 @@ export const HintForm = ({
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Provide a hint"
-        onChange={onInputChanged}
-        value={hint}
-      ></input>
+    <>
+      <fieldset>
+        <legend>Hint</legend>
+        <input
+          type="text"
+          placeholder="Provide a hint"
+          onChange={onInputChanged}
+          value={hint}
+        />
+      </fieldset>
       <button disabled={hint === ""} onClick={onHintSubmit}>
         Submit
       </button>
-    </div>
+    </>
   );
 };

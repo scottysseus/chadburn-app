@@ -51,7 +51,11 @@ export const GuessForm = ({
    */
   return (
     <>
-      <input type="text" value={localGuess} onChange={onInputChange} />
+      <fieldset>
+        <legend>Guess</legend>
+        <input type="text" value={localGuess} onChange={onInputChange} />
+      </fieldset>
+
       <button onClick={onGuessSubmit} disabled={isGuessInvalid(localGuess)}>
         Submit
       </button>

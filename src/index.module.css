@@ -25,20 +25,39 @@ body {
 }
 
 button,
-input {
+fieldset {
   font-family: inherit;
-  vertical-align: bottom;
-  padding: 0.5rem;
+  vertical-align: text-bottom;
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
   outline: none;
   border: solid 2px #252024ff;
   background-color: transparent;
 }
 
+fieldset {
+  font-size: 0.7rem;
+  padding: 0.3rem;
+}
+
+legend {
+  font-family: inherit;
+  background-color: transparent;
+}
+
+input {
+  font-family: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  vertical-align: bottom;
+  font-size: 0.7rem;
+}
+
 button {
   text-align: center;
   cursor: pointer;
   width: 6rem;
+  padding: 0.5rem;
 }
 
 button:hover {
