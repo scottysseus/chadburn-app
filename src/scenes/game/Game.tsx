@@ -52,7 +52,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     }
   }, [sharedState]);
 
-  const onUpdateGuess = (guess: number) => {
+  const onGuessUpdate = (guess: number) => {
     const action: UpdateGuessAction = {
       type: ActionTypes.UPDATE_GUESS,
       guess,
@@ -60,7 +60,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onUpdateHint = (hint: string) => {
+  const onHintUpdate = (hint: string) => {
     const action: UpdateHintAction = {
       type: ActionTypes.UPDATE_HINT,
       hint,
@@ -68,7 +68,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onSubmitHint = () => {
+  const onHintSubmit = () => {
     const action: SubmitHintAction = {
       type: ActionTypes.SUBMIT_HINT,
       hint: sharedState.hint || "",
@@ -76,7 +76,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
-  const onToggleActor = (isPlayer: boolean) => {
+  const onActorToggle = (isPlayer: boolean) => {
     setIsPlayer(isPlayer);
   };
 
@@ -96,7 +96,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish({ type: ActionTypes.UPDATE_REBUTTAL, rebuttal });
   };
 
-  const onSubmitRebuttal = () => {
+  const onRebuttalSubmit = () => {
     const action: SubmitRebuttalAction = {
       type: ActionTypes.SUBMIT_REBUTTAL,
       rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
@@ -118,16 +118,16 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   let currentActionForm = (
     <HintForm
       hint={sharedState.hint || ""}
-      onHintUpdated={onUpdateHint}
-      onHintSubmitted={onSubmitHint}
+      onHintUpdate={onHintUpdate}
+      onHintSubmit={onHintSubmit}
     />
   );
   if (sharedState.game.turn.hint && sharedState.game.turn.guess === undefined) {
     currentActionForm = (
       <GuessForm
         guess={sharedState.guess}
-        onGuessUpdated={onUpdateGuess}
-        onGuessSubmitted={onGuessSubmit}
+        onGuessUpdate={onGuessUpdate}
+        onGuessSubmit={onGuessSubmit}
       />
     );
     currentActionFormVisible = isPlayer;
@@ -143,7 +143,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         teamInTurn={sharedState.game.teamInTurn}
         otherTeam={getTeamOutOfTurn(sharedState.game)}
         onRebuttalUpdate={onRebuttalUpdate}
-        onRebuttalSubmit={onSubmitRebuttal}
+        onRebuttalSubmit={onRebuttalSubmit}
       />
     );
     currentActionFormVisible = isPlayer;
@@ -162,7 +162,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
 
       <Chadburn
         guess={sharedState.guess}
-        onGuessUpdated={onUpdateGuess}
+        onGuessUpdate={onGuessUpdate}
         showTarget={!isPlayer || turnOver}
         target={sharedState.game.turn.target}
       />
@@ -179,7 +179,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       <div className={styles.actorToggleContainer}>
         <Footer
           isPlayer={isPlayer}
-          onActorToggle={onToggleActor}
+          onActorToggle={onActorToggle}
           onNewGameClick={onNewGameClick}
         />
       </div>

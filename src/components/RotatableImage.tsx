@@ -71,8 +71,8 @@ export interface RotatableImageProps {
   src: string;
   style?: CSSProperties;
   className: string;
-  onUpdated?: (angle: number) => void;
-  onUpdating?: (event: OnUpdatingEvent) => number;
+  onUpdate?: (angle: number) => void;
+  onBeforeUpdate?: (event: OnUpdatingEvent) => number;
 }
 
 /**
@@ -88,8 +88,8 @@ export const RotatableImage = ({
   src,
   className,
   style,
-  onUpdated,
-  onUpdating,
+  onUpdate,
+  onBeforeUpdate,
   angle = START_ANGLE,
 }: RotatableImageProps) => {
   // editModedAngle saves the angle while this component is in 'edit mode'
@@ -138,7 +138,7 @@ export const RotatableImage = ({
     setIsRotating(false);
 
     // when the mouse is released, update the parent
-    if (onUpdated) onUpdated(editModeAngle);
+    if (onUpdate) onUpdate(editModeAngle);
   };
 
   const rotate = (point: Point) => {
@@ -150,8 +150,8 @@ export const RotatableImage = ({
 
       // allow the parent to update the angle e.g. to restrict the range
       // the user can rotate.
-      if (onUpdating) {
-        newAngle = onUpdating({ angle: newAngle, rotationDirection });
+      if (onBeforeUpdate) {
+        newAngle = onBeforeUpdate({ angle: newAngle, rotationDirection });
       }
 
       if (newAngle > editModeAngle) {
