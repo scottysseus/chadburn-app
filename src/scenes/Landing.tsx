@@ -1,13 +1,20 @@
+import { customAlphabet, urlAlphabet } from "nanoid";
 import React from "react";
 import { useNavigate } from "react-router";
-import { v4 as uuidv4 } from "uuid";
 import styles from "./Landing.module.css";
+
+/**
+ * generateId generates URL-safe IDs which are 4 characters long.
+ * These IDs should uniquely identify each game while being
+ * human readable and memorable.
+ */
+const generateId = customAlphabet(urlAlphabet, 4);
 
 export const Landing = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/${uuidv4()}`, { replace: true });
+    navigate(`/${generateId()}`, { replace: true });
   };
 
   return (
