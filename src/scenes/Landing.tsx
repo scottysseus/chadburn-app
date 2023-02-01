@@ -1,13 +1,16 @@
+import { customAlphabet, urlAlphabet } from "nanoid";
 import React from "react";
 import { useNavigate } from "react-router";
-import { v4 as uuidv4 } from "uuid";
 import styles from "./Landing.module.css";
+
+const generateId = customAlphabet(urlAlphabet, 5);
 
 export const Landing = () => {
   const navigate = useNavigate();
 
+  console.log(urlAlphabet);
   const onClick = () => {
-    navigate(`/${uuidv4()}`, { replace: true });
+    navigate(`/${generateId()}`, { replace: true });
   };
 
   return (
