@@ -1,16 +1,14 @@
 /// <reference types="Cypress" />
 
-import { PlayerView } from "../lib/PlayerView";
+import { Game } from "../lib/Game";
 
 describe("guess dial", () => {
   it("can be rotated", () => {
-    cy.visit("/");
+    cy.startNewGame();
 
-    cy.get('[data-cy="landing_btn_new_game"]').click();
+    Game.getGuessAngle().should("equal", 0);
 
-    PlayerView.get_guess_angle().should("equal", 0);
-
-    PlayerView.get_guess_dial().then(($guessDial) => {
+    Game.getGuessDial().then(($guessDial) => {
       const offset = $guessDial.offset();
 
       const downX = $guessDial.width() / 2 + offset.left;
@@ -26,6 +24,6 @@ describe("guess dial", () => {
         .trigger("mouseup");
     });
 
-    PlayerView.get_guess_angle().should("not.equal", 0);
+    Game.getGuessAngle().should("not.equal", 0);
   });
 });

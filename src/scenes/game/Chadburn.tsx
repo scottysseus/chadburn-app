@@ -26,16 +26,16 @@ export const Chadburn = ({
   return (
     <div className={styles.chadburn}>
       <GuessDial guess={guess} onUpdate={onGuessUpdate} />
-      {showTarget && (
-        <UnselectableImage
-          src="assets/target.svg"
-          className={styles.chadburnImage}
-          style={{
-            zIndex: 0,
-            transform: `rotate(${target}deg)`,
-          }}
-        />
-      )}
+
+      <UnselectableImage
+        src="assets/target.svg"
+        className={styles.chadburnImage}
+        style={{
+          zIndex: 0,
+          transform: `rotate(${target}deg)`,
+          visibility: showTarget ? "visible" : "hidden",
+        }}
+      />
       <UnselectableImage
         src="assets/border.svg"
         className={styles.chadburnImage}

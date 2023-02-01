@@ -35,3 +35,8 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add("startNewGame", () => {
+  cy.visit("/");
+  cy.get('[data-cy="landing_btn_new_game"]').click();
+});

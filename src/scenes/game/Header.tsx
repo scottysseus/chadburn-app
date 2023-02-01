@@ -12,7 +12,8 @@ export const Header = ({ score, teamInTurn }: HeaderProps) => {
   return (
     <div className={styles.header}>
       <p>
-        Blue: {score.get("blue")} Red: {score.get("red")}
+        Blue: <span data-cy="game_score_blue">{score.get("blue")}</span> Red:{" "}
+        <span data-cy="game_score_red">{score.get("red")}</span>
       </p>
 
       <p className={styles.turnTracker}>{teamInTurn} team&apos;s turn!</p>

@@ -27,7 +27,9 @@ export const RebuttalForm = ({
         }
       />
 
-      <button onClick={onRebuttalSubmit}>Submit</button>
+      <button data-cy="game_btn_submit_rebuttal" onClick={onRebuttalSubmit}>
+        Submit
+      </button>
     </>
   );
 };
