@@ -13,7 +13,6 @@ const generateId = customAlphabet(urlAlphabet, 5);
 export const Landing = () => {
   const navigate = useNavigate();
 
-  console.log(urlAlphabet);
   const onClick = () => {
     navigate(`/${generateId()}`, { replace: true });
   };
