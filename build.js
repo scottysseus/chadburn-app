@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const sassPlugin = require("esbuild-sass-plugin").default;
-const cssModulesPlugin = require("esbuild-css-modules-plugin");
 const { exec } = require("child_process");
 
 const esbuildConfig = {
