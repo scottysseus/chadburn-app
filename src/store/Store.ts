@@ -21,6 +21,7 @@ import {
   UpdateGuessAction,
   UpdateHintAction,
   UpdateRebuttalAction,
+  InitializeWithCachedState,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
 import { WebrtcProvider } from "y-webrtc";
@@ -54,6 +55,16 @@ export function getInitialSharedState(): SharedState {
     started: false,
     guess: START_GUESS,
     game: startGame(getRandomSpectrum(), getRandomTarget()),
+  };
+}
+
+export function geCachedSharedState(cachedState: SharedState): SharedState {
+  return {
+    game: cachedState.game,
+    started: cachedState.started,
+    guess: cachedState.guess,
+    hint: cachedState.hint,
+    rebuttal: cachedState.rebuttal,
   };
 }
 
@@ -181,6 +192,12 @@ export class YStore implements Store {
           ),
         };
         break;
+
+      case ActionTypes.INITIALIZE_WITH_CACHED_STATE:
+        const initializeWithCachedStateAction =
+          action as unknown as InitializeWithCachedState;
+        toShare = geCachedSharedState(initializeWithCachedStateAction.toShare);
+        break;
     }
 
     this.transactShareState(toShare);
@@ -206,7 +223,7 @@ export class YStore implements Store {
     return this.cachedSnapshot;
   }
 
-  private sharedStateFromY() {
+  private getSharedStateFromY() {
     if (this.ymap.size < 1) {
       return getInitialSharedState();
     }
@@ -291,7 +308,7 @@ export class YStore implements Store {
   }
 
   private updateCachedSnapshot() {
-    this.cachedSnapshot = this.sharedStateFromY();
+    this.cachedSnapshot = this.getSharedStateFromY();
   }
 
   private emitChange() {
