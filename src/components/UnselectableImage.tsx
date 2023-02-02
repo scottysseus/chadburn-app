@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "./UnselectableImage.module.css";
+import "./UnselectableImage.module.scss";
 
 /**
  * Browsers by default allow images to be dragged around
@@ -9,11 +9,7 @@ import styles from "./UnselectableImage.module.css";
 
 const UnselectableImage = React.forwardRef((props: any, ref) => {
   return (
-    <img
-      className={`${props?.className} ${styles.styledImage}`}
-      ref={ref}
-      {...props}
-    />
+    <img className={`${props?.className} styledImage`} ref={ref} {...props} />
   );
 });
 

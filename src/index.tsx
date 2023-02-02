@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "src/App";
 
-import "./index.module.css";
+import "./Styles/App.scss";
 
 window.onload = function () {
   const container = document.getElementById("root");

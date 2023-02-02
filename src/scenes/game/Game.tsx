@@ -32,7 +32,7 @@ import {
   UpdateHintAction,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
-import styles from "../Game.module.css";
+import "../Game.module.scss";
 
 interface GameProps {
   sharedState: SharedState;
@@ -150,7 +150,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   }
 
   return (
-    <div className={styles.gameSceneContainer} draggable={false}>
+    <div className="gameSceneContainer" draggable={false}>
       <Header
         score={sharedState.game.score}
         teamInTurn={sharedState.game.teamInTurn}
@@ -171,12 +171,12 @@ export const Game = ({ sharedState, publish }: GameProps) => {
 
       <div
         style={{ visibility: currentActionFormVisible ? "visible" : "hidden" }}
-        className={styles.currentActionFormContainer}
+        className="currentActionFormContainer"
       >
         {currentActionForm}
       </div>
 
-      <div className={styles.actorToggleContainer}>
+      <div className="actorToggleContainer">
         <Footer
           isPlayer={isPlayer}
           onActorToggle={onActorToggle}

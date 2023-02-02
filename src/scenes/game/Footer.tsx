@@ -1,7 +1,7 @@
 import React from "react";
 import { Toggle } from "src/components/Toggle";
 
-import styles from "../Game.module.css";
+import "../Game.module.scss";
 
 export interface FooterProps {
   isPlayer: boolean;
@@ -15,7 +15,7 @@ export const Footer = ({
   onNewGameClick,
 }: FooterProps) => {
   return (
-    <div className={styles.actorToggleContainer}>
+    <div className="actorToggleContainer">
       <button onClick={onNewGameClick}>New Game</button>
       <Toggle
         left="Player"

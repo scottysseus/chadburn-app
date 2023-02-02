@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../Game.module.css";
+import "../Game.module.scss";
 
 import { Score } from "src/game/game";
 
@@ -10,13 +10,13 @@ interface HeaderProps {
 
 export const Header = ({ score, teamInTurn }: HeaderProps) => {
   return (
-    <div className={styles.header}>
+    <div className="header">
       <p>
         Blue: <span data-cy="game_score_blue">{score.get("blue")}</span> Red:{" "}
         <span data-cy="game_score_red">{score.get("red")}</span>
       </p>
 
-      <p className={styles.turnTracker}>{teamInTurn} team&apos;s turn!</p>
+      <p className="turnTracker">{teamInTurn} team&apos;s turn!</p>
     </div>
   );
 };

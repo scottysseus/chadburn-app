@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../Game.module.css";
+import "../Game.module.scss";
 
 interface HintProps {
   hint: string | undefined;
@@ -8,7 +8,7 @@ interface HintProps {
 export const Hint = ({ hint }: HintProps) => {
   return (
     <>
-      <div className={styles.hintContainer}>
+      <div className="hintContainer">
         {hint ? hint : "The psychic must choose a hint"}
       </div>
     </>
