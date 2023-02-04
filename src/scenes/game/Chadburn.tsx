@@ -1,7 +1,7 @@
 import React from "react";
 import { GuessDial } from "src/components/GuessDial";
 import { UnselectableImage } from "src/components/UnselectableImage";
-import styles from "../Game.module.css";
+import "../Game.module.scss";
 
 export interface ChadburnProps {
   guess: number;
@@ -24,12 +24,12 @@ export const Chadburn = ({
   target,
 }: ChadburnProps) => {
   return (
-    <div className={styles.chadburn}>
+    <div className="chadburn">
       <GuessDial guess={guess} onUpdate={onGuessUpdate} />
 
       <UnselectableImage
         src="assets/target.svg"
-        className={styles.chadburnImage}
+        className="chadburnImage"
         style={{
           zIndex: 0,
           transform: `rotate(${target}deg)`,
@@ -38,7 +38,7 @@ export const Chadburn = ({
       />
       <UnselectableImage
         src="assets/border.svg"
-        className={styles.chadburnImage}
+        className="chadburnImage"
         style={{ zIndex: 0 }}
       />
     </div>

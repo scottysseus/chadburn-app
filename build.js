@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-
-const cssModulesPlugin = require("esbuild-css-modules-plugin");
+const sassPlugin = require("esbuild-sass-plugin").default;
 const { exec } = require("child_process");
 
 const esbuildConfig = {
@@ -8,7 +7,7 @@ const esbuildConfig = {
   entryPoints: ["src/index.tsx"],
   bundle: true,
   outfile: "www/main.js",
-  plugins: [cssModulesPlugin()],
+  plugins: [sassPlugin()],
   loader: { ".svg": "file" },
 };
 

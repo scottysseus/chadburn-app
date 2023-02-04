@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./TopBar.module.css";
+import "./TopBar.module.scss";
 
 export const TopBar = () => {
   return (
-    <div className={styles.topBar}>
+    <div className="topBar">
       <h1>
         <a href="/">CHADBURN</a>
       </h1>

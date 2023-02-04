@@ -5,7 +5,7 @@ import {
   RotationDirection,
 } from "src/components/RotatableImage";
 
-import styles from "../scenes/Game.module.css";
+import "../scenes/Game.module.scss";
 
 export interface GuessDialProps {
   guess: number;
@@ -40,7 +40,7 @@ export const GuessDial = ({ guess, onUpdate }: GuessDialProps) => {
   return (
     <RotatableImage
       src="assets/guess.svg"
-      className={styles.chadburnImage}
+      className="chadburnImage"
       style={{
         zIndex: 1,
       }}

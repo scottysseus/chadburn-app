@@ -1,7 +1,7 @@
 import { customAlphabet, urlAlphabet } from "nanoid";
 import React from "react";
 import { useNavigate } from "react-router";
-import styles from "./Landing.module.css";
+import "./Landing.module.scss";
 
 /**
  * generateId generates URL-safe IDs which are 4 characters long.
@@ -18,7 +18,7 @@ export const Landing = () => {
   };
 
   return (
-    <div className={styles.landingMenuContainer}>
+    <div className="landingMenuContainer">
       <button data-cy="landing_btn_new_game" onClick={onClick}>
         New Game
       </button>
