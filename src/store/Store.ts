@@ -15,13 +15,13 @@ import {
 import {
   Action,
   ActionTypes,
+  InitializeWithCachedState,
   SubmitGuessAction,
   SubmitHintAction,
   SubmitRebuttalAction,
   UpdateGuessAction,
   UpdateHintAction,
   UpdateRebuttalAction,
-  InitializeWithCachedState,
 } from "src/store/actions";
 import { SharedState } from "src/store/SharedState";
 import { WebrtcProvider } from "y-webrtc";
@@ -105,27 +105,28 @@ export class YStore implements Store {
       case ActionTypes.UPDATE_HINT:
         const updateHint: UpdateHintAction =
           action as unknown as UpdateHintAction;
-        toShare = { ...toShare, hint: updateHint.hint };
+        this.ymap.set(YMapKeys.HINT, updateHint.hint);
         break;
 
       case ActionTypes.UPDATE_GUESS:
         const updateGuess: UpdateGuessAction =
           action as unknown as UpdateGuessAction;
-        toShare = { ...toShare, guess: updateGuess.guess };
+        this.ymap.set(YMapKeys.GUESS, updateGuess.guess);
         break;
 
       case ActionTypes.UPDATE_REBUTTAL:
         const updateRebuttal: UpdateRebuttalAction =
           action as unknown as UpdateRebuttalAction;
-        toShare = { ...toShare, rebuttal: updateRebuttal.rebuttal };
+        this.ymap.set(YMapKeys.REBUTTAL, updateRebuttal.rebuttal);
+        break;
+
+      case ActionTypes.START_GAME:
+        this.ymap.set(YMapKeys.STARTED, true);
         break;
 
       case ActionTypes.NEW_GAME:
         toShare = getInitialSharedState();
-        break;
-
-      case ActionTypes.START_GAME:
-        toShare = { ...toShare, started: true };
+        this.transactShareState(toShare);
         break;
 
       case ActionTypes.START_TURN:
@@ -141,6 +142,7 @@ export class YStore implements Store {
             getRandomTarget()
           ),
         };
+        this.transactShareState(toShare);
         break;
 
       case ActionTypes.START_CATCH_UP_TURN:
@@ -156,6 +158,7 @@ export class YStore implements Store {
             getRandomTarget()
           ),
         };
+        this.transactShareState(toShare);
         break;
 
       case ActionTypes.SUBMIT_HINT:
@@ -167,6 +170,7 @@ export class YStore implements Store {
             submitHint(toShare.game.turn, submitHintAction.hint)
           ),
         };
+        this.transactShareState(toShare);
         break;
 
       case ActionTypes.SUBMIT_GUESS:
@@ -178,6 +182,7 @@ export class YStore implements Store {
             submitGuess(toShare.game.turn, submitGuessAction.guess)
           ),
         };
+        this.transactShareState(toShare);
         break;
 
       case ActionTypes.SUBMIT_REBUTTAL:
@@ -191,16 +196,16 @@ export class YStore implements Store {
             )
           ),
         };
+        this.transactShareState(toShare);
         break;
 
       case ActionTypes.INITIALIZE_WITH_CACHED_STATE:
         const initializeWithCachedStateAction =
           action as unknown as InitializeWithCachedState;
         toShare = geCachedSharedState(initializeWithCachedStateAction.toShare);
+        this.transactShareState(toShare);
         break;
     }
-
-    this.transactShareState(toShare);
   }
 
   /**
