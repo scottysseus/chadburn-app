@@ -3,7 +3,19 @@
 }
 
 .topBar > h1 {
+  font-size: 70px;
   text-align: center;
+  overflow: hidden;
+  animation: typing 3.5s steps(40, end);
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .topBar > h1 > a {
