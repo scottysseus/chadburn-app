@@ -22,7 +22,11 @@ export const Spectrum = ({ spectrum }: SpectrumProps) => {
         <p>
           {spectrum.right}
           <BsArrowRightSquare
-            style={{ marginBottom: "-3px", marginLeft: "4px" }}
+            style={{
+              marginBottom: "-3px",
+              marginLeft: "4px",
+              marginRight: "5px",
+            }}
           />
         </p>
       </div>
