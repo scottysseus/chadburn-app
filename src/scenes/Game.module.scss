@@ -18,10 +18,13 @@
   width: 100%;
   display: inline-flex;
   justify-content: space-between;
+  margin-left: 10px;
 }
 
 .turnTracker {
   text-align: end;
+  text-transform: capitalize;
+  margin-right: 20px;
 }
 
 .turnSummary {
@@ -54,6 +57,8 @@
 
 .hintContainer {
   margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
