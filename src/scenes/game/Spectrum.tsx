@@ -11,24 +11,18 @@ export const Spectrum = ({ spectrum }: SpectrumProps) => {
   return (
     <div className="spectrumContainer">
       <div className="spectrum">
-        <p>
-          <span>
-            <BsArrowLeftSquare
-              style={{ marginBottom: "-3px", marginRight: "4px" }}
-            />
-          </span>
-          {spectrum.left}
-        </p>
-        <p>
-          {spectrum.right}
-          <BsArrowRightSquare
-            style={{
-              marginBottom: "-3px",
-              marginLeft: "4px",
-              marginRight: "5px",
-            }}
-          />
-        </p>
+        <BsArrowLeftSquare
+          style={{ marginBottom: "-3px", marginRight: "4px" }}
+        />
+        <p id="one">{spectrum.left}</p>
+        <p id="two">{spectrum.right}</p>
+        <BsArrowRightSquare
+          style={{
+            marginBottom: "-3px",
+            marginLeft: "4px",
+            marginRight: "5px",
+          }}
+        />
       </div>
     </div>
   );
