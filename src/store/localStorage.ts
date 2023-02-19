@@ -23,10 +23,10 @@ export function cacheInLocalStorage(sharedState: SharedState) {
 
 /**
  * Attempts to read shared state from local storage.
- * Returns the cached shared state if it exists, or null
+ * Returns the cached shared state if it exists, or undefined
  * otherwise.
  */
-export function readFromLocalStorage(): SharedState | null {
+export function readFromLocalStorage(): SharedState | undefined {
   const data = window.localStorage.getItem("SHARED_STATE");
   if (data !== null) {
     return JSON.parse(data, (key, value) => {
@@ -39,5 +39,5 @@ export function readFromLocalStorage(): SharedState | null {
     });
   }
 
-  return null;
+  return undefined;
 }

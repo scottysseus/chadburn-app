@@ -1,5 +1,5 @@
 import { GameState } from "src/game/game";
-import { Rebuttal } from "src/game/turn";
+import { Rebuttal, Spectrum } from "src/game/turn";
 
 /**
  * SharedState is meant to be shared across all clients in the
@@ -17,4 +17,6 @@ export interface SharedState {
   game: GameState;
 
   started: boolean;
+
+  spectrumHistory: Array<Spectrum>;
 }

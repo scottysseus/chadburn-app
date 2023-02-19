@@ -32,8 +32,10 @@ function getRandomInteger(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-export function getRandomSpectrum(): Spectrum {
-  return spectrumData[getRandomInteger(0, 60)];
+export function getRandomSpectrum(spectrumHistory: Array<Spectrum>): Spectrum {
+  const currentRandomIndex = getRandomInteger(0, 60);
+
+  return spectrumData[currentRandomIndex];
 }
 
 export function getRandomTarget(): number {
