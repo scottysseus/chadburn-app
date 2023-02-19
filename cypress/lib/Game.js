@@ -1,5 +1,3 @@
-import { Rebuttals } from "./Player";
-
 // matches e.g. rotate(-90deg) and captures the numeric value (-90 in this case)
 const rotateDegreeRegex = /^rotate\(([-]?[0-9]+)deg\)$/;
 const matrixRegx = /^matrix\(.*\)$/;
@@ -7,6 +5,11 @@ const matrixRegx = /^matrix\(.*\)$/;
 export const Teams = {
   BLUE: "blue",
   RED: "red",
+};
+
+export const Rebuttals = {
+  RIGHT: "Right",
+  LEFT: "Left",
 };
 
 /**
@@ -91,8 +94,23 @@ export const Game = {
       return cy.wrap(angle);
     });
   },
+  getSubmittedHint() {
+    return cy.get('[data-cy="game_hint"]').then(($hint) => {
+      return cy.wrap($hint.text());
+    });
+  },
+  getSpectrum() {
+    return cy.get('[data-cy="spectrum_left"]').then(($spectrumLeft) => {
+      cy.get('[data-cy="spectrum_right"]').then(($spectrumRight) => {
+        return cy.wrap({
+          left: $spectrumLeft.text(),
+          right: $spectrumRight.text(),
+        });
+      });
+    });
+  },
   getGuessForPoints(desiredPoints) {
-    return this.getTargetAngle().then((targetAngle) => {
+    return Game.getTargetAngle().then((targetAngle) => {
       let multiplier = -1;
       if (targetAngle < 0) {
         multiplier = 1;
@@ -113,8 +131,8 @@ export const Game = {
     });
   },
   getCorrectRebuttal() {
-    return this.getTargetAngle().then((targetAngle) => {
-      return this.getGuessAngle().then((guessAngle) => {
+    return Game.getTargetAngle().then((targetAngle) => {
+      return Game.getGuessAngle().then((guessAngle) => {
         let rebuttal = Rebuttals.LEFT;
         if (guessAngle < targetAngle) {
           rebuttal = Rebuttals.RIGHT;
@@ -124,7 +142,7 @@ export const Game = {
     });
   },
   getIncorrectRebuttal() {
-    return this.getCorrectRebuttal().then((rebuttal) => {
+    return Game.getCorrectRebuttal().then((rebuttal) => {
       if (rebuttal === Rebuttals.LEFT) {
         return cy.wrap(Rebuttals.RIGHT);
       }
