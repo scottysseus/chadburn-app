@@ -6,13 +6,19 @@
 
 p {
   font-size: 1rem;
+  padding-left: 5px;
 }
 
 button {
-  width: 8rem;
+  width: 7rem;
 }
 
 .landingMenuContainer > button {
   display: block;
   margin: 0 auto;
+  margin-top: 70px;
+}
+
+#content2 {
+  padding-left: 10px;
 }

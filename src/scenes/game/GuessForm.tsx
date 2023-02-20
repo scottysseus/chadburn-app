@@ -56,6 +56,9 @@ export const GuessForm = ({
         type="text"
         value={localGuess}
         onChange={onInputChange}
+        style={{
+          lineHeight: "20px",
+        }}
       />
       <button
         data-cy="game_btn_submit_guess"

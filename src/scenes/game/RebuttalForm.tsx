@@ -27,7 +27,11 @@ export const RebuttalForm = ({
         }
       />
 
-      <button data-cy="game_btn_submit_rebuttal" onClick={onRebuttalSubmit}>
+      <button
+        data-cy="game_btn_submit_rebuttal"
+        onClick={onRebuttalSubmit}
+        style={{ marginLeft: "20px" }}
+      >
         Submit
       </button>
     </>

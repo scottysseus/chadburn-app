@@ -2,6 +2,14 @@
   display: block;
 }
 
+.newGameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -30px;
+  margin-bottom: 20px;
+}
+
 .pageHeader {
   display: flex;
   justify-content: left;
@@ -18,10 +26,13 @@
   width: 100%;
   display: inline-flex;
   justify-content: space-between;
+  margin-left: 10px;
 }
 
 .turnTracker {
   text-align: end;
+  text-transform: capitalize;
+  margin-right: 20px;
 }
 
 .turnSummary {
@@ -46,14 +57,21 @@
   width: 300px;
   display: inline-flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .spectrum > p {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
+}
+
+.spectrum > #two {
+  text-align: right;
 }
 
 .hintContainer {
   margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -97,7 +115,9 @@
 .actorToggleContainer {
   width: 100%;
   display: inline-flex;
-  justify-content: space-between;
+  justify-content: right;
   position: relative;
   z-index: 10;
+  margin-right: 10px;
+  margin-top: 20px;
 }

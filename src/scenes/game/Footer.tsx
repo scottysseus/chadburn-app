@@ -9,14 +9,9 @@ export interface FooterProps {
   onNewGameClick: () => void;
 }
 
-export const Footer = ({
-  isPlayer,
-  onActorToggle,
-  onNewGameClick,
-}: FooterProps) => {
+export const Footer = ({ isPlayer, onActorToggle }: FooterProps) => {
   return (
     <div className="actorToggleContainer">
-      <button onClick={onNewGameClick}>New Game</button>
       <Toggle
         left="Player"
         right="Psychic"

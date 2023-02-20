@@ -5,7 +5,9 @@ export const TopBar = () => {
   return (
     <div className="topBar">
       <h1>
-        <a href="/">CHADBURN</a>
+        <a href="/" className="typewriter">
+          CHADBURN
+        </a>
       </h1>
     </div>
   );
