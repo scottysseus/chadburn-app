@@ -32,6 +32,8 @@ function getRandomInteger(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+// TODO use the spectrum history to ensure we don't pick an already-used
+// spectrum.
 export function getRandomSpectrum(spectrumHistory: Array<Spectrum>): Spectrum {
   const currentRandomIndex = getRandomInteger(0, 60);
 

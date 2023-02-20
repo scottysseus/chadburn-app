@@ -96,7 +96,7 @@ export class YStore implements Store {
       this.emitChange();
     });
 
-    this.cachedSnapshot = initialState;
+    this.transactShareState(initialState || getInitialSharedState());
 
     // I feel like this should be done automatically...
     this.publish = this.publish.bind(this);
@@ -322,7 +322,10 @@ export class YStore implements Store {
       YMapKeys.SPECTRUM_HISTORY
     ) as Y.Array<Spectrum>;
 
-    spectrumHistory.push(toShare.spectrumHistory.slice(spectrumHistory.length));
+    // clear the spectrum history YArray and repopulate it from the
+    // SharedState
+    spectrumHistory.delete(0, spectrumHistory.length);
+    spectrumHistory.push(toShare.spectrumHistory);
   }
 
   /**
