@@ -8,6 +8,7 @@ import {
 import {
   getRandomSpectrum,
   getRandomTarget,
+  Spectrum,
   submitGuess,
   submitHint,
   submitRebuttal,
@@ -15,7 +16,6 @@ import {
 import {
   Action,
   ActionTypes,
-  InitializeWithCachedState,
   SubmitGuessAction,
   SubmitHintAction,
   SubmitRebuttalAction,
@@ -36,6 +36,7 @@ export const YMapKeys = {
   TEAM_IN_TURN: "teamInTurn",
   SCORE: "score",
   TURN: "turn",
+  SPECTRUM_HISTORY: "spectrumHistory",
 
   HINT: "hint",
   TARGET: "target",
@@ -51,20 +52,23 @@ const START_GUESS = 0;
 export const SHARED_STATE_YMAP_NAME = "sharedState";
 
 export function getInitialSharedState(): SharedState {
+  const newSpectrum = getRandomSpectrum([]);
   return {
     started: false,
     guess: START_GUESS,
-    game: startGame(getRandomSpectrum(), getRandomTarget()),
+    game: startGame(newSpectrum, getRandomTarget()),
+    spectrumHistory: [newSpectrum],
   };
 }
 
-export function geCachedSharedState(cachedState: SharedState): SharedState {
+export function getCachedSharedState(cachedState: SharedState): SharedState {
   return {
     game: cachedState.game,
     started: cachedState.started,
     guess: cachedState.guess,
     hint: cachedState.hint,
     rebuttal: cachedState.rebuttal,
+    spectrumHistory: cachedState.spectrumHistory,
   };
 }
 
@@ -82,16 +86,17 @@ export class YStore implements Store {
   ydoc: Y.Doc;
   cachedSnapshot?: SharedState;
 
-  constructor(ydoc: Y.Doc) {
+  constructor(ydoc: Y.Doc, initialState?: SharedState) {
     this.listeners = [];
 
     this.ydoc = ydoc;
     this.ymap = this.ydoc.getMap<any>(SHARED_STATE_YMAP_NAME);
-    this.transactShareState(getInitialSharedState());
     this.ymap.observeDeep(() => {
       this.updateCachedSnapshot();
       this.emitChange();
     });
+
+    this.transactShareState(initialState || getInitialSharedState());
 
     // I feel like this should be done automatically...
     this.publish = this.publish.bind(this);
@@ -101,6 +106,7 @@ export class YStore implements Store {
 
   publish<T extends Action>(action: T): void {
     let toShare: SharedState = this.getSnapshot();
+
     switch (action.type) {
       case ActionTypes.UPDATE_HINT:
         const updateHint: UpdateHintAction =
@@ -130,15 +136,17 @@ export class YStore implements Store {
         break;
 
       case ActionTypes.START_TURN:
+        const newSpectrum = getRandomSpectrum(toShare.spectrumHistory);
         toShare = {
           ...toShare,
+          spectrumHistory: [...toShare.spectrumHistory, newSpectrum],
           guess: START_GUESS,
           hint: undefined,
           rebuttal: undefined,
           game: startTurn(
             toShare.game,
             getTeamOutOfTurn(toShare.game),
-            getRandomSpectrum(),
+            newSpectrum,
             getRandomTarget()
           ),
         };
@@ -146,15 +154,17 @@ export class YStore implements Store {
         break;
 
       case ActionTypes.START_CATCH_UP_TURN:
+        const newCatchUpSpectrum = getRandomSpectrum(toShare.spectrumHistory);
         toShare = {
           ...toShare,
           guess: START_GUESS,
           hint: undefined,
           rebuttal: undefined,
+          spectrumHistory: [...toShare.spectrumHistory, newCatchUpSpectrum],
           game: startTurn(
             toShare.game,
             toShare.game.teamInTurn,
-            getRandomSpectrum(),
+            newCatchUpSpectrum,
             getRandomTarget()
           ),
         };
@@ -198,13 +208,6 @@ export class YStore implements Store {
         };
         this.transactShareState(toShare);
         break;
-
-      case ActionTypes.INITIALIZE_WITH_CACHED_STATE:
-        const initializeWithCachedStateAction =
-          action as unknown as InitializeWithCachedState;
-        toShare = geCachedSharedState(initializeWithCachedStateAction.toShare);
-        this.transactShareState(toShare);
-        break;
     }
   }
 
@@ -228,7 +231,11 @@ export class YStore implements Store {
     return this.cachedSnapshot;
   }
 
-  private getSharedStateFromY() {
+  /**
+   * Reads the full SharedState from the Y Document.
+   * @returns the full SharedState from the Y Document
+   */
+  private getSharedStateFromY(): SharedState {
     if (this.ymap.size < 1) {
       return getInitialSharedState();
     }
@@ -242,11 +249,16 @@ export class YStore implements Store {
       updatedScore.set(String(key), Number(value));
     });
 
+    const spectrumHistory = this.ymap.get(
+      YMapKeys.SPECTRUM_HISTORY
+    ) as Y.Array<Spectrum>;
+
     const sharedState: SharedState = {
       started: this.ymap.get(YMapKeys.STARTED),
       hint: this.ymap.get(YMapKeys.HINT),
       guess: this.ymap.get(YMapKeys.GUESS),
       rebuttal: this.ymap.get(YMapKeys.REBUTTAL),
+      spectrumHistory: spectrumHistory.toArray(),
       game: {
         teamInTurn: gameState.get(YMapKeys.TEAM_IN_TURN),
         score: updatedScore,
@@ -273,6 +285,11 @@ export class YStore implements Store {
     });
   }
 
+  /**
+   * Writes the given SharedState object to the Y Document
+   * to share it with the other players.
+   * @param toShare the state to share
+   */
   private shareState(toShare: SharedState) {
     if (this.ymap.size < 1) {
       this.initializeYMap();
@@ -300,16 +317,33 @@ export class YStore implements Store {
     turn.set(YMapKeys.LEFT, toShare.game.turn.spectrum.left);
     turn.set(YMapKeys.RIGHT, toShare.game.turn.spectrum.right);
     turn.set(YMapKeys.REBUTTAL, toShare.game.turn.rebuttal);
+
+    const spectrumHistory = this.ymap.get(
+      YMapKeys.SPECTRUM_HISTORY
+    ) as Y.Array<Spectrum>;
+
+    // clear the spectrum history YArray and repopulate it from the
+    // SharedState
+    spectrumHistory.delete(0, spectrumHistory.length);
+    spectrumHistory.push(toShare.spectrumHistory);
   }
 
+  /**
+   * Initializes the Y Document's 'schema'.
+   * This should only be called once on page load, and
+   * should mirror the schema defined by the SharedState interface.
+   */
   private initializeYMap() {
     const game = new Y.Map();
     const score = new Y.Map();
     const turn = new Y.Map();
+    const spectrumHistory = new Y.Array();
 
     this.ymap.set(YMapKeys.GAME, game);
     game.set(YMapKeys.SCORE, score);
     game.set(YMapKeys.TURN, turn);
+
+    this.ymap.set(YMapKeys.SPECTRUM_HISTORY, spectrumHistory);
   }
 
   private updateCachedSnapshot() {
@@ -346,7 +380,7 @@ export class YStoreFactory {
     this.ydoc = ydoc;
   }
 
-  getStore() {
-    return new YStore(this.ydoc);
+  getStore(initialState?: SharedState) {
+    return new YStore(this.ydoc, initialState);
   }
 }

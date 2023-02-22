@@ -1,5 +1,4 @@
 import { Rebuttal } from "src/game/turn";
-import { SharedState } from "src/store/SharedState";
 
 export enum ActionTypes {
   // game actions
@@ -7,7 +6,6 @@ export enum ActionTypes {
   START_GAME = "START_GAME",
   START_TURN = "START_TURN",
   START_CATCH_UP_TURN = "START_CATCH_UP_TURN",
-  INITIALIZE_WITH_CACHED_STATE = "INITIALIZE_WITH_CACHED_STATE",
 
   // turn actions
   SUBMIT_GUESS = "SUBMIT_GUESS",
@@ -52,9 +50,4 @@ export interface SubmitGuessAction extends Action {
 export interface SubmitRebuttalAction extends Action {
   type: ActionTypes.SUBMIT_REBUTTAL;
   rebuttal: Rebuttal;
-}
-
-export interface InitializeWithCachedState extends Action {
-  type: ActionTypes.INITIALIZE_WITH_CACHED_STATE;
-  toShare: SharedState;
 }

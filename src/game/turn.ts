@@ -32,8 +32,17 @@ function getRandomInteger(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-export function getRandomSpectrum(): Spectrum {
-  return spectrumData[getRandomInteger(0, 60)];
+// TODO create unit tests to check which of these two are most opitmal.
+export function getRandomSpectrum(spectrumHistory: Array<Spectrum>): Spectrum {
+  const spectrumSet = new Set(spectrumData);
+
+  spectrumHistory.map((spectrum) => {
+    spectrumSet.has(spectrum) ? spectrumSet.delete(spectrum) : null;
+  });
+
+  const currentRandomIndex = getRandomInteger(0, spectrumSet.size);
+
+  return Array.from(spectrumSet)[currentRandomIndex];
 }
 
 export function getRandomTarget(): number {
