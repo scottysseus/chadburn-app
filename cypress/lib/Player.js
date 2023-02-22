@@ -13,8 +13,8 @@ export const Player = {
   },
   choosesRebuttalWithCorrectness(correct) {
     let rebuttalFunction = correct
-      ? Game.getCorrectRebuttal.bind(Game)
-      : Game.getIncorrectRebuttal.bind(Game);
+      ? Game.getCorrectRebuttal
+      : Game.getIncorrectRebuttal;
     rebuttalFunction().then((rebuttal) => {
       Player.choosesRebuttal(rebuttal);
     });

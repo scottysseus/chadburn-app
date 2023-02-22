@@ -12,7 +12,12 @@ export const Spectrum = ({ spectrum }: SpectrumProps) => {
     <div className="spectrumContainer">
       <div className="spectrum">
         <BsArrowLeftSquare
-          style={{ marginBottom: "-3px", marginRight: "4px" }}
+          style={{
+            marginBottom: "-3px",
+            marginRight: "4px",
+            marginLeft: "5px",
+            width: "40px",
+          }}
         />
         <p id="one" data-cy="spectrum_left">
           {spectrum.left}
@@ -25,6 +30,7 @@ export const Spectrum = ({ spectrum }: SpectrumProps) => {
             marginBottom: "-3px",
             marginLeft: "4px",
             marginRight: "5px",
+            width: "40px",
           }}
         />
       </div>

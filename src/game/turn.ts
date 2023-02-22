@@ -33,17 +33,29 @@ function getRandomInteger(min: number, max: number): number {
 }
 
 export function getRandomSpectrum(spectrumHistory: Array<Spectrum>): Spectrum {
-  let newSpectrumData = spectrumData;
+  // TODO create unit tests to check which of these two are most opitmal.
+
+  // let newSpectrumData = spectrumData;
+
+  // spectrumHistory.map((spectrum) => {
+  //   newSpectrumData = newSpectrumData.filter(
+  //     (dataSpectrum) => dataSpectrum !== spectrum
+  //   );
+  // });
+
+  // const currentRandomIndex = getRandomInteger(0, newSpectrumData.length);
+
+  // return newSpectrumData[currentRandomIndex];
+
+  const spectrumSet = new Set(spectrumData);
 
   spectrumHistory.map((spectrum) => {
-    newSpectrumData = newSpectrumData.filter(
-      (dataSpectrum) => dataSpectrum !== spectrum
-    );
+    spectrumSet.has(spectrum) ? spectrumSet.delete(spectrum) : null;
   });
 
-  const currentRandomIndex = getRandomInteger(0, newSpectrumData.length);
+  const currentRandomIndex = getRandomInteger(0, spectrumSet.size);
 
-  return newSpectrumData[currentRandomIndex];
+  return Array.from(spectrumSet)[currentRandomIndex];
 }
 
 export function getRandomTarget(): number {
