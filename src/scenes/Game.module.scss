@@ -2,14 +2,6 @@
   display: block;
 }
 
-.newGameContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -30px;
-  margin-bottom: 20px;
-}
-
 .pageHeader {
   display: flex;
   justify-content: left;
@@ -118,9 +110,11 @@
 .actorToggleContainer {
   width: 100%;
   display: inline-flex;
-  justify-content: right;
+  justify-content: space-between;
   position: relative;
   z-index: 10;
   margin-right: 10px;
+  margin-left: 10px;
   margin-top: 20px;
+  align-items: center;
 }
