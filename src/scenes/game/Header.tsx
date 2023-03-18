@@ -1,7 +1,7 @@
 import React from "react";
 import "../Game.module.scss";
 
-import { Score } from "src/game/game";
+import { isGameOver, Score } from "src/game/game";
 
 interface HeaderProps {
   score: Score;
@@ -16,7 +16,9 @@ export const Header = ({ score, teamInTurn }: HeaderProps) => {
         <span data-cy="game_score_red">{score.get("red")}</span>
       </p>
 
-      <p className="turnTracker">{teamInTurn} team&apos;s turn!</p>
+      {!isGameOver(score) && (
+        <p className="turnTracker">{teamInTurn} team&apos;s turn!</p>
+      )}
     </div>
   );
 };

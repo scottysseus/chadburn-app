@@ -5,11 +5,15 @@ import "../Game.module.scss";
 
 interface SpectrumProps {
   spectrum: SpectrumType;
+  visible: boolean;
 }
 
-export const Spectrum = ({ spectrum }: SpectrumProps) => {
+export const Spectrum = ({ spectrum, visible }: SpectrumProps) => {
   return (
-    <div className="spectrumContainer">
+    <div
+      className="spectrumContainer"
+      style={{ visibility: visible ? "visible" : "hidden" }}
+    >
       <div className="spectrum">
         <BsArrowLeftSquare
           style={{

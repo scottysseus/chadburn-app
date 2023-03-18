@@ -24,7 +24,7 @@ export const Chadburn = ({
   target,
 }: ChadburnProps) => {
   return (
-    <div className="chadburn">
+    <>
       <GuessDial guess={guess} onUpdate={onGuessUpdate} />
 
       <UnselectableImage
@@ -41,6 +41,6 @@ export const Chadburn = ({
         className="chadburnImage"
         style={{ zIndex: 0 }}
       />
-    </div>
+    </>
   );
 };
