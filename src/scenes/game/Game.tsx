@@ -151,10 +151,6 @@ export const Game = ({ sharedState, publish }: GameProps) => {
 
   return (
     <div className="gameSceneContainer" draggable={false}>
-      <div className="newGameContainer">
-        <button onClick={onNewGameClick}>New Game</button>
-      </div>
-
       <Header
         score={sharedState.game.score}
         teamInTurn={sharedState.game.teamInTurn}
