@@ -50,15 +50,16 @@ export const GuessForm = ({
    * numbers difficult.
    */
   return (
-    <>
+    <div>
+      <p className="formDescription">
+        Guess where the psychic&apos;s hint lies on the spectrum
+      </p>
       <input
+        className="formInput"
         data-cy="game_input_guess"
         type="text"
         value={localGuess}
         onChange={onInputChange}
-        style={{
-          lineHeight: "20px",
-        }}
       />
       <button
         data-cy="game_btn_submit_guess"
@@ -67,6 +68,6 @@ export const GuessForm = ({
       >
         Submit
       </button>
-    </>
+    </div>
   );
 };

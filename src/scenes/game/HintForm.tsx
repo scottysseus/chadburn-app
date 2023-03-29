@@ -17,20 +17,25 @@ export const HintForm = ({
 
   return (
     <div>
-      <input
-        data-cy="game_input_hint"
-        type="text"
-        placeholder="Provide a hint"
-        onChange={onInputChanged}
-        value={hint}
-      ></input>
-      <button
-        data-cy="game_btn_submit_hint"
-        disabled={hint === ""}
-        onClick={onHintSubmit}
-      >
-        Submit
-      </button>
+      <p className="formDescription">
+        Provide a hint for your team to guess the highlighted target
+      </p>
+      <div className="formInput">
+        <input
+          data-cy="game_input_hint"
+          type="text"
+          placeholder="Provide a hint"
+          onChange={onInputChanged}
+          value={hint}
+        ></input>
+        <button
+          data-cy="game_btn_submit_hint"
+          disabled={hint === ""}
+          onClick={onHintSubmit}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 };

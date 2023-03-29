@@ -100,8 +100,7 @@
 }
 
 .currentActionFormContainer {
-  display: inline-flex;
-  justify-content: center;
+  text-align: center;
   width: 100%;
   position: relative;
   z-index: 9;
@@ -121,4 +120,15 @@
 
 .endgameText {
   text-align: center;
+}
+
+.formDescription {
+  font-size: 0.8rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.formInput {
+  display: inline-flex;
+  justify-content: center;
 }
