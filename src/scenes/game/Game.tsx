@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import {
   getGuessScore,
+  getScoreLeader,
   getTeamOutOfTurn,
   isCatchUp,
   isGameOver,
@@ -109,6 +110,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     }
   };
 
+  const gameOver = isGameOver(sharedState.game.score);
+
   /**
    * The current action form depends on the current actor, view, and
    * step within the turn. At the start of the turn, for example, it
@@ -122,7 +125,12 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       onHintSubmit={onHintSubmit}
     />
   );
-  if (sharedState.game.turn.hint && sharedState.game.turn.guess === undefined) {
+  if (gameOver) {
+    currentActionFormVisible = false;
+  } else if (
+    sharedState.game.turn.hint &&
+    sharedState.game.turn.guess === undefined
+  ) {
     currentActionForm = (
       <GuessForm
         guess={sharedState.guess}
@@ -149,6 +157,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     currentActionFormVisible = isPlayer;
   }
 
+  const leader = getScoreLeader(sharedState.game.score);
+
   return (
     <div className="gameSceneContainer" draggable={false}>
       <Header
@@ -156,18 +166,22 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         teamInTurn={sharedState.game.teamInTurn}
       />
 
-      <Hint hint={sharedState.game.turn.hint} />
+      <Hint visible={!gameOver} hint={sharedState.game.turn.hint} />
 
-      {isGameOver(sharedState) && <EndGame />}
+      <div className="chadburnContainer">
+        {gameOver ? (
+          <EndGame victor={leader!} />
+        ) : (
+          <Chadburn
+            guess={sharedState.guess}
+            onGuessUpdate={onGuessUpdate}
+            showTarget={!isPlayer || turnOver}
+            target={sharedState.game.turn.target}
+          />
+        )}
+      </div>
 
-      <Chadburn
-        guess={sharedState.guess}
-        onGuessUpdate={onGuessUpdate}
-        showTarget={!isPlayer || turnOver}
-        target={sharedState.game.turn.target}
-      />
-
-      <Spectrum spectrum={sharedState.game.turn.spectrum} />
+      <Spectrum visible={!gameOver} spectrum={sharedState.game.turn.spectrum} />
 
       <div
         style={{ visibility: currentActionFormVisible ? "visible" : "hidden" }}

@@ -5,7 +5,6 @@ import {
   startTurn as turnStateStartTurn,
   TurnState,
 } from "src/game/turn";
-import { SharedState } from "src/store/SharedState";
 
 export type Score = Map<string, number>;
 
@@ -166,14 +165,25 @@ export const isCatchUp = (state: GameState): boolean => {
   return false;
 };
 
-export function isGameOver(state: SharedState): boolean {
-  if (
-    (state.game.score.get(state.game.teamInTurn) || 0) >= 10 ||
-    (state.game.score.get(getTeamOutOfTurn(state.game)) || 0) >= 10
-  ) {
-    return true;
-  } else {
+export function isGameOver(score: Score): boolean {
+  for (const key of score.keys()) {
+    if ((score.get(key) || 0) >= 10) {
+      return true;
+    }
   }
-
   return false;
+}
+
+export function getScoreLeader(score: Score): string | undefined {
+  let highScore = 0;
+  let leader = undefined;
+
+  score.forEach((score, team) => {
+    if (score > highScore) {
+      highScore = score;
+      leader = team;
+    }
+  });
+
+  return leader;
 }
