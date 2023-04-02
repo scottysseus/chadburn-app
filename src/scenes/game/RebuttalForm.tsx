@@ -13,13 +13,18 @@ interface RebuttalViewProps {
 
 export const RebuttalForm = ({
   rebuttal,
+  teamInTurn,
+  otherTeam,
   onRebuttalUpdate,
   onRebuttalSubmit,
 }: RebuttalViewProps) => {
   return (
     <div>
       <p className="formDescription">
-        Is the hint to the left or the right of the other team&apos;s guess?
+        <span style={{ color: otherTeam }}>{otherTeam} team</span>, does the
+        hint lie to the left or the right of{" "}
+        <span style={{ color: teamInTurn }}>{teamInTurn} team&apos;s</span>{" "}
+        guess?
       </p>
       <div className="formInput">
         <Toggle
