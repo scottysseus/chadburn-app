@@ -154,4 +154,9 @@ export const Game = {
       return cy.wrap($scoreSpan.text());
     });
   },
+  getId() {
+    return cy.location().then((location) => {
+      return cy.wrap(location.pathname);
+    });
+  },
 };
