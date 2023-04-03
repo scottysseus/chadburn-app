@@ -1,6 +1,7 @@
 import { customAlphabet, urlAlphabet } from "nanoid";
 import React from "react";
 import { useNavigate } from "react-router";
+import { removeFromLocalStorage } from "src/store/localStorage";
 import "./Landing.module.scss";
 
 /**
@@ -14,6 +15,7 @@ export const Landing = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
+    removeFromLocalStorage();
     navigate(`/${generateId()}`, { replace: true });
   };
 
