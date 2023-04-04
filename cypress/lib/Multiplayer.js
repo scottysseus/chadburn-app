@@ -58,4 +58,8 @@ export class MultiplayerClient {
   setGuess(guess) {
     this.ymap.set("guess", guess);
   }
+
+  setSubmittedHint(hint) {
+    return this.ymap.get("game")?.get("turn")?.set("hint", hint);
+  }
 }

@@ -41,6 +41,21 @@ function getRotationDegreesFromCssMatrix(cssMatrix) {
   return normalizeDegrees(angle < 0 ? angle + 360 : angle);
 }
 
+export function getAngleOfElement($element) {
+  const transform = $element.css("transform");
+  let angle = NaN;
+
+  if (rotateDegreeRegex.test(transform)) {
+    const match = rotateDegreeRegex.exec(transform);
+    angle = match[1];
+  } else if (matrixRegx.test(transform)) {
+    const match = matrixRegx.exec(transform);
+    angle = getRotationDegreesFromCssMatrix(match[0]);
+  }
+
+  return angle;
+}
+
 export const Game = {
   enablePsychicView() {
     return cy.contains("button", "Psychic").then(($btn) => {
@@ -60,20 +75,7 @@ export const Game = {
     return cy.get('img[src="assets/guess.svg"]');
   },
   getGuessAngle() {
-    return Game.getGuessDial().then(($guessDial) => {
-      const transform = $guessDial.css("transform");
-      let angle = NaN;
-
-      if (rotateDegreeRegex.test(transform)) {
-        const match = rotateDegreeRegex.exec(transform);
-        angle = match[1];
-      } else if (matrixRegx.test(transform)) {
-        const match = matrixRegx.exec(transform);
-        angle = getRotationDegreesFromCssMatrix(match[0]);
-      }
-
-      return cy.wrap(angle);
-    });
+    return Game.getGuessDial().pipe(getAngleOfElement);
   },
   getTargetImage() {
     return cy.get('img[src="assets/target.svg"]');
