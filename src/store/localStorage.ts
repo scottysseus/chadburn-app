@@ -1,4 +1,5 @@
 import { SharedState } from "src/store/SharedState";
+import { getInitialSharedState } from "src/store/Store";
 
 /**
  * Caches the shared state in local storage so it can
@@ -40,4 +41,8 @@ export function readFromLocalStorage(): SharedState | undefined {
   }
 
   return undefined;
+}
+
+export function removeFromLocalStorage() {
+  window.localStorage.removeItem("SHARED_STATE");
 }
