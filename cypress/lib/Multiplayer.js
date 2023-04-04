@@ -25,7 +25,6 @@ export function getDefaultSignalingUrl() {
  * @returns
  */
 export function getClientForAnotherPlayer(gameId, signalingUrl) {
-  console.log(gameId, signalingUrl);
   const ydoc = new Y.Doc();
 
   const provider = new WebrtcProvider(gameId, ydoc, {
@@ -37,23 +36,26 @@ export function getClientForAnotherPlayer(gameId, signalingUrl) {
 
 const SHARED_STATE_YMAP_NAME = "sharedState";
 
+/**
+ * MultiplayerClient represents another player.
+ * It can be used to perform actions on behalf of another player and query the other player's game state.
+ */
 export class MultiplayerClient {
   constructor(ydoc, provider) {
     this.ydoc = ydoc;
     this.provider = provider;
     this.ymap = this.ydoc.getMap(SHARED_STATE_YMAP_NAME);
-
-    this.ydoc.on("beforeTransaction", (event) => {
-      console.log(event);
-    });
-
-    this.ymap.observeDeep(() => {
-      console.log("an update happened");
-    });
   }
 
   getSubmittedHint() {
-    console.log(this.ymap.toJSON());
     return this.ymap.get("game")?.get("turn")?.get("hint");
+  }
+
+  getGuess() {
+    return this.ymap.get("guess");
+  }
+
+  setGuess(guess) {
+    this.ymap.set("guess", guess);
   }
 }

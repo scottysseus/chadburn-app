@@ -156,7 +156,7 @@ export const Game = {
   },
   getId() {
     return cy.location().then((location) => {
-      return cy.wrap(location.pathname);
+      return cy.wrap(location.pathname.slice(1));
     });
   },
 };
