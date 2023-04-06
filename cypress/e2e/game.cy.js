@@ -9,47 +9,47 @@ describe("game", () => {
     cy.startNewGame();
 
     // blue team turn 1
-    Psychic.setsHint("a hint");
-    Player.setsGuessForPoints(4);
-    Player.choosesIncorrectRebuttal();
+    Psychic.submitsHint("a hint");
+    Player.submitsGuessForPoints(4);
+    Player.submitsIncorrectRebuttal();
     Game.getScoreForTeam(Teams.BLUE).should("equal", "4");
     Game.getScoreForTeam(Teams.RED).should("equal", "0");
 
     // red team turn 1
-    Psychic.setsHint("a hint");
-    Player.setsGuessForPoints(2);
-    Player.choosesCorrectRebuttal();
+    Psychic.submitsHint("a hint");
+    Player.submitsGuessForPoints(2);
+    Player.submitsCorrectRebuttal();
 
     Game.getScoreForTeam(Teams.BLUE).should("equal", "5");
     Game.getScoreForTeam(Teams.RED).should("equal", "2");
 
     // blue team turn 2
-    Psychic.setsHint("a hint");
-    Player.setsGuessForPoints(3);
-    Player.choosesCorrectRebuttal();
+    Psychic.submitsHint("a hint");
+    Player.submitsGuessForPoints(3);
+    Player.submitsCorrectRebuttal();
     Game.getScoreForTeam(Teams.BLUE).should("equal", "8");
     Game.getScoreForTeam(Teams.RED).should("equal", "3");
 
     // red team turn 2
-    Psychic.setsHint("a hint");
-    Player.setsGuessForPoints(4);
-    Player.choosesIncorrectRebuttal();
+    Psychic.submitsHint("a hint");
+    Player.submitsGuessForPoints(4);
+    Player.submitsIncorrectRebuttal();
 
     Game.getScoreForTeam(Teams.BLUE).should("equal", "8");
     Game.getScoreForTeam(Teams.RED).should("equal", "7");
 
     // red team catch up turn
-    Psychic.setsHint("a hint");
-    Player.setsGuessForPoints(0);
-    Player.choosesCorrectRebuttal();
+    Psychic.submitsHint("a hint");
+    Player.submitsGuessForPoints(0);
+    Player.submitsCorrectRebuttal();
 
     Game.getScoreForTeam(Teams.BLUE).should("equal", "9");
     Game.getScoreForTeam(Teams.RED).should("equal", "7");
 
     // blue team turn 3
-    Psychic.setsHint("a hint");
-    Player.setsGuessForPoints(2);
-    Player.choosesCorrectRebuttal();
+    Psychic.submitsHint("a hint");
+    Player.submitsGuessForPoints(2);
+    Player.submitsCorrectRebuttal();
 
     Game.getScoreForTeam(Teams.BLUE).should("equal", "11");
     Game.getScoreForTeam(Teams.RED).should("equal", "8");
@@ -60,7 +60,7 @@ describe("game", () => {
 
     const hint = "a hint";
     const guess = 25;
-    Psychic.setsHint(hint);
+    Psychic.submitsHint(hint);
     Player.setsGuess(guess);
 
     const oldSpectrumAlias = "old-spectrum";

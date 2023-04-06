@@ -1,31 +1,34 @@
 import { Game } from "./Game";
 
 export const Player = {
-  setsGuessForPoints(points) {
-    Game.getGuessForPoints(points).then((guessAngle) => {
-      Player.setsGuess(guessAngle);
-    });
-  },
   setsGuess(guess) {
     Game.enablePlayerView();
     cy.get('[data-cy="game_input_guess"]').clear().type(guess);
+  },
+  submitsGuessForPoints(points) {
+    Game.getGuessForPoints(points).then((guessAngle) => {
+      Player.submitsGuess(guessAngle);
+    });
+  },
+  submitsGuess(guess) {
+    Player.setsGuess(guess);
     cy.get('[data-cy="game_btn_submit_guess"]').click();
   },
-  choosesRebuttalWithCorrectness(correct) {
+  submitsRebuttalWithCorrectness(correct) {
     let rebuttalFunction = correct
       ? Game.getCorrectRebuttal
       : Game.getIncorrectRebuttal;
     rebuttalFunction().then((rebuttal) => {
-      Player.choosesRebuttal(rebuttal);
+      Player.submitsRebuttal(rebuttal);
     });
   },
-  choosesCorrectRebuttal() {
-    Player.choosesRebuttalWithCorrectness(true);
+  submitsCorrectRebuttal() {
+    Player.submitsRebuttalWithCorrectness(true);
   },
-  choosesIncorrectRebuttal() {
-    Player.choosesRebuttalWithCorrectness(false);
+  submitsIncorrectRebuttal() {
+    Player.submitsRebuttalWithCorrectness(false);
   },
-  choosesRebuttal(rebuttal) {
+  submitsRebuttal(rebuttal) {
     Game.enablePlayerView();
     cy.contains("button", rebuttal).then(($btn) => {
       if (!$btn.is(":disabled")) {
