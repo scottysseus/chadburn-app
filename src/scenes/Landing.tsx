@@ -16,7 +16,7 @@ export const Landing = () => {
 
   const onClick = () => {
     removeFromLocalStorage();
-    navigate(`/${generateId()}`, { replace: true });
+    navigate(`/${generateId()}`, { replace: true, state: { isNewGame: true } });
   };
 
   return (

@@ -96,7 +96,9 @@ export class YStore implements Store {
       this.emitChange();
     });
 
-    this.transactShareState(initialState || getInitialSharedState());
+    if (initialState) {
+      this.transactShareState(initialState);
+    }
 
     // I feel like this should be done automatically...
     this.publish = this.publish.bind(this);
@@ -380,7 +382,10 @@ export class YStoreFactory {
     this.ydoc = ydoc;
   }
 
-  getStore(initialState?: SharedState) {
+  getStore(initialState?: SharedState, isNewGame = true) {
+    if (!initialState && isNewGame) {
+      initialState = getInitialSharedState();
+    }
     return new YStore(this.ydoc, initialState);
   }
 }
