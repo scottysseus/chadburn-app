@@ -77,7 +77,7 @@ export type Listener = () => void;
 export interface Store {
   publish<T extends Action>(action: T): void;
   subscribe(listener: Listener): () => void;
-  getSnapshot(): SharedState;
+  getSnapshot(): SharedState | undefined;
 }
 
 export class YStore implements Store {
@@ -107,7 +107,7 @@ export class YStore implements Store {
   }
 
   publish<T extends Action>(action: T): void {
-    let toShare: SharedState = this.getSnapshot();
+    let toShare: SharedState = this.getSnapshot() || getInitialSharedState();
 
     switch (action.type) {
       case ActionTypes.UPDATE_HINT:
@@ -225,11 +225,7 @@ export class YStore implements Store {
     };
   }
 
-  getSnapshot(): SharedState {
-    if (!this.cachedSnapshot) {
-      this.cachedSnapshot = getInitialSharedState();
-    }
-
+  getSnapshot(): SharedState | undefined {
     return this.cachedSnapshot;
   }
 

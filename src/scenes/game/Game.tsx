@@ -48,13 +48,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   const turnOver = isTurnOver(sharedState.game.turn);
 
   useEffect(() => {
-    /**
-     * This is pretty hacky, but because of the way getInitialSharedState() is implemented,
-     * sharedState.hint is undefined if we are joining another player's game, but have NOT
-     * loaded their state yet. If we have not loaded their state, we don't want to publish this
-     * START_GAME action.
-     */
-    if (!sharedState.started && sharedState.hasOwnProperty("hint")) {
+    if (!sharedState.started) {
       publish({ type: ActionTypes.START_GAME });
     }
   }, [sharedState]);
