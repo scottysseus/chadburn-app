@@ -1,5 +1,8 @@
 import { SharedState } from "src/store/SharedState";
-import { getInitialSharedState } from "src/store/Store";
+
+export function cacheGameIdInLocalStorage(gameId?: string) {
+  if (gameId) window.localStorage.setItem("GAME_ID", gameId);
+}
 
 /**
  * Caches the shared state in local storage so it can
@@ -20,6 +23,14 @@ export function cacheInLocalStorage(sharedState: SharedState) {
       }
     })
   );
+}
+
+export function readGameIdFromLocalStorage(): string | undefined {
+  const data = window.localStorage.getItem("GAME_ID");
+
+  if (data !== null) {
+    return data;
+  }
 }
 
 /**
@@ -45,4 +56,5 @@ export function readFromLocalStorage(): SharedState | undefined {
 
 export function removeFromLocalStorage() {
   window.localStorage.removeItem("SHARED_STATE");
+  window.localStorage.removeItem("GAME_ID");
 }

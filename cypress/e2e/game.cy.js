@@ -72,7 +72,7 @@ describe("game", () => {
     // assert that the hint, guess, and spectrum have not changed
     // after refreshing the page.
     Game.getSpectrum().then((spectrum) => {
-      cy.get(`@${oldSpectrumAlias}`).should("to.deep.equal", spectrum);
+      cy.get(`@${oldSpectrumAlias}`).should("deep.equal", spectrum);
     });
     Game.getSubmittedHint().should("equal", hint);
     Game.getGuessAngle().should("equal", guess);

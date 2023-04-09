@@ -80,8 +80,6 @@ describe("multiplayer", () => {
     Game.getGuessAngle().should("equal", guess);
   });
 
-  /*
-  TODO enable this test when we fix the multiplayer cache overwriting issue
   it("leaves behind its cached state when joining another player's game", () => {
     cy.startNewGame();
     Psychic.submitsHint("a hint");
@@ -95,13 +93,15 @@ describe("multiplayer", () => {
 
     const newGuess = 22;
     const newHint = "new hint";
+    otherPlayer.startGame();
     otherPlayer.setGuess(newGuess);
     otherPlayer.setSubmittedHint(newHint);
+    const spectrum = otherPlayer.getSpectrum();
 
     cy.visit(`/${otherGameId}`);
 
     Game.getGuessAngle().should("equal", newGuess);
     Game.getSubmittedHint().should("equal", newHint);
+    Game.getSpectrum().should("deep.equal", spectrum);
   });
-  */
 });
