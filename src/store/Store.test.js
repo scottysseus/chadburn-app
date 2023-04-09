@@ -1,5 +1,10 @@
 import { ActionTypes } from "src/store/actions";
-import { SHARED_STATE_YMAP_NAME, YMapKeys, YStore } from "src/store/Store";
+import {
+  getInitialSharedState,
+  SHARED_STATE_YMAP_NAME,
+  YMapKeys,
+  YStore,
+} from "src/store/Store";
 import * as Y from "yjs";
 
 function getConnectedDocuments() {
@@ -20,7 +25,7 @@ function getConnectedDocuments() {
 describe("YStore", () => {
   it("shares guess updates with other players", () => {
     const [player1, player2] = getConnectedDocuments();
-    const player1Store = new YStore(player1);
+    const player1Store = new YStore(player1, getInitialSharedState());
 
     player1Store.publish({ type: ActionTypes.UPDATE_GUESS, guess: 10 });
     expect(player2.getMap(SHARED_STATE_YMAP_NAME).get(YMapKeys.GUESS)).toBe(10);
