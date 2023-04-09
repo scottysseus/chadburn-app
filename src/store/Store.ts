@@ -72,22 +72,22 @@ export function getCachedSharedState(cachedState: SharedState): SharedState {
   };
 }
 
-export type Listener = () => void;
+export type Subscriber = () => void;
 
 export interface Store {
   publish<T extends Action>(action: T): void;
-  subscribe(listener: Listener): () => void;
+  subscribe(subscriber: Subscriber): () => void;
   getSnapshot(): SharedState;
 }
 
 export class YStore implements Store {
-  listeners: Listener[];
+  subscribers: Subscriber[];
   ymap: Y.Map<any>;
   ydoc: Y.Doc;
   cachedSnapshot?: SharedState;
 
   constructor(ydoc: Y.Doc, initialState?: SharedState) {
-    this.listeners = [];
+    this.subscribers = [];
 
     this.ydoc = ydoc;
     this.ymap = this.ydoc.getMap<any>(SHARED_STATE_YMAP_NAME);
@@ -212,14 +212,14 @@ export class YStore implements Store {
   }
 
   /**
-   * Subscribes a listener to changes to the store.
-   * @param listener
-   * @returns An unsubscribe function for this listener.
+   * Subscribes to changes to the store.
+   * @param subscriber
+   * @returns An unsubscribe function for this subscriber.
    */
-  subscribe(listener: Listener) {
-    this.listeners.push(listener);
+  subscribe(subscriber: Subscriber) {
+    this.subscribers.push(subscriber);
     return () => {
-      this.listeners = this.listeners.filter((l) => l !== listener);
+      this.subscribers = this.subscribers.filter((l) => l !== subscriber);
     };
   }
 
@@ -351,8 +351,8 @@ export class YStore implements Store {
   }
 
   private emitChange() {
-    this.listeners.forEach((listener) => {
-      listener();
+    this.subscribers.forEach((subscriber) => {
+      subscriber();
     });
   }
 }
