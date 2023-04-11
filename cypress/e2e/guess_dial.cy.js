@@ -2,6 +2,9 @@
 
 import { Game } from "../lib/Game";
 
+/**
+ * Smoke tests for the SVG guess dial. We need to ensure it can be dragged.
+ */
 describe("guess dial", () => {
   it("can be rotated", () => {
     cy.startNewGame();

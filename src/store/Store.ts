@@ -78,7 +78,7 @@ export interface Store {
   publish<T extends Action>(action: T): void;
   subscribe(subscriber: Subscriber): () => void;
   getSnapshot(): SharedState;
-}
+
 
 export class YStore implements Store {
   subscribers: Subscriber[];
@@ -96,7 +96,9 @@ export class YStore implements Store {
       this.emitChange();
     });
 
-    this.transactShareState(initialState || getInitialSharedState());
+    if (initialState) {
+      this.transactShareState(initialState);
+    }
 
     // I feel like this should be done automatically...
     this.publish = this.publish.bind(this);
@@ -105,7 +107,7 @@ export class YStore implements Store {
   }
 
   publish<T extends Action>(action: T): void {
-    let toShare: SharedState = this.getSnapshot();
+    let toShare: SharedState = this.getSnapshot() || getInitialSharedState();
 
     switch (action.type) {
       case ActionTypes.UPDATE_HINT:
@@ -223,11 +225,7 @@ export class YStore implements Store {
     };
   }
 
-  getSnapshot(): SharedState {
-    if (!this.cachedSnapshot) {
-      this.cachedSnapshot = getInitialSharedState();
-    }
-
+  getSnapshot(): SharedState | undefined {
     return this.cachedSnapshot;
   }
 
@@ -380,7 +378,10 @@ export class YStoreFactory {
     this.ydoc = ydoc;
   }
 
-  getStore(initialState?: SharedState) {
+  getStore(initialState?: SharedState, isNewGame = true) {
+    if (!initialState && isNewGame) {
+      initialState = getInitialSharedState();
+    }
     return new YStore(this.ydoc, initialState);
   }
 }

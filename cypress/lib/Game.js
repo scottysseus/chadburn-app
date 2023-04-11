@@ -30,6 +30,11 @@ function normalizeDegrees(degrees) {
   return degrees;
 }
 
+/**
+ * Gets the rotation angle in degrees from a CSS transform matrix.
+ * @param {*} cssMatrix the value of the CSS transform property as a matrix
+ * @returns the rotation angle in degrees
+ */
 function getRotationDegreesFromCssMatrix(cssMatrix) {
   let angle = 0;
   if (cssMatrix !== "none") {
@@ -41,6 +46,11 @@ function getRotationDegreesFromCssMatrix(cssMatrix) {
   return normalizeDegrees(angle < 0 ? angle + 360 : angle);
 }
 
+/**
+ * gets the rotation angle in degrees of the given element using the element's CSS transform property.
+ * @param {*} $element Cypress element to get the rotation angle of
+ * @returns
+ */
 export function getAngleOfElement($element) {
   const transform = $element.css("transform");
   let angle = NaN;
@@ -74,27 +84,20 @@ export const Game = {
   getGuessDial() {
     return cy.get('img[src="assets/guess.svg"]');
   },
+  /**
+   * @returns the angle of the guess, taken from the SVG's CSS transform property
+   */
   getGuessAngle() {
     return Game.getGuessDial().pipe(getAngleOfElement);
   },
   getTargetImage() {
     return cy.get('img[src="assets/target.svg"]');
   },
+  /**
+   * @returns the angle of the target, taken from the SVG's CSS transform property
+   */
   getTargetAngle() {
-    return Game.getTargetImage().then(($targetImage) => {
-      const transform = $targetImage.css("transform");
-      let angle = NaN;
-
-      if (rotateDegreeRegex.test(transform)) {
-        const match = rotateDegreeRegex.exec(transform);
-        angle = match[1];
-      } else if (matrixRegx.test(transform)) {
-        const match = matrixRegx.exec(transform);
-        angle = getRotationDegreesFromCssMatrix(match[0]);
-      }
-
-      return cy.wrap(angle);
-    });
+    return Game.getTargetImage().pipe(getAngleOfElement);
   },
   getSubmittedHint() {
     return cy.get('[data-cy="game_hint"]').then(($hint) => {
@@ -111,6 +114,11 @@ export const Game = {
       });
     });
   },
+  /**
+   * Returns a guess that will result in the desired points
+   * @param {*} desiredPoints
+   * @returns
+   */
   getGuessForPoints(desiredPoints) {
     return Game.getTargetAngle().then((targetAngle) => {
       let multiplier = -1;
@@ -132,6 +140,10 @@ export const Game = {
       return cy.wrap(targetAngle + offset * multiplier);
     });
   },
+  /**
+   * returns the correct rebuttal value to give the rebutting team a point
+   * @returns
+   */
   getCorrectRebuttal() {
     return Game.getTargetAngle().then((targetAngle) => {
       return Game.getGuessAngle().then((guessAngle) => {
@@ -143,6 +155,10 @@ export const Game = {
       });
     });
   },
+  /**
+   * returns the incorrect rebuttal
+   * @returns
+   */
   getIncorrectRebuttal() {
     return Game.getCorrectRebuttal().then((rebuttal) => {
       if (rebuttal === Rebuttals.LEFT) {
@@ -151,6 +167,11 @@ export const Game = {
       return cy.wrap(Rebuttals.LEFT);
     });
   },
+  /**
+   * returns the current score for the given team
+   * @param {*} team
+   * @returns
+   */
   getScoreForTeam(team) {
     return cy.get(`[data-cy="game_score_${team}"]`).then(($scoreSpan) => {
       return cy.wrap($scoreSpan.text());
