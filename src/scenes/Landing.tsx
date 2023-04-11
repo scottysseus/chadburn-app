@@ -17,10 +17,7 @@ export const Landing = () => {
   const onClick = () => {
     removeFromLocalStorage();
     navigate(`/${generateId()}`, { replace: true, state: { isNewGame: true } });
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-      console.log("full screen");
-    }
+    document.documentElement.requestFullscreen();
   };
 
   return (
