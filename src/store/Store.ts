@@ -77,8 +77,8 @@ export type Subscriber = () => void;
 export interface Store {
   publish<T extends Action>(action: T): void;
   subscribe(subscriber: Subscriber): () => void;
-  getSnapshot(): SharedState;
-
+  getSnapshot(): SharedState | undefined;
+}
 
 export class YStore implements Store {
   subscribers: Subscriber[];
