@@ -1,9 +1,14 @@
 .topBar {
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-top: 40px;
 }
 
 .topBar > h1 {
-  font-size: 70px;
+  font-size: 50px;
   text-align: center;
   overflow: hidden;
   animation: typing 3.5s steps(40, end);
