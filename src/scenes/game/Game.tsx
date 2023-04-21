@@ -23,6 +23,7 @@ import { Hint } from "src/scenes/game/Hint";
 import { HintForm } from "src/scenes/game/HintForm";
 import { RebuttalForm } from "src/scenes/game/RebuttalForm";
 import { Spectrum } from "src/scenes/game/Spectrum";
+import { Summary } from "src/scenes/game/Summary";
 import {
   Action,
   ActionTypes,
@@ -103,6 +104,9 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       rebuttal: sharedState.rebuttal ? sharedState.rebuttal : DEFAULT_REBUTTAL,
     };
     publish(action);
+  };
+
+  const onNextTurnClick = () => {
     if (getGuessScore(sharedState.game) === 4 && isCatchUp(sharedState.game)) {
       publish({ type: ActionTypes.START_CATCH_UP_TURN });
     } else {
@@ -190,11 +194,15 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         {currentActionForm}
       </div>
 
+      <Summary isTurnOver={turnOver} state={sharedState} />
+
       <div className="actorToggleContainer">
         <Footer
           isPlayer={isPlayer}
           onActorToggle={onActorToggle}
           onNewGameClick={onNewGameClick}
+          isTurnOver={turnOver}
+          onNextTurnClick={onNextTurnClick}
         />
       </div>
     </div>
