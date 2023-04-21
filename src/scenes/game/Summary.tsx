@@ -24,13 +24,20 @@ export const Summary = ({ isTurnOver, state }: SummaryProps) => {
           <>
             <p>
               <span style={{ color: "blue" }}>
-                Blue Team: {state.game.score.get("blue") || 0}{" "}
+                Blue Team:{" "}
+                {(state.game.score.get("blue") || 0) +
+                  getGuessScore(state.game)}{" "}
               </span>
               <HiOutlineArrowUp /> {getGuessScore(state.game)}
             </p>
             <p>
               <span style={{ color: "red" }}>
-                Red Team: {state.game.score.get("red") || 0}{" "}
+                Red Team:{" "}
+                {(state.game.score.get("red") || 0) +
+                  getRebuttalScore(
+                    state.game,
+                    getCorrectRebuttal(state.game)
+                  )}{" "}
               </span>
               <HiOutlineArrowUp />{" "}
               {getRebuttalScore(state.game, getCorrectRebuttal(state.game))}
@@ -40,14 +47,20 @@ export const Summary = ({ isTurnOver, state }: SummaryProps) => {
           <>
             <p>
               <span style={{ color: "blue" }}>
-                Blue Team: {state.game.score.get("blue") || 0}{" "}
+                Blue Team:{" "}
+                {(state.game.score.get("blue") || 0) +
+                  getRebuttalScore(
+                    state.game,
+                    getCorrectRebuttal(state.game)
+                  )}{" "}
               </span>
               <HiOutlineArrowUp />{" "}
               {getRebuttalScore(state.game, getCorrectRebuttal(state.game))}
             </p>
             <p>
               <span style={{ color: "red" }}>
-                Red Team: {state.game.score.get("red") || 0}{" "}
+                Red Team:{" "}
+                {(state.game.score.get("red") || 0) + getGuessScore(state.game)}{" "}
               </span>
               <HiOutlineArrowUp /> {getGuessScore(state.game)}
             </p>
