@@ -7,22 +7,34 @@ export interface FooterProps {
   isPlayer: boolean;
   onActorToggle: (isPlayer: boolean) => void;
   onNewGameClick: () => void;
+  onNextTurnClick: () => void;
+  isTurnOver: boolean;
 }
 
 export const Footer = ({
   isPlayer,
   onActorToggle,
   onNewGameClick,
+  isTurnOver,
+  onNextTurnClick,
 }: FooterProps) => {
   return (
     <div className="actorToggleContainer">
       <a onClick={onNewGameClick}>New Game</a>
-      <Toggle
-        left="Player"
-        right="Psychic"
-        isLeft={isPlayer}
-        onToggle={onActorToggle}
-      />
+      {isTurnOver ? (
+        <>
+          <a onClick={onNextTurnClick}>Next Turn </a>
+        </>
+      ) : (
+        <>
+          <Toggle
+            left="Player"
+            right="Psychic"
+            isLeft={isPlayer}
+            onToggle={onActorToggle}
+          />
+        </>
+      )}
     </div>
   );
 };

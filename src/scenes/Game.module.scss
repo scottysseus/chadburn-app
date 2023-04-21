@@ -107,6 +107,15 @@
   margin-bottom: 10px;
 }
 
+.summary {
+  display: flex;
+  width: 449px;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  margin-top: -50px;
+}
+
 .actorToggleContainer {
   width: 100%;
   display: inline-flex;
