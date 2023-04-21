@@ -201,12 +201,18 @@ export class YStore implements Store {
         const submitRebuttalAction = action as unknown as SubmitRebuttalAction;
         toShare = {
           ...toShare,
-          game: finishTurn(
-            updateTurn(
-              toShare.game,
-              submitRebuttal(toShare.game.turn, submitRebuttalAction.rebuttal)
-            )
+          game: updateTurn(
+            toShare.game,
+            submitRebuttal(toShare.game.turn, submitRebuttalAction.rebuttal)
           ),
+        };
+        this.transactShareState(toShare);
+        break;
+
+      case ActionTypes.FINISH_TURN:
+        toShare = {
+          ...toShare,
+          game: finishTurn(updateTurn(toShare.game, toShare.game.turn)),
         };
         this.transactShareState(toShare);
         break;

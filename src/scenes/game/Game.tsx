@@ -27,6 +27,7 @@ import { Summary } from "src/scenes/game/Summary";
 import {
   Action,
   ActionTypes,
+  FinishTurnAction,
   SubmitGuessAction,
   SubmitHintAction,
   SubmitRebuttalAction,
@@ -106,7 +107,15 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     publish(action);
   };
 
+  const finishTurn = () => {
+    const action: FinishTurnAction = {
+      type: ActionTypes.FINISH_TURN,
+    };
+    publish(action);
+  };
+
   const onNextTurnClick = () => {
+    finishTurn();
     if (getGuessScore(sharedState.game) === 4 && isCatchUp(sharedState.game)) {
       publish({ type: ActionTypes.START_CATCH_UP_TURN });
     } else {
