@@ -57,32 +57,37 @@ export function startTurn(
  * @returns the update state
  */
 export function finishTurn(state: GameState): GameState {
-  const guessScore = getGuessScore(state);
-
   const newState = { ...state };
   newState.score = new Map<string, number>(state.score);
-  if (guessScore === 4) {
-    newState.score.set(
-      state.teamInTurn,
-      (state.score.get(state.teamInTurn) || 0) + guessScore
-    );
-    newState.score.set(
-      getTeamOutOfTurn(state),
-      state.score.get(getTeamOutOfTurn(state)) || 0
-    );
-  } else {
-    newState.score.set(
-      state.teamInTurn,
-      (state.score.get(state.teamInTurn) || 0) + guessScore
-    );
-    newState.score.set(
-      getTeamOutOfTurn(state),
-      (state.score.get(getTeamOutOfTurn(state)) || 0) +
-        getRebuttalScore(state, getCorrectRebuttal(state))
-    );
-  }
+
+  newState.score.set(state.teamInTurn, getTeamScore(state, state.teamInTurn));
+  newState.score.set(
+    getTeamOutOfTurn(state),
+    getTeamScore(state, getTeamOutOfTurn(state))
+  );
 
   return newState;
+}
+
+export function getTeamScore(state: GameState, team: string): number {
+  const guessScore = getGuessScore(state);
+
+  if (guessScore === 4) {
+    if (team === state.teamInTurn) {
+      return (state.score.get(state.teamInTurn) || 0) + guessScore;
+    } else {
+      return state.score.get(getTeamOutOfTurn(state)) || 0;
+    }
+  } else {
+    if (team === state.teamInTurn) {
+      return (state.score.get(state.teamInTurn) || 0) + guessScore;
+    } else {
+      return (
+        (state.score.get(getTeamOutOfTurn(state)) || 0) +
+        getRebuttalScore(state, getCorrectRebuttal(state))
+      );
+    }
+  }
 }
 
 /*
