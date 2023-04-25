@@ -22,7 +22,7 @@ export const RebuttalForm = ({
     <div>
       <p className="formDescription">
         <span style={{ color: otherTeam }}>{otherTeam} team</span>, does the
-        hint lie to the left or the right of{" "}
+        target lie to the left or the right of{" "}
         <span style={{ color: teamInTurn }}>{teamInTurn} team&apos;s</span>{" "}
         guess?
       </p>
