@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  getCorrectRebuttal,
-  getGuessScore,
-  getRebuttalScore,
-} from "src/game/game";
+import { getTeamScore } from "src/game/game";
 import { SharedState } from "src/store/SharedState";
 import "../Game.module.scss";
 import { HiOutlineArrowUp } from "react-icons/hi";
@@ -20,52 +16,24 @@ export const Summary = ({ isTurnOver, state }: SummaryProps) => {
       className="summary"
     >
       {isTurnOver ? (
-        state.game.teamInTurn === "blue" ? (
-          <>
-            <p>
-              <span style={{ color: "blue" }}>
-                Blue Team:{" "}
-                {(state.game.score.get("blue") || 0) +
-                  getGuessScore(state.game)}{" "}
-              </span>
-              <HiOutlineArrowUp /> {getGuessScore(state.game)}
-            </p>
-            <p>
-              <span style={{ color: "red" }}>
-                Red Team:{" "}
-                {(state.game.score.get("red") || 0) +
-                  getRebuttalScore(
-                    state.game,
-                    getCorrectRebuttal(state.game)
-                  )}{" "}
-              </span>
-              <HiOutlineArrowUp />{" "}
-              {getRebuttalScore(state.game, getCorrectRebuttal(state.game))}
-            </p>
-          </>
-        ) : (
-          <>
-            <p>
-              <span style={{ color: "blue" }}>
-                Blue Team:{" "}
-                {(state.game.score.get("blue") || 0) +
-                  getRebuttalScore(
-                    state.game,
-                    getCorrectRebuttal(state.game)
-                  )}{" "}
-              </span>
-              <HiOutlineArrowUp />{" "}
-              {getRebuttalScore(state.game, getCorrectRebuttal(state.game))}
-            </p>
-            <p>
-              <span style={{ color: "red" }}>
-                Red Team:{" "}
-                {(state.game.score.get("red") || 0) + getGuessScore(state.game)}{" "}
-              </span>
-              <HiOutlineArrowUp /> {getGuessScore(state.game)}
-            </p>
-          </>
-        )
+        <>
+          <p>
+            <span style={{ color: "blue" }}>
+              Blue Team: {getTeamScore(state.game, "blue")}{" "}
+            </span>
+            <HiOutlineArrowUp />{" "}
+            {getTeamScore(state.game, "blue") -
+              (state.game.score.get("blue") || 0)}
+          </p>
+          <p>
+            <span style={{ color: "red" }}>
+              Red Team: {getTeamScore(state.game, "red")}{" "}
+            </span>
+            <HiOutlineArrowUp />{" "}
+            {getTeamScore(state.game, "red") -
+              (state.game.score.get("red") || 0)}
+          </p>
+        </>
       ) : (
         <></>
       )}
