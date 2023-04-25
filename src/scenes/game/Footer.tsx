@@ -23,7 +23,9 @@ export const Footer = ({
       <a onClick={onNewGameClick}>New Game</a>
       {isTurnOver ? (
         <>
-          <a onClick={onNextTurnClick}>Next Turn </a>
+          <a data-cy="btn_next_turn" onClick={onNextTurnClick}>
+            Next Turn{" "}
+          </a>
         </>
       ) : (
         <>

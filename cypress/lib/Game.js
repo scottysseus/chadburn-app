@@ -182,4 +182,8 @@ export const Game = {
       return cy.wrap(location.pathname.slice(1));
     });
   },
+
+  getNextTurn() {
+    return cy.get(`[data-cy="btn_next_turn"]`).click();
+  },
 };
