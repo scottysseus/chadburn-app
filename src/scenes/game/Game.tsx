@@ -203,7 +203,12 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         {currentActionForm}
       </div>
 
-      <Summary isTurnOver={turnOver} state={sharedState} />
+      <div
+        style={{ visibility: turnOver ? "visible" : "hidden" }}
+        className="summary"
+      >
+        <Summary isTurnOver={turnOver} state={sharedState} />
+      </div>
 
       <div className="actorToggleContainer">
         <Footer

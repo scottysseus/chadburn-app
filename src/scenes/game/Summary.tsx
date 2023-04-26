@@ -11,10 +11,7 @@ interface SummaryProps {
 
 export const Summary = ({ isTurnOver, state }: SummaryProps) => {
   return (
-    <div
-      style={{ visibility: isTurnOver ? "visible" : "hidden" }}
-      className="summary"
-    >
+    <>
       {isTurnOver ? (
         <>
           <p>
@@ -37,6 +34,6 @@ export const Summary = ({ isTurnOver, state }: SummaryProps) => {
       ) : (
         <></>
       )}
-    </div>
+    </>
   );
 };
