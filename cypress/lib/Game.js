@@ -183,7 +183,7 @@ export const Game = {
     });
   },
 
-  getNextTurn() {
+  startNextTurn() {
     return cy.get(`[data-cy="btn_next_turn"]`).click();
   },
 };
