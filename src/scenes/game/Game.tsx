@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { TopBar } from "src/components/TopBar";
 
 import {
   getGuessScore,
@@ -173,52 +174,60 @@ export const Game = ({ sharedState, publish }: GameProps) => {
   const leader = getScoreLeader(sharedState.game.score);
 
   return (
-    <div className="gameSceneContainer" draggable={false}>
-      <Header
-        score={sharedState.game.score}
-        teamInTurn={sharedState.game.teamInTurn}
-      />
-
-      <Hint visible={!gameOver} hint={sharedState.game.turn.hint} />
-
-      <div className="chadburnContainer">
-        {gameOver ? (
-          <EndGame victor={leader!} />
-        ) : (
-          <Chadburn
-            guess={sharedState.guess}
-            onGuessUpdate={onGuessUpdate}
-            showTarget={!isPlayer || turnOver}
-            target={sharedState.game.turn.target}
-          />
-        )}
-      </div>
-
-      <Spectrum visible={!gameOver} spectrum={sharedState.game.turn.spectrum} />
-
-      <div
-        style={{ visibility: currentActionFormVisible ? "visible" : "hidden" }}
-        className="currentActionFormContainer"
-      >
-        {currentActionForm}
-      </div>
-
-      <div
-        style={{ visibility: turnOver ? "visible" : "hidden" }}
-        className="summary"
-      >
-        <Summary isTurnOver={turnOver} state={sharedState} />
-      </div>
-
-      <div className="actorToggleContainer">
-        <Footer
-          isPlayer={isPlayer}
-          onActorToggle={onActorToggle}
-          onNewGameClick={onNewGameClick}
-          isTurnOver={turnOver}
-          onNextTurnClick={onNextTurnClick}
+    <>
+      <TopBar />
+      <div className="gameSceneContainer" draggable={false}>
+        <Header
+          score={sharedState.game.score}
+          teamInTurn={sharedState.game.teamInTurn}
         />
+
+        <Hint visible={!gameOver} hint={sharedState.game.turn.hint} />
+
+        <div className="chadburnContainer">
+          {gameOver ? (
+            <EndGame victor={leader!} />
+          ) : (
+            <Chadburn
+              guess={sharedState.guess}
+              onGuessUpdate={onGuessUpdate}
+              showTarget={!isPlayer || turnOver}
+              target={sharedState.game.turn.target}
+            />
+          )}
+        </div>
+
+        <Spectrum
+          visible={!gameOver}
+          spectrum={sharedState.game.turn.spectrum}
+        />
+
+        <div
+          style={{
+            visibility: currentActionFormVisible ? "visible" : "hidden",
+          }}
+          className="currentActionFormContainer"
+        >
+          {currentActionForm}
+        </div>
+
+        <div
+          style={{ visibility: turnOver ? "visible" : "hidden" }}
+          className="summary"
+        >
+          <Summary isTurnOver={turnOver} state={sharedState} />
+        </div>
+
+        <div className="actorToggleContainer">
+          <Footer
+            isPlayer={isPlayer}
+            onActorToggle={onActorToggle}
+            onNewGameClick={onNewGameClick}
+            isTurnOver={turnOver}
+            onNextTurnClick={onNextTurnClick}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };

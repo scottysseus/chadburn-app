@@ -4,7 +4,6 @@ import { StoreContextProvider } from "src/scenes/StoreContextProvider";
 
 import { Landing } from "src/scenes/Landing";
 
-import { TopBar } from "src/components/TopBar";
 import "./Styles/App.scss";
 
 const router = createBrowserRouter([
@@ -21,7 +20,6 @@ const router = createBrowserRouter([
 export function App() {
   return (
     <div id="app">
-      <TopBar />
       <RouterProvider router={router} />
     </div>
   );
