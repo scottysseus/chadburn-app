@@ -1,3 +1,5 @@
+@import "../Styles/variables.scss";
+
 .landingMenuContainer {
   margin: auto;
   width: 100%;
@@ -12,30 +14,46 @@ button {
   width: 7rem;
 }
 
+button:visited {
+  color: black;
+}
+
 .landingMenuContainer > button {
   display: block;
   margin: 0 auto;
   margin-top: 70px;
 }
 
-#content2 {
+#content1 {
   padding-left: 10px;
 }
 
+#content2 {
+  display: flex;
+  justify-content: space-evenly;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .topBar {
-  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  margin: 0 auto;
   margin-top: 40px;
+  width: fit-content;
+  margin-bottom: 40px;
 }
 
 .topBar > h1 {
   font-size: 50px;
   text-align: center;
   overflow: hidden;
-  animation: typing 3.5s steps(40, end);
+  border-right: 0.15em solid $black; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  height: 36px;
+  animation: typing 3.5s steps(30, end), blink-caret 0.5s step-end infinite;
 }
 
 @keyframes typing {
@@ -44,6 +62,15 @@ button {
   }
   to {
     width: 100%;
+  }
+}
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: $black;
   }
 }
 
