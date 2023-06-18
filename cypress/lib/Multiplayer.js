@@ -1,7 +1,7 @@
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs";
 import { ActionTypes } from "../../src/store/actions";
-import { getInitialSharedState, YStoreFactory } from "../../src/store/Store";
+import { YStoreFactory } from "../../src/store/Store";
 
 /**
  * returns a sensible default URL for the signaling server (used by players to connect to each other)
@@ -26,7 +26,12 @@ export function getDefaultSignalingUrl() {
  * @param {*} signalingUrl
  * @returns
  */
-export function getClientForAnotherPlayer(gameId, signalingUrl) {
+export function getClientForAnotherPlayer(
+  gameId,
+  signalingUrl,
+  initialState,
+  isNewGame = false
+) {
   const ydoc = new Y.Doc();
 
   const provider = new WebrtcProvider(gameId, ydoc, {
@@ -34,7 +39,7 @@ export function getClientForAnotherPlayer(gameId, signalingUrl) {
   });
 
   const factory = new YStoreFactory({ ydoc, id: gameId });
-  const store = factory.getStore(getInitialSharedState());
+  const store = factory.getStore(initialState, isNewGame);
 
   return new MultiplayerClient(store, ydoc, provider);
 }
@@ -72,6 +77,10 @@ export class MultiplayerClient {
 
   getSpectrum() {
     return this.store.getSnapshot().game.turn.spectrum;
+  }
+
+  getMode() {
+    return this.store.getSnapshot().mode;
   }
 
   setGuess(guess) {

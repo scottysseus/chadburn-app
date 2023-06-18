@@ -2,8 +2,8 @@ import { GameState } from "src/game/game";
 import { Rebuttal, Spectrum } from "src/game/turn";
 
 export enum GameMode {
-  NORMAL,
-  FREE_PLAY,
+  NORMAL = "NORMAL",
+  FREE_PLAY = "FREE_PLAY",
 }
 
 /**

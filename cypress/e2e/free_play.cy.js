@@ -4,7 +4,7 @@ import { Teams } from "../lib/Game";
 import { Player } from "../lib/Player";
 import { Psychic } from "../lib/Psychic";
 
-describe("game", () => {
+describe("free play", () => {
   it("does not display score", () => {
     cy.startFreePlay();
 
