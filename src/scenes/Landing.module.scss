@@ -12,14 +12,15 @@ button {
   width: 7rem;
 }
 
-.landingMenuContainer > button {
-  display: block;
+.landingMenuContainer > form {
   margin: 0 auto;
   margin-top: 70px;
 }
 
-#content2 {
-  padding-left: 10px;
+.landingMenuContainer > form > button {
+  margin: 0 auto;
+  margin-top: 15px;
+  display: block;
 }
 
 .topBar {

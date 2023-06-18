@@ -2,6 +2,7 @@ import { customAlphabet, urlAlphabet } from "nanoid";
 import React from "react";
 import { useNavigate } from "react-router";
 import { removeFromLocalStorage } from "src/store/localStorage";
+import { GameMode } from "src/store/SharedState";
 import "./Landing.module.scss";
 
 /**
@@ -14,9 +15,20 @@ const generateId = customAlphabet(urlAlphabet, 4);
 export const Landing = () => {
   const navigate = useNavigate();
 
-  const onClick = () => {
+  const startNewGame = (mode: GameMode) => {
     removeFromLocalStorage();
-    navigate(`/${generateId()}`, { replace: true, state: { isNewGame: true } });
+    navigate(`/${generateId()}`, {
+      replace: true,
+      state: { isNewGame: true, mode },
+    });
+  };
+
+  const onStartMatchClick = () => {
+    startNewGame(GameMode.NORMAL);
+  };
+
+  const onFreePlayClick = () => {
+    startNewGame(GameMode.FREE_PLAY);
   };
 
   return (
@@ -35,9 +47,14 @@ export const Landing = () => {
         <p id="content2">
           Play with your friends across multiple devices on a shared board.
         </p>
-        <button data-cy="landing_btn_new_game" onClick={onClick}>
-          New Game
-        </button>
+        <form>
+          <button data-cy="landing_btn_new_game" onClick={onStartMatchClick}>
+            Start Match
+          </button>
+          <button data-cy="landing_btn_free_play" onClick={onFreePlayClick}>
+            Free Play
+          </button>
+        </form>
       </div>
     </>
   );

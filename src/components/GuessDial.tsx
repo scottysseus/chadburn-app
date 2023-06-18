@@ -10,12 +10,19 @@ import "../scenes/Game.module.scss";
 export interface GuessDialProps {
   guess: number;
   onUpdate: (angle: number) => void;
+
+  // set to true to disable interaction with the guess dial
+  disabled: boolean;
 }
 /**
  * GuessDial represents the game's guess dial SVG. It restricts its rotation
  * to the top half of a circle.
  */
-export const GuessDial = ({ guess, onUpdate }: GuessDialProps) => {
+export const GuessDial = ({
+  guess,
+  onUpdate,
+  disabled = false,
+}: GuessDialProps) => {
   // Restrict the rotation angle to -90° < θ < 90°, the top half of a circle
   // (keeping in mind that CSS transforms work clockwise
   // instead of the conventional counter-clockwise).
@@ -47,6 +54,7 @@ export const GuessDial = ({ guess, onUpdate }: GuessDialProps) => {
       onUpdate={onUpdate}
       onBeforeUpdate={restrictToUpperHalf}
       angle={guess}
+      disabled={disabled}
     />
   );
 };

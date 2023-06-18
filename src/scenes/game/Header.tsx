@@ -6,11 +6,16 @@ import { isGameOver, Score } from "src/game/game";
 interface HeaderProps {
   score: Score;
   teamInTurn: string;
+  visible: boolean;
 }
 
-export const Header = ({ score, teamInTurn }: HeaderProps) => {
+export const Header = ({ score, teamInTurn, visible }: HeaderProps) => {
   return (
-    <div className="header">
+    <div
+      style={{ visibility: visible ? "visible" : "hidden" }}
+      className="header"
+      data-cy="game_header"
+    >
       <p>
         <span style={{ color: "blue" }}>
           Blue: <span data-cy="game_score_blue">{score.get("blue")}</span>

@@ -9,11 +9,14 @@ export interface ChadburnProps {
 
   showTarget: boolean;
   target: number;
+
+  disabled: boolean;
 }
 
 /**
  * Chadburn encapsulates the graphical parts of the game display: the guess dial,
- * the target overlay, and the border image.
+ * the target overlay, and the border image. Disabling it prevents players from
+ * moving the guess dial.
  *
  * The target can optionally be hidden e.g. for the player view.
  */
@@ -22,10 +25,11 @@ export const Chadburn = ({
   onGuessUpdate,
   showTarget,
   target,
+  disabled,
 }: ChadburnProps) => {
   return (
     <>
-      <GuessDial guess={guess} onUpdate={onGuessUpdate} />
+      <GuessDial guess={guess} onUpdate={onGuessUpdate} disabled={disabled} />
       <div
         style={{
           height: "153px",
