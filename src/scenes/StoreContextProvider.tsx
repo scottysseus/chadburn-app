@@ -9,6 +9,7 @@ import {
   readGameIdFromLocalStorage,
   removeFromLocalStorage,
 } from "src/store/localStorage";
+import { GameMode } from "src/store/SharedState";
 
 import { YStoreFactory } from "src/store/Store";
 
@@ -35,7 +36,8 @@ export const StoreContextProvider = () => {
   const yStoreFactory = new YStoreFactory({ id: gameId });
   const store = yStoreFactory.getStore(
     cachedSharedState,
-    !!location?.state?.isNewGame
+    !!location?.state?.isNewGame,
+    location?.state?.mode as GameMode
   );
 
   return (

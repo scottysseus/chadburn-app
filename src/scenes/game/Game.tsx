@@ -35,7 +35,7 @@ import {
   UpdateGuessAction,
   UpdateHintAction,
 } from "src/store/actions";
-import { SharedState } from "src/store/SharedState";
+import { GameMode, SharedState } from "src/store/SharedState";
 import "../Game.module.scss";
 
 interface GameProps {
@@ -124,7 +124,12 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     }
   };
 
-  const gameOver = isGameOver(sharedState.game.score);
+  const gameOver =
+    isGameOver(sharedState.game.score) && sharedState.mode === GameMode.NORMAL;
+
+  // we want to disable the chadburn (prevent it from being rotated) when
+  // the turn summary is displayed
+  let chadburnDisabled = turnOver;
 
   /**
    * The current action form depends on the current actor, view, and
@@ -157,6 +162,8 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     isGuessSubmitted(sharedState.game.turn) &&
     !isRebuttalSubmitted(sharedState.game.turn)
   ) {
+    // disable the chadburn during the rebuttal
+    chadburnDisabled = true;
     currentActionForm = (
       <RebuttalForm
         rebuttal={
@@ -166,6 +173,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         otherTeam={getTeamOutOfTurn(sharedState.game)}
         onRebuttalUpdate={onRebuttalUpdate}
         onRebuttalSubmit={onRebuttalSubmit}
+        mode={sharedState.mode}
       />
     );
     currentActionFormVisible = isPlayer;
@@ -178,6 +186,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
       <TopBar />
       <div className="gameSceneContainer" draggable={false}>
         <Header
+          visible={sharedState.mode === GameMode.NORMAL}
           score={sharedState.game.score}
           teamInTurn={sharedState.game.teamInTurn}
         />
@@ -193,6 +202,7 @@ export const Game = ({ sharedState, publish }: GameProps) => {
               onGuessUpdate={onGuessUpdate}
               showTarget={!isPlayer || turnOver}
               target={sharedState.game.turn.target}
+              disabled={chadburnDisabled}
             />
           )}
         </div>
@@ -212,7 +222,12 @@ export const Game = ({ sharedState, publish }: GameProps) => {
         </div>
 
         <div
-          style={{ visibility: turnOver ? "visible" : "hidden" }}
+          style={{
+            visibility:
+              turnOver && sharedState.mode === GameMode.NORMAL
+                ? "visible"
+                : "hidden",
+          }}
           className="summary"
         >
           <Summary isTurnOver={turnOver} state={sharedState} />
