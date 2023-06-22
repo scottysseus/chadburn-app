@@ -1,22 +1,63 @@
 .title {
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 50px;
   margin-top: 40px;
+  padding: 0 40px;
 }
 
 .title > h1 {
-  font-size: 50px;
-  text-align: center;
+  font-size: 30px;
 }
 
 .title > h1 > a {
   text-decoration: none;
   color: black;
 }
-.clipboard {
-  display: flex;
-  justify-content: right;
+
+.title > .clipboard {
+  width: fit-content;
+  border: none;
+
+  &:before {
+    visibility: hidden;
+    z-index: 9998;
+    width: 0;
+    height: 0;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    visibility: hidden;
+
+    z-index: 9999;
+    margin-left: 5px;
+    margin-bottom: 10px;
+
+    color: rgba(23, 219, 16, 0.96);
+    font-size: 13px;
+    line-height: -10px;
+    text-align: center;
+  }
+
+  &:hover {
+    &:before,
+    &:after {
+      visibility: visible;
+    }
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+
+    &:after {
+      content: "\2713";
+      font-size: 15px;
+      margin-top: -5px;
+    }
+  }
 }

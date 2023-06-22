@@ -12,10 +12,10 @@ export const TopBar = () => {
         <h1>
           <a href="/">CHADBURN</a>
         </h1>
+        <button onClick={onCopyLinkClick} className="clipboard">
+          Copy Link
+        </button>
       </div>
-      <a onClick={onCopyLinkClick} className="clipboard">
-        Copy Link
-      </a>
     </>
   );
 };
