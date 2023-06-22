@@ -47,6 +47,7 @@
 
 .spectrum {
   width: 300px;
+  height: 30px;
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
@@ -54,18 +55,17 @@
 
 .spectrum > p {
   font-size: 0.8rem;
-  width: 100%;
   margin: 0 auto;
   padding-top: 5px;
 }
 
 .spectrum > #one {
-  width: 100px;
+  width: 90px;
   margin-left: -10px;
 }
 
 .spectrum > #two {
-  width: 100px;
+  width: 90px;
   text-align: right;
   margin-right: -10px;
 }
