@@ -14,17 +14,12 @@ button {
   width: 7rem;
 }
 
-button:visited {
-  color: black;
-}
-
-.landingMenuContainer > button {
-  display: block;
+.landingMenuContainer > form {
   margin: 0 auto;
   margin-top: 70px;
 }
 
-.landingMenuContainer > button {
+.landingMenuContainer > form > button {
   margin: 0 auto;
   margin-top: 15px;
   display: block;
@@ -38,13 +33,6 @@ button:visited {
   display: flex;
   justify-content: space-evenly;
   padding: 0 5px 0 10px;
-}
-
-#content2 {
-  display: flex;
-  justify-content: space-evenly;
-  padding-left: 30px;
-  padding-right: 30px;
 }
 
 .topBar {
