@@ -142,7 +142,7 @@ export class YStore implements Store {
         break;
 
       case ActionTypes.NEW_GAME:
-        toShare = getInitialSharedState();
+        toShare = getInitialSharedStateForMode(toShare.mode);
         this.transactShareState(toShare);
         break;
 
