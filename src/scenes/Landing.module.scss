@@ -14,15 +14,24 @@ button {
   width: 7rem;
 }
 
-.landingMenuContainer > form {
+button:visited {
+  color: black;
+}
+
+.landingMenuContainer > button {
+  display: block;
   margin: 0 auto;
   margin-top: 70px;
 }
 
-.landingMenuContainer > form > button {
+.landingMenuContainer > button {
   margin: 0 auto;
   margin-top: 15px;
   display: block;
+}
+
+#content1 {
+  padding-left: 10px;
 }
 
 #content2 {
