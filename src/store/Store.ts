@@ -23,7 +23,7 @@ import {
   UpdateHintAction,
   UpdateRebuttalAction,
 } from "src/store/actions";
-import { SharedState } from "src/store/SharedState";
+import { GameMode, SharedState } from "src/store/SharedState";
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs";
 
@@ -37,6 +37,7 @@ export const YMapKeys = {
   SCORE: "score",
   TURN: "turn",
   SPECTRUM_HISTORY: "spectrumHistory",
+  MODE: "mode",
 
   HINT: "hint",
   TARGET: "target",
@@ -52,12 +53,19 @@ const START_GUESS = 0;
 export const SHARED_STATE_YMAP_NAME = "sharedState";
 
 export function getInitialSharedState(): SharedState {
+  return getInitialSharedStateForMode(GameMode.NORMAL);
+}
+
+export function getInitialSharedStateForMode(
+  mode: GameMode = GameMode.NORMAL
+): SharedState {
   const newSpectrum = getRandomSpectrum([]);
   return {
     started: false,
     guess: START_GUESS,
     game: startGame(newSpectrum, getRandomTarget()),
     spectrumHistory: [newSpectrum],
+    mode: mode,
   };
 }
 
@@ -69,6 +77,7 @@ export function getCachedSharedState(cachedState: SharedState): SharedState {
     hint: cachedState.hint,
     rebuttal: cachedState.rebuttal,
     spectrumHistory: cachedState.spectrumHistory,
+    mode: cachedState.mode,
   };
 }
 
@@ -263,6 +272,7 @@ export class YStore implements Store {
       guess: this.ymap.get(YMapKeys.GUESS),
       rebuttal: this.ymap.get(YMapKeys.REBUTTAL),
       spectrumHistory: spectrumHistory.toArray(),
+      mode: this.ymap.get(YMapKeys.MODE),
       game: {
         teamInTurn: gameState.get(YMapKeys.TEAM_IN_TURN),
         score: updatedScore,
@@ -303,6 +313,7 @@ export class YStore implements Store {
     this.ymap.set(YMapKeys.GUESS, toShare.guess);
     this.ymap.set(YMapKeys.REBUTTAL, toShare.rebuttal);
     this.ymap.set(YMapKeys.STARTED, toShare.started);
+    this.ymap.set(YMapKeys.MODE, toShare.mode);
 
     const gameState = this.ymap.get(YMapKeys.GAME) as Y.Map<any>;
     gameState.set(YMapKeys.TEAM_IN_TURN, toShare.game.teamInTurn);
@@ -384,9 +395,13 @@ export class YStoreFactory {
     this.ydoc = ydoc;
   }
 
-  getStore(initialState?: SharedState, isNewGame = true) {
+  getStore(
+    initialState?: SharedState,
+    isNewGame = true,
+    mode: GameMode = GameMode.NORMAL
+  ) {
     if (!initialState && isNewGame) {
-      initialState = getInitialSharedState();
+      initialState = getInitialSharedStateForMode(mode);
     }
     return new YStore(this.ydoc, initialState);
   }

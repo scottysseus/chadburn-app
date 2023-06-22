@@ -24,14 +24,21 @@ button:visited {
   margin-top: 70px;
 }
 
+.landingMenuContainer > button {
+  margin: 0 auto;
+  margin-top: 15px;
+  display: block;
+}
+
 #content1 {
-  padding: 0 5px 0 10px;
+  padding-left: 10px;
 }
 
 #content2 {
   display: flex;
   justify-content: space-evenly;
-  padding: 0 5px 0 10px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .topBar {

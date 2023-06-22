@@ -71,6 +71,9 @@ export interface RotatableImageProps {
   src: string;
   style?: CSSProperties;
   className: string;
+
+  // set to true to disable rotation
+  disabled: boolean;
   onUpdate?: (angle: number) => void;
   onBeforeUpdate?: (event: OnUpdatingEvent) => number;
 }
@@ -91,6 +94,7 @@ export const RotatableImage = ({
   onUpdate,
   onBeforeUpdate,
   angle = START_ANGLE,
+  disabled = false,
 }: RotatableImageProps) => {
   // editModedAngle saves the angle while this component is in 'edit mode'
   // (while the mouse is down)
@@ -131,7 +135,9 @@ export const RotatableImage = ({
   }, []);
 
   const startRotating = () => {
-    setIsRotating(true);
+    if (!disabled) {
+      setIsRotating(true);
+    }
   };
 
   const finishRotating = () => {
