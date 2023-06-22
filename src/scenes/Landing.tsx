@@ -42,10 +42,10 @@ export const Landing = () => {
       </div>
       <div className="landingMenuContainer">
         <p id="content1">
-          CHADBURN is an online version of the board game WAVELENGTH.
+          CHADBURN is an online version of the board game WAVELENGTH
         </p>
         <p id="content2">
-          Play with your friends across multiple devices on a shared board.
+          Play with your friends across multiple devices on a shared board
         </p>
         <form>
           <button data-cy="landing_btn_new_game" onClick={onStartMatchClick}>
