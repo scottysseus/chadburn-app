@@ -43,13 +43,6 @@
     text-align: center;
   }
 
-  &:hover {
-    &:before,
-    &:after {
-      visibility: visible;
-    }
-  }
-
   &:active,
   &:focus {
     outline: none;
@@ -58,6 +51,7 @@
       content: "\2713";
       font-size: 15px;
       margin-top: -5px;
+      visibility: visible;
     }
   }
 }
