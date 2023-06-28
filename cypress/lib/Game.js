@@ -1,3 +1,5 @@
+import { GameMode } from "../../src/store/SharedState";
+
 // matches e.g. rotate(-90deg) and captures the numeric value (-90 in this case)
 const rotateDegreeRegex = /^rotate\(([-]?[0-9]+)deg\)$/;
 const matrixRegx = /^matrix\(.*\)$/;
@@ -11,6 +13,11 @@ export const Rebuttals = {
   RIGHT: "Right",
   LEFT: "Left",
 };
+
+export const modeCommands = [
+  { mode: GameMode.FREE_PLAY, command: cy.startFreePlay },
+  { mode: GameMode.NORMAL, command: cy.startNewGame },
+];
 
 /**
  * Copied from source :)
@@ -185,5 +192,9 @@ export const Game = {
 
   startNextTurn() {
     return cy.get(`[data-cy="btn_next_turn"]`).click();
+  },
+
+  startNextGame() {
+    return cy.get(`[data-cy="btn_new_game"]`).click();
   },
 };

@@ -20,7 +20,9 @@ export const Footer = ({
 }: FooterProps) => {
   return (
     <div className="actorToggleContainer">
-      <a onClick={onNewGameClick}>New Game</a>
+      <a onClick={onNewGameClick} data-cy="btn_new_game">
+        New Game
+      </a>
       {isTurnOver ? (
         <>
           <a data-cy="btn_next_turn" onClick={onNextTurnClick}>

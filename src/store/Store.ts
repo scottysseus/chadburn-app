@@ -69,18 +69,6 @@ export function getInitialSharedStateForMode(
   };
 }
 
-export function getCachedSharedState(cachedState: SharedState): SharedState {
-  return {
-    game: cachedState.game,
-    started: cachedState.started,
-    guess: cachedState.guess,
-    hint: cachedState.hint,
-    rebuttal: cachedState.rebuttal,
-    spectrumHistory: cachedState.spectrumHistory,
-    mode: cachedState.mode,
-  };
-}
-
 export type Subscriber = () => void;
 
 export interface Store {

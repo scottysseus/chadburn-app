@@ -1,8 +1,7 @@
 /// <reference types="Cypress" />
 
-import { GameMode } from "../../src/store/SharedState";
 import { getInitialSharedState } from "../../src/store/Store";
-import { Game } from "../lib/Game";
+import { modeCommands, Game } from "../lib/Game";
 import {
   getClientForAnotherPlayer,
   getDefaultSignalingUrl,
@@ -12,13 +11,9 @@ import { Psychic } from "../lib/Psychic";
 
 describe("multiplayer", () => {
   describe("shares the correct game mode", () => {
-    [GameMode.FREE_PLAY, GameMode.NORMAL].forEach((mode) => {
-      it(`shares mode ${mode}`, () => {
-        if (mode === GameMode.FREE_PLAY) {
-          cy.startFreePlay();
-        } else {
-          cy.startNewGame();
-        }
+    modeCommands.forEach((modeCommand) => {
+      it(`shares mode ${modeCommand.mode}`, () => {
+        modeCommand.command();
 
         const otherPlayerAlias = "other-player";
 
@@ -34,7 +29,7 @@ describe("multiplayer", () => {
         Psychic.submitsHint("a hint");
 
         cy.get(`@${otherPlayerAlias}`).then((otherPlayer) => {
-          expect(otherPlayer.getMode()).to.eq(mode);
+          expect(otherPlayer.getMode()).to.eq(modeCommand.mode);
         });
       });
     });
