@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import { Game } from "../lib/Game";
+import { modeCommands, Game } from "../lib/Game";
 import { Player } from "../lib/Player";
 import { Psychic } from "../lib/Psychic";
 
@@ -36,9 +36,9 @@ describe("guess dial", () => {
     Game.getGuessAngle().should("not.equal", 0);
   });
 
-  it("cannot be rotated during rebuttal", () => {
-    [cy.startNewGame, cy.startFreePlay].forEach((modeFunc) => {
-      modeFunc();
+  modeCommands.forEach((modeCommand) => {
+    it(`cannot be rotated during rebuttal in ${modeCommand.mode}`, () => {
+      modeCommand.command();
 
       Psychic.submitsHint("a hint");
       Player.submitsGuess(0);
@@ -49,9 +49,9 @@ describe("guess dial", () => {
     });
   });
 
-  it("cannot be rotated during turn summary", () => {
-    [cy.startNewGame, cy.startFreePlay].forEach((modeFunc) => {
-      modeFunc();
+  modeCommands.forEach((modeCommand) => {
+    it(`cannot be rotated during turn summary in ${modeCommand.mode}`, () => {
+      modeCommand.command();
 
       Psychic.submitsHint("a hint");
       Player.submitsGuess(0);
