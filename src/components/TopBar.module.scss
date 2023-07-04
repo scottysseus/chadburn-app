@@ -1,15 +1,14 @@
 .title {
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   height: 50px;
   margin-top: 40px;
-  padding: 0 40px;
 }
 
 .title > h1 {
   font-size: 30px;
+  margin-left: 0;
 }
 
 .title > h1 > a {
@@ -20,6 +19,8 @@
 .title > .clipboard {
   width: fit-content;
   border: none;
+  margin-left: auto;
+  margin-right: 0;
 
   &:before {
     visibility: hidden;
