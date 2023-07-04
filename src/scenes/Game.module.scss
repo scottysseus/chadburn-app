@@ -123,16 +123,22 @@
   margin-top: -50px;
 }
 
-.actorToggleContainer {
+.footer {
   width: 100%;
   display: inline-flex;
-  justify-content: space-between;
   position: relative;
   z-index: 10;
-  margin-right: 20px;
-  margin-left: 10px;
   margin-bottom: 40px;
   align-items: center;
+}
+
+.footerLeft {
+  margin-left: 0;
+}
+
+.footerRight {
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .endgameText {

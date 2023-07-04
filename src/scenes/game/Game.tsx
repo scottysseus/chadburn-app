@@ -233,15 +233,13 @@ export const Game = ({ sharedState, publish }: GameProps) => {
           <Summary isTurnOver={turnOver} state={sharedState} />
         </div>
 
-        <div className="actorToggleContainer">
-          <Footer
-            isPlayer={isPlayer}
-            onActorToggle={onActorToggle}
-            onNewGameClick={onNewGameClick}
-            isTurnOver={turnOver}
-            onNextTurnClick={onNextTurnClick}
-          />
-        </div>
+        <Footer
+          isPlayer={isPlayer}
+          onActorToggle={onActorToggle}
+          onNewGameClick={onNewGameClick}
+          isTurnOver={turnOver}
+          onNextTurnClick={onNextTurnClick}
+        />
       </div>
     </>
   );

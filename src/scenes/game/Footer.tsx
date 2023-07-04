@@ -19,26 +19,28 @@ export const Footer = ({
   onNextTurnClick,
 }: FooterProps) => {
   return (
-    <div className="actorToggleContainer">
-      <a onClick={onNewGameClick} data-cy="btn_new_game">
+    <div className="footer">
+      <a className="footerLeft" onClick={onNewGameClick} data-cy="btn_new_game">
         New Game
       </a>
-      {isTurnOver ? (
-        <>
-          <a data-cy="btn_next_turn" onClick={onNextTurnClick}>
-            Next Turn{" "}
-          </a>
-        </>
-      ) : (
-        <>
-          <Toggle
-            left="Player"
-            right="Psychic"
-            isLeft={isPlayer}
-            onToggle={onActorToggle}
-          />
-        </>
-      )}
+      <div className="footerRight">
+        {isTurnOver ? (
+          <>
+            <a data-cy="btn_next_turn" onClick={onNextTurnClick}>
+              Next Turn{" "}
+            </a>
+          </>
+        ) : (
+          <>
+            <Toggle
+              left="Player"
+              right="Psychic"
+              isLeft={isPlayer}
+              onToggle={onActorToggle}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };
