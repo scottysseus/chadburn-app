@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 import { getInitialSharedState } from "../../src/store/Store";
-import { modeCommands, Game } from "../lib/Game";
+import { Game, modeCommands } from "../lib/Game";
 import {
   getClientForAnotherPlayer,
   getDefaultSignalingUrl,
@@ -111,25 +111,30 @@ describe("multiplayer", () => {
     Psychic.submitsHint("a hint");
     Player.setsGuess(11);
 
+    const otherPlayerAlias = "other-player";
     const otherGameId = "otherGame";
-    const otherPlayer = getClientForAnotherPlayer(
-      otherGameId,
-      getDefaultSignalingUrl(),
-      getInitialSharedState(),
-      true
-    );
+    cy.wrap(
+      getClientForAnotherPlayer(
+        otherGameId,
+        getDefaultSignalingUrl(),
+        getInitialSharedState(),
+        true
+      )
+    ).as(otherPlayerAlias);
 
     const newGuess = 22;
     const newHint = "new hint";
-    otherPlayer.startGame();
-    otherPlayer.setGuess(newGuess);
-    otherPlayer.setSubmittedHint(newHint);
-    const spectrum = otherPlayer.getSpectrum();
+    cy.get(`@${otherPlayerAlias}`).then((otherPlayer) => {
+      otherPlayer.startGame();
+      otherPlayer.setGuess(newGuess);
+      otherPlayer.setSubmittedHint(newHint);
+      const spectrum = otherPlayer.getSpectrum();
 
-    cy.visit(`/${otherGameId}`);
+      cy.visit(`/${otherGameId}`);
 
-    Game.getGuessAngle().should("equal", newGuess);
-    Game.getSubmittedHint().should("equal", newHint);
-    Game.getSpectrum().should("deep.equal", spectrum);
+      Game.getGuessAngle().should("equal", newGuess);
+      Game.getSubmittedHint().should("equal", newHint);
+      Game.getSpectrum().should("deep.equal", spectrum);
+    });
   });
 });

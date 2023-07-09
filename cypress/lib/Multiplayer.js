@@ -26,7 +26,7 @@ export function getDefaultSignalingUrl() {
  * @param {*} signalingUrl
  * @returns
  */
-export function getClientForAnotherPlayer(
+export async function getClientForAnotherPlayer(
   gameId,
   signalingUrl,
   initialState,
@@ -39,7 +39,7 @@ export function getClientForAnotherPlayer(
   });
 
   const factory = new YStoreFactory({ ydoc, id: gameId });
-  const store = factory.getStore(initialState, isNewGame);
+  const store = await factory.getStore(initialState, isNewGame);
 
   return new MultiplayerClient(store, ydoc, provider);
 }
