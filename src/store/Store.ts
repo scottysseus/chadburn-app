@@ -387,10 +387,38 @@ export class YStoreFactory {
     initialState?: SharedState,
     isNewGame = true,
     mode: GameMode = GameMode.NORMAL
-  ) {
+  ): Promise<Store> {
     if (!initialState && isNewGame) {
       initialState = getInitialSharedStateForMode(mode);
+    } else if (!initialState) {
+      if (this.provider) {
+        const newGamePromise = new Promise<Store>((resolve) => {
+          // isNewGame is only set to true if the user clicks the 'New Game' button.
+          // If it's false _and_ initialState is null, it's possible the user provided their own game ID in the URL.
+          // If the signaling server doesn't give us any other players (peers) in a few seconds, we'll assume this is the case.
+
+          // set a timeout for 4 seconds; after 4 seconds, we'll set the initial state, which starts a new game
+          setTimeout(() => {
+            initialState = getInitialSharedStateForMode(mode);
+            resolve(new YStore(this.ydoc, initialState));
+          }, 4000);
+        });
+
+        const existingGamePromise = new Promise<Store>((resolve) => {
+          // if we find other players before timeout, join that game by resolving the promise to a new YStore without any initial state
+          const onPeersFound = () => {
+            resolve(new YStore(this.ydoc));
+          };
+
+          // this listens for notifications that we have found other players in our game.
+          // once we find other players, join their game
+          this.provider?.once("peers", onPeersFound);
+        });
+
+        // return a promise which resolves to whichever comes first: we join an existing game, or start a new one.
+        return Promise.race([existingGamePromise, newGamePromise]);
+      }
     }
-    return new YStore(this.ydoc, initialState);
+    return Promise.resolve(new YStore(this.ydoc, initialState));
   }
 }
