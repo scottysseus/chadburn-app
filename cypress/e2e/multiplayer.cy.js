@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 import { getInitialSharedState } from "../../src/store/Store";
-import { modeCommands, Game } from "../lib/Game";
+import { Game, modeCommands, Rebuttals } from "../lib/Game";
 import {
   getClientForAnotherPlayer,
   getDefaultSignalingUrl,
@@ -131,5 +131,37 @@ describe("multiplayer", () => {
     Game.getGuessAngle().should("equal", newGuess);
     Game.getSubmittedHint().should("equal", newHint);
     Game.getSpectrum().should("deep.equal", spectrum);
+  });
+
+  it("sets all players to the player view after a turn finishes", () => {
+    cy.startNewGame();
+
+    const otherPlayerAlias = "other-player";
+
+    Game.getId().then((gameId) => {
+      const otherPlayer = getClientForAnotherPlayer(
+        gameId,
+        getDefaultSignalingUrl()
+      );
+
+      cy.wrap(otherPlayer).as(otherPlayerAlias);
+    });
+
+    // switch to the psychic view and submit a hint.
+    // Psychic.submitsHint should enable psychic view for us, but we'll be extra explicit here
+    Game.enablePsychicView();
+    Psychic.submitsHint("a hint");
+
+    const guess = 88;
+
+    cy.get(`@${otherPlayerAlias}`).then((otherPlayer) => {
+      otherPlayer.setSubmittedGuess(guess);
+      otherPlayer.setSubmittedRebuttal(Rebuttals.LEFT);
+      otherPlayer.finishTurn();
+      otherPlayer.startTurn();
+
+      // if the Psychic button is enabled, that means it's the Player's turn
+      cy.contains("button", "Psychic").should("be.enabled");
+    });
   });
 });
