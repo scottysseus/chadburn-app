@@ -90,4 +90,28 @@ export class MultiplayerClient {
   setSubmittedHint(hint) {
     this.store.publish({ type: ActionTypes.SUBMIT_HINT, hint });
   }
+
+  setSubmittedGuess(guess) {
+    this.store.publish({
+      type: ActionTypes.SUBMIT_GUESS,
+      guess: guess,
+    });
+  }
+
+  setSubmittedRebuttal(rebuttal) {
+    this.store.publish({
+      type: ActionTypes.SUBMIT_REBUTTAL,
+      rebuttal,
+    });
+  }
+
+  finishTurn() {
+    this.store.publish({
+      type: ActionTypes.FINISH_TURN,
+    });
+  }
+
+  startTurn() {
+    this.store.publish({ type: ActionTypes.START_TURN });
+  }
 }

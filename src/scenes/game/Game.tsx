@@ -54,6 +54,11 @@ export const Game = ({ sharedState, publish }: GameProps) => {
     if (!sharedState.started) {
       publish({ type: ActionTypes.START_GAME });
     }
+
+    const turnOver = isTurnOver(sharedState.game.turn);
+    if (turnOver) {
+      setIsPlayer(true);
+    }
   }, [sharedState]);
 
   const onGuessUpdate = (guess: number) => {
