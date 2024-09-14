@@ -116,8 +116,8 @@
 
 .summary {
   display: flex;
-  width: 449px;
-  justify-content: space-around;
+  width: 340px;
+  justify-content: space-between;
   align-items: center;
   position: absolute;
   margin-top: -50px;
@@ -161,4 +161,8 @@
 .formInput {
   display: inline-flex;
   justify-content: center;
+}
+
+.formInput > button {
+  margin-left: 12px;
 }
