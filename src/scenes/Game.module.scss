@@ -18,13 +18,12 @@
   width: 100%;
   display: inline-flex;
   justify-content: space-between;
-  margin-left: 10px;
+  height: 48px;
 }
 
 .turnTracker {
   text-align: end;
   text-transform: capitalize;
-  margin-right: 20px;
 }
 
 .turnSummary {
@@ -112,6 +111,7 @@
   position: relative;
   z-index: 9;
   margin-bottom: 10px;
+  height: 80px;
 }
 
 .summary {
@@ -130,6 +130,7 @@
   z-index: 10;
   margin-bottom: 40px;
   align-items: center;
+  height: 30px;
 }
 
 .footerLeft {
@@ -146,6 +147,8 @@
 }
 
 .formDescription {
+  height: 2rem;
+  padding-top: 0.5rem;
   font-size: 0.8rem;
   padding-left: 1rem;
   padding-right: 1rem;
