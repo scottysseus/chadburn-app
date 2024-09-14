@@ -23,7 +23,7 @@ body {
 #app {
   margin: 0 auto;
   padding: 24px;
-  width: 400px;
+  width: 340px;
 }
 
 a {
@@ -58,4 +58,8 @@ button:disabled {
 
 button:hover:disabled {
   cursor: default;
+}
+
+.toggle > button {
+  width: 80px;
 }
