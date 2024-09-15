@@ -20,6 +20,12 @@ body {
   align-items: center;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 #app {
   margin: 0 auto;
   padding: 24px;
